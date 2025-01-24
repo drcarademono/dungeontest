@@ -1,0 +1,154 @@
+{
+    "Position": 25146065,
+    "Index": 908,
+    "Name": "B0000000.RDB",
+    "Type": "Rdb",
+    "RmbBlock": {
+        "FldHeader": {
+            "NumBlockDataRecords": 0,
+            "NumMisc3dObjectRecords": 0,
+            "NumMiscFlatObjectRecords": 0,
+            "BlockPositions": null,
+            "BuildingDataList": null,
+            "BlockDataSizes": null,
+            "GroundData": {
+
+            },
+            "AutoMapData": null,
+            "Name": null,
+            "OtherNames": null
+        },
+        "SubRecords": null,
+        "Misc3dObjectRecords": null,
+        "MiscFlatObjectRecords": null
+    },
+    "RdbBlock": {
+        "ModelReferenceList": [
+            {
+                "ModelId": "61018",
+                "ModelIdNum": 61018,
+                "Description": "C0D"
+            },
+            {
+                "ModelId": "61019",
+                "ModelIdNum": 61019,
+                "Description": "C09"
+            },
+            {
+                "ModelId": "61011",
+                "ModelIdNum": 61011,
+                "Description": "C01"
+            },
+            {
+                "ModelId": "61020",
+                "ModelIdNum": 61020,
+                "Description": "C09"
+            },
+            {
+                "ModelId": "61013",
+                "ModelIdNum": 61013,
+                "Description": "C08"
+            },
+            {
+                "ModelId": "61004",
+                "ModelIdNum": 61004,
+                "Description": "C0J"
+            },
+            {
+                "ModelId": "61021",
+                "ModelIdNum": 61021,
+                "Description": "C09"
+            },
+            {
+                "ModelId": "70037",
+                "ModelIdNum": 70037,
+                "Description": "101"
+            },
+            {
+                "ModelId": "70007",
+                "ModelIdNum": 70007,
+                "Description": "011"
+            },
+            {
+                "ModelId": "70010",
+                "ModelIdNum": 70010,
+                "Description": "014"
+            },
+            {
+                "ModelId": "61002",
+                "ModelIdNum": 61002,
+                "Description": "C0I"
+            },
+            {
+                "ModelId": "61015",
+                "ModelIdNum": 61015,
+                "Description": "C1D"
+            },
+            {
+                "ModelId": "70506",
+                "ModelIdNum": 70506,
+                "Description": "012"
+            },
+            {
+                "ModelId": "60500",
+                "ModelIdNum": 60500,
+                "Description": "C0O"
+            },
+            {
+                "ModelId": "70800",
+                "ModelIdNum": 70800,
+                "Description": "022"
+            },
+            {
+                "ModelId": "55002",
+                "ModelIdNum": 55002,
+                "Description": "DOR"
+            },
+            {
+                "ModelId": "55004",
+                "ModelIdNum": 55004,
+                "Description": "DOR"
+            },
+            {
+                "ModelId": "850003",
+                "ModelIdNum": 850003,
+                "Description": "MOD"
+            }
+        ],
+        "ObjectRootList": [
+            {
+                "RdbObjects": null
+            },
+            {
+                "RdbObjects": null
+            },
+            {
+                "RdbObjects": null
+            },
+            {
+                "RdbObjects": null
+            },
+            {
+                "RdbObjects": null
+            },
+            {
+                "RdbObjects": null
+            },
+            {
+                "RdbObjects": null
+            },
+            {
+                "RdbObjects": null
+            },
+            {
+                "RdbObjects": null
+            },
+            {
+                "RdbObjects": null
+            }
+        ]
+    },
+    "RdiBlock": {
+        "Data": null
+    }
+}
