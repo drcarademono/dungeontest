@@ -6,7 +6,7 @@ import random
 # Directory containing the JSON files
 directory = '.'
 
-def find_bridges(rooms):
+def find_bridges(rooms, doors):
     print("Starting ramp detection...")
 
     # Initialize all rooms as unvisited and clear previous types and stories
@@ -24,7 +24,7 @@ def find_bridges(rooms):
 
     # Identify bridge rooms
     for room_index, room in enumerate(rooms):
-        if is_valid_ramp(room, rooms):
+        if is_valid_ramp(room, rooms, doors):
             # Temporarily remove the room and test connectivity
             remaining_rooms = [r for i, r in enumerate(rooms) if i != room_index]
             new_components = get_connected_components(remaining_rooms)
@@ -234,9 +234,20 @@ def is_adjacent(room1, room2):
     return False
 
 # Check if a room is a valid ramp (1xN or Nx1) with opposite adjacency
-def is_valid_ramp(room, rooms):
+def is_valid_ramp(room, rooms, doors):
     # Check if the room is 1xN or Nx1
     if not (room['w'] == 1 or room['h'] == 1):
+        return False
+
+    # Check for disqualifying doors
+    disqualifying_door_types = {1, 2, 4, 6, 7}
+    room_has_disqualifying_door = any(
+        door['type'] in disqualifying_door_types and
+        door['x'] >= room['x'] and door['x'] < room['x'] + room['w'] and
+        door['y'] >= room['y'] and door['y'] < room['y'] + room['h']
+        for door in doors
+    )
+    if room_has_disqualifying_door:
         return False
 
     # Get adjacent rooms
@@ -276,10 +287,11 @@ for filename in os.listdir(directory):
             data = json.load(f)
 
         print(f"Processing file: {filename}")
-        data['rects'] = find_bridges(data['rects'])  # Detect and mark ramps
+        data['rects'] = find_bridges(data['rects'], data.get('doors', []))  # Pass the doors array
         data['rects'] = assign_stories(data['rects'])  # Assign stories
 
         with open(filepath, 'w') as f:
             json.dump(data, f, indent=4)
 
 print("All files processed with ramps and stories assigned.")
+

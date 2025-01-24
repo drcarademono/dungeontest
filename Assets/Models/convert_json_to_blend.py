@@ -806,7 +806,7 @@ def process_json_file(json_file):
 
     for door in data.get('doors', []):
         # Skip doors that don't meet the criteria
-        if not (door.get('type') in [1, 2, 4, 5, 6, 7] or (door['x'] == 0 and door['y'] == 0)):
+        if not (door.get('type') in [1, 2, 4, 6, 7] or (door['x'] == 0 and door['y'] == 0)):
             continue
 
         # Create the doorway if conditions are met
