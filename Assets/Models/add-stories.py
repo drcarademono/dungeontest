@@ -112,31 +112,37 @@ def assign_stories(rooms):
     # Update ramps adjacent to story 0
     update_adjacent_ramps(rooms, story=0)
 
-    # Assign story -1 by flood-filling from unvisited rooms adjacent to story 0 ramps
-    story_0_ramps = [room for room in rooms if room['type'] == 'ramp' and room['story'] == 0]
-    for ramp in story_0_ramps:
-        neighbors = find_adjacent_rooms(ramp, rooms)
-        for neighbor in neighbors:
-            if neighbor['story'] is None:  # Unvisited room
-                neighbor['story'] = -1
-                flood_fill_story([neighbor], rooms, story=-1)
+    # Iterative process to assign progressively lower stories
+    current_story = 0
+    while True:
+        # Find all ramps for the current story
+        current_story_ramps = [room for room in rooms if room['type'] == 'ramp' and room['story'] == current_story]
+        if not current_story_ramps:
+            break  # Exit if there are no more ramps to process
 
-        # Mark the ramp itself as story -1
-        ramp['story'] = -1
-        print(f"Updated ramp at ({ramp['x']}, {ramp['y']}) to story -1.")
+        print(f"Processing story {current_story} ramps...")
 
-    # Assign story -2 to all remaining non-ramp rooms
-    for room in rooms:
-        if room['story'] is None and room.get('type') != 'ramp':
-            room['story'] = -2
-            print(f"Assigned story -2 to room at ({room['x']}, {room['y']}).")
+        # Assign the next story to unvisited rooms adjacent to current story ramps
+        next_story = current_story - 1
+        for ramp in current_story_ramps:
+            neighbors = find_adjacent_rooms(ramp, rooms)
+            for neighbor in neighbors:
+                if neighbor['story'] is None:  # Unvisited room
+                    neighbor['story'] = next_story
+                    flood_fill_story([neighbor], rooms, story=next_story)
+
+        # Update ramps adjacent to the next story
+        update_adjacent_ramps(rooms, story=next_story)
+
+        # Move to the next story level
+        current_story = next_story
 
     print("Story assignment completed.")
     return rooms
 
-# Flood-fill for assigning stories
+# Flood-fill for assigning stories with ramp detection
 def flood_fill_story(start_rooms, rooms, story):
-    """Flood-fill to assign a story."""
+    """Flood-fill to assign a story and mark unvisited ramps blocking the fill."""
     queue = deque(start_rooms)
     while queue:
         current_room = queue.popleft()
@@ -144,10 +150,13 @@ def flood_fill_story(start_rooms, rooms, story):
         neighbors = find_adjacent_rooms(current_room, rooms)
 
         for neighbor in neighbors:
-            if neighbor['story'] is None and neighbor.get('type') != 'ramp':
+            if neighbor['story'] is None and neighbor.get('type') != 'ramp':  # Unvisited, non-ramp rooms
                 neighbor['story'] = story
                 queue.append(neighbor)
                 print(f"Flood-filled room at ({neighbor['x']}, {neighbor['y']}) with story {story}.")
+            elif neighbor['story'] is None and neighbor.get('type') == 'ramp':  # Unvisited ramp
+                neighbor['story'] = story
+                print(f"Marked ramp at ({neighbor['x']}, {neighbor['y']}) as story {story} (blocked flood-fill).")
 
 def update_adjacent_ramps(rooms, story):
     """Update ramps adjacent to rooms with the specified story."""
