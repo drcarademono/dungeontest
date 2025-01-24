@@ -526,7 +526,8 @@
                 }
             ],
             "exits": [],
-            "vault": 1
+            "vault": 1,
+            "type": null
         },
         {
             "x": 4,
@@ -691,7 +692,8 @@
                 }
             ],
             "exits": [],
-            "vault": 1
+            "vault": 1,
+            "type": null
         },
         {
             "x": -8,
@@ -1216,7 +1218,8 @@
                 }
             ],
             "exits": [],
-            "vault": 1
+            "vault": 1,
+            "type": null
         },
         {
             "x": 4,
@@ -1433,7 +1436,8 @@
                     "level": 0
                 }
             ],
-            "vault": 1
+            "vault": 1,
+            "type": null
         },
         {
             "x": 4,
@@ -2082,7 +2086,8 @@
                     "level": 2
                 }
             ],
-            "vault": 1
+            "vault": 1,
+            "type": null
         },
         {
             "x": -8,
@@ -2723,7 +2728,8 @@
                     "level": 2
                 }
             ],
-            "vault": 1
+            "vault": 1,
+            "type": null
         },
         {
             "x": -8,
@@ -3156,7 +3162,8 @@
                     "level": 1
                 }
             ],
-            "vault": 1
+            "vault": 1,
+            "type": null
         },
         {
             "x": 0,
@@ -3193,7 +3200,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": null
         },
         {
             "x": 3,
@@ -3221,7 +3229,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": "ramp"
         },
         {
             "x": -3,
@@ -3249,7 +3258,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": "ramp"
         },
         {
             "x": 6,
@@ -3277,7 +3287,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": "ramp"
         },
         {
             "x": 6,
@@ -3305,7 +3316,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": "ramp"
         },
         {
             "x": -6,
@@ -3333,7 +3345,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": "ramp"
         },
         {
             "x": -6,
@@ -3361,7 +3374,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": "ramp"
         },
         {
             "x": -6,
@@ -3398,7 +3412,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": null
         }
     ],
     "doors": [

@@ -146,7 +146,8 @@
                     "level": 0
                 }
             ],
-            "vault": 1
+            "vault": 1,
+            "type": null
         },
         {
             "x": 4,
@@ -768,7 +769,8 @@
                     "level": 2
                 }
             ],
-            "vault": 1
+            "vault": 1,
+            "type": null
         },
         {
             "x": -10,
@@ -1165,7 +1167,8 @@
                     "level": 1
                 }
             ],
-            "vault": 1
+            "vault": 1,
+            "type": null
         },
         {
             "x": 4,
@@ -1211,7 +1214,8 @@
                     "level": 0
                 }
             ],
-            "vault": 1
+            "vault": 1,
+            "type": "ramp"
         },
         {
             "x": 4,
@@ -1257,7 +1261,8 @@
                     "level": 0
                 }
             ],
-            "vault": 1
+            "vault": 1,
+            "type": null
         },
         {
             "x": -4,
@@ -1303,7 +1308,8 @@
                     "level": 0
                 }
             ],
-            "vault": 1
+            "vault": 1,
+            "type": null
         },
         {
             "x": -4,
@@ -1349,7 +1355,8 @@
                     "level": 0
                 }
             ],
-            "vault": 1
+            "vault": 1,
+            "type": null
         },
         {
             "x": 2,
@@ -1530,7 +1537,8 @@
                     "level": 0
                 }
             ],
-            "vault": 1
+            "vault": 1,
+            "type": null
         },
         {
             "x": 4,
@@ -1558,7 +1566,8 @@
                     "level": 0
                 }
             ],
-            "vault": 1
+            "vault": 1,
+            "type": null
         },
         {
             "x": -4,
@@ -1586,7 +1595,8 @@
                     "level": 0
                 }
             ],
-            "vault": 1
+            "vault": 1,
+            "type": null
         },
         {
             "x": -4,
@@ -1614,7 +1624,8 @@
                     "level": 0
                 }
             ],
-            "vault": 1
+            "vault": 1,
+            "type": null
         },
         {
             "x": 1,
@@ -1696,7 +1707,8 @@
                     "level": 0
                 }
             ],
-            "vault": 1
+            "vault": 1,
+            "type": null
         },
         {
             "x": 6,
@@ -1778,7 +1790,8 @@
                     "level": 0
                 }
             ],
-            "vault": 1
+            "vault": 1,
+            "type": null
         },
         {
             "x": 3,
@@ -1871,7 +1884,8 @@
                 }
             ],
             "exits": [],
-            "vault": 1
+            "vault": 1,
+            "type": null
         },
         {
             "x": -2,
@@ -2142,7 +2156,8 @@
                     "level": 2
                 }
             ],
-            "vault": 1
+            "vault": 1,
+            "type": null
         },
         {
             "x": -7,
@@ -2314,7 +2329,8 @@
                     "level": 1
                 }
             ],
-            "vault": 1
+            "vault": 1,
+            "type": null
         },
         {
             "x": -5,
@@ -2641,7 +2657,8 @@
                 }
             ],
             "exits": [],
-            "vault": 1
+            "vault": 1,
+            "type": null
         },
         {
             "x": -2,
@@ -2723,7 +2740,8 @@
                     "level": 0
                 }
             ],
-            "vault": 1
+            "vault": 1,
+            "type": null
         },
         {
             "x": -7,
@@ -2895,7 +2913,8 @@
                     "level": 1
                 }
             ],
-            "vault": 1
+            "vault": 1,
+            "type": null
         },
         {
             "x": -5,
@@ -3105,7 +3124,8 @@
                 }
             ],
             "exits": [],
-            "vault": 1
+            "vault": 1,
+            "type": null
         },
         {
             "x": 6,
@@ -3133,7 +3153,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": null
         },
         {
             "x": 4,
@@ -3161,7 +3182,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": null
         },
         {
             "x": -6,
@@ -3189,7 +3211,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": null
         },
         {
             "x": -6,
@@ -3217,7 +3240,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": null
         },
         {
             "x": -4,
@@ -3236,7 +3260,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": null
         },
         {
             "x": -2,
@@ -3327,7 +3352,8 @@
                     "level": 0
                 }
             ],
-            "vault": 1
+            "vault": 1,
+            "type": null
         },
         {
             "x": -6,
@@ -3355,7 +3381,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": null
         },
         {
             "x": -2,
@@ -3419,7 +3446,8 @@
                     "level": 0
                 }
             ],
-            "vault": 1
+            "vault": 1,
+            "type": "ramp"
         },
         {
             "x": -7,
@@ -3852,7 +3880,8 @@
                     "level": 3
                 }
             ],
-            "vault": 1
+            "vault": 1,
+            "type": null
         },
         {
             "x": -5,
@@ -4351,7 +4380,8 @@
                 }
             ],
             "exits": [],
-            "vault": 1
+            "vault": 1,
+            "type": null
         },
         {
             "x": 0,
@@ -4388,7 +4418,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": null
         },
         {
             "x": 3,
@@ -4416,7 +4447,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": null
         },
         {
             "x": -3,
@@ -4444,7 +4476,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": null
         },
         {
             "x": 4,
@@ -4472,7 +4505,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": "ramp"
         },
         {
             "x": 4,
@@ -4500,7 +4534,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": null
         },
         {
             "x": -4,
@@ -4528,7 +4563,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": null
         },
         {
             "x": -4,
@@ -4556,7 +4592,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": null
         },
         {
             "x": 4,
@@ -4584,7 +4621,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": "ramp"
         },
         {
             "x": 4,
@@ -4612,7 +4650,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": null
         },
         {
             "x": -4,
@@ -4640,7 +4679,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": null
         },
         {
             "x": -4,
@@ -4668,7 +4708,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": null
         },
         {
             "x": 3,
@@ -4696,7 +4737,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": null
         },
         {
             "x": 5,
@@ -4724,7 +4766,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": null
         },
         {
             "x": 4,
@@ -4752,7 +4795,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": null
         },
         {
             "x": -3,
@@ -4780,7 +4824,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": "ramp"
         },
         {
             "x": -5,
@@ -4808,7 +4853,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": null
         },
         {
             "x": -4,
@@ -4836,7 +4882,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": "ramp"
         },
         {
             "x": -3,
@@ -4864,7 +4911,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": null
         },
         {
             "x": -5,
@@ -4892,7 +4940,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": null
         },
         {
             "x": -4,
@@ -4920,7 +4969,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": null
         },
         {
             "x": 6,
@@ -4948,7 +4998,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": null
         },
         {
             "x": 4,
@@ -4976,7 +5027,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": null
         },
         {
             "x": -6,
@@ -5004,7 +5056,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": null
         },
         {
             "x": -6,
@@ -5032,7 +5085,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": null
         },
         {
             "x": -4,
@@ -5060,7 +5114,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": null
         },
         {
             "x": -3,
@@ -5088,7 +5143,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": null
         },
         {
             "x": -5,
@@ -5116,7 +5172,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": "ramp"
         },
         {
             "x": -2,
@@ -5144,7 +5201,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": "ramp"
         },
         {
             "x": -6,
@@ -5172,7 +5230,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": "ramp"
         },
         {
             "x": -2,
@@ -5200,7 +5259,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": "ramp"
         },
         {
             "x": 2,
@@ -5237,7 +5297,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": null
         },
         {
             "x": -2,
@@ -5274,7 +5335,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": null
         },
         {
             "x": 3,
@@ -5302,7 +5364,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": null
         },
         {
             "x": 0,
@@ -5330,7 +5393,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": null
         },
         {
             "x": 6,
@@ -5358,7 +5422,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": null
         },
         {
             "x": -6,
@@ -5386,7 +5451,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": null
         },
         {
             "x": -6,
@@ -5414,7 +5480,8 @@
                     "level": 0
                 }
             ],
-            "vault": 0
+            "vault": 0,
+            "type": null
         }
     ],
     "doors": [

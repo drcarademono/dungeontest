@@ -1,6 +1,7 @@
 import os
 import json
 import matplotlib.pyplot as plt
+from matplotlib.patches import Rectangle
 
 # Directory containing the JSON files
 directory = '.'
@@ -14,6 +15,11 @@ def draw_walls(walls, ax):
         
         ax.plot([start_x, end_x], [start_y, end_y], color='black')
 
+# Function to fill ramp rooms with black
+def fill_ramp(room, ax):
+    rect = Rectangle((room['x'], room['y']), room['w'], room['h'], facecolor='black', edgecolor='black', linewidth=1)
+    ax.add_patch(rect)
+
 # Process each JSON file in the directory
 for filename in os.listdir(directory):
     if filename.endswith('.json'):
@@ -26,8 +32,11 @@ for filename in os.listdir(directory):
         fig, ax = plt.subplots()
         ax.set_aspect('equal')
         
-        # Draw the walls for each room
+        # Draw the walls and fill ramps
         for room in data['rects']:
+            if room.get('type') == 'ramp':
+                fill_ramp(room, ax)  # Fill ramp rooms with black
+            
             if 'walls' in room:
                 draw_walls(room['walls'], ax)
         
@@ -40,5 +49,5 @@ for filename in os.listdir(directory):
         plt.savefig(png_filename)
         plt.close(fig)
 
-print("PNG files created for all JSON files with wall arrays.")
+print("PNG files created for all JSON files with ramp rooms filled in black.")
 
