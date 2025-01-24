@@ -107,33 +107,47 @@ def assign_stories(rooms):
         raise ValueError("No entrance room found at (0, 0).")
     
     entrance['story'] = 0
-    flood_fill_story([entrance], rooms)
+    flood_fill_story([entrance], rooms, story=0)
 
     # Update ramps adjacent to story 0
     update_adjacent_ramps(rooms, story=0)
 
-    # Assign story -1 to all remaining non-ramp rooms
+    # Assign story -1 by flood-filling from unvisited rooms adjacent to story 0 ramps
+    story_0_ramps = [room for room in rooms if room['type'] == 'ramp' and room['story'] == 0]
+    for ramp in story_0_ramps:
+        neighbors = find_adjacent_rooms(ramp, rooms)
+        for neighbor in neighbors:
+            if neighbor['story'] is None:  # Unvisited room
+                neighbor['story'] = -1
+                flood_fill_story([neighbor], rooms, story=-1)
+
+        # Mark the ramp itself as story -1
+        ramp['story'] = -1
+        print(f"Updated ramp at ({ramp['x']}, {ramp['y']}) to story -1.")
+
+    # Assign story -2 to all remaining non-ramp rooms
     for room in rooms:
         if room['story'] is None and room.get('type') != 'ramp':
-            room['story'] = -1
-            print(f"Assigned story -1 to room at ({room['x']}, {room['y']}).")
+            room['story'] = -2
+            print(f"Assigned story -2 to room at ({room['x']}, {room['y']}).")
 
     print("Story assignment completed.")
     return rooms
 
-# Flood-fill for assigning story 0
-def flood_fill_story(start_rooms, rooms):
+# Flood-fill for assigning stories
+def flood_fill_story(start_rooms, rooms, story):
+    """Flood-fill to assign a story."""
     queue = deque(start_rooms)
     while queue:
         current_room = queue.popleft()
-        print(f"Processing room at ({current_room['x']}, {current_room['y']}) for story 0.")
+        print(f"Processing room at ({current_room['x']}, {current_room['y']}) for story {story}.")
         neighbors = find_adjacent_rooms(current_room, rooms)
 
         for neighbor in neighbors:
             if neighbor['story'] is None and neighbor.get('type') != 'ramp':
-                neighbor['story'] = 0
+                neighbor['story'] = story
                 queue.append(neighbor)
-                print(f"Flood-filled room at ({neighbor['x']}, {neighbor['y']}) with story 0.")
+                print(f"Flood-filled room at ({neighbor['x']}, {neighbor['y']}) with story {story}.")
 
 def update_adjacent_ramps(rooms, story):
     """Update ramps adjacent to rooms with the specified story."""
@@ -144,6 +158,7 @@ def update_adjacent_ramps(rooms, story):
                 if neighbor.get('type') == 'ramp' and neighbor['story'] is None:
                     neighbor['story'] = story  # Assign the highest story
                     print(f"Updated ramp at ({neighbor['x']}, {neighbor['y']}) with story {neighbor['story']}.")
+
 
 def get_direction(room, neighbor):
     """Determine the direction of the neighbor relative to the room."""
@@ -259,4 +274,3 @@ for filename in os.listdir(directory):
             json.dump(data, f, indent=4)
 
 print("All files processed with ramps and stories assigned.")
-
