@@ -137,7 +137,7 @@ def add_rotunda_uvs(obj, width, height):
             vertex = obj.data.vertices[obj.data.loops[loop_index].vertex_index].co
 
             uv[0] = uv[0] * width
-            uv[1] = uv[1] / height
+            uv[1] = uv[1] / height * 0.5
 
 def create_rotunda_plus(x, y, w, h, floor_material):
     objs = []
@@ -185,7 +185,7 @@ def create_wall(x, y, dir_x, dir_y, rect_x, rect_y, rect_w, rect_h, wall_materia
         wall = bpy.context.active_object
         wall.rotation_euler[0] = math.radians(90)
         wall.rotation_euler[2] = math.radians(90)
-    add_uvs(wall, 1, 0.5)  # Accounts for Daggerfall dungeon wall textures being 64x32
+    add_uvs(wall, 1, 1)  # Accounts for Daggerfall dungeon wall textures being 64x32
     wall.data.materials.append(wall_material)
     return wall
 
@@ -242,24 +242,24 @@ def create_doorway(x, y, dir_x, dir_y, collection, wall_material):
 
             if dir_x != 0:  # Vertical wall
                 if abs(normal.z) > 0.99:
-                    uv[1] = (vertex.y - 0.5) * 2
+                    uv[1] = (vertex.y - 0.5)
                     uv[0] = vertex.x / 4
                 elif abs(normal.y) > 0.99:  # Faces on the thickness axis
-                    uv[1] = (vertex.z - 0.5) * 2
+                    uv[1] = (vertex.z - 0.5)
                     uv[0] = vertex.x / 4
                 else:  # Other faces
                     uv[0] = vertex.y  # Width along the Y-axis
-                    uv[1] = vertex.z / 0.5  # Height along the Z-axis (64x32 texture)
+                    uv[1] = vertex.z # Height along the Z-axis (/ 0.5 for 64x32 texture)
             if dir_y != 0:  # Horizontal wall
                 if abs(normal.z) > 0.99:
-                    uv[1] = (vertex.x - 0.5) * 2
+                    uv[1] = (vertex.x - 0.5)
                     uv[0] = vertex.y / 4
                 elif abs(normal.x) > 0.99:  # Faces on the thickness axis
-                    uv[1] = (vertex.z - 0.5) * 2
+                    uv[1] = (vertex.z - 0.5)
                     uv[0] = vertex.y / 4
                 else:  # Other faces
                     uv[0] = vertex.x  # Width along the X-axis
-                    uv[1] = vertex.z / 0.5  # Height along the Z-axis (64x32 texture)
+                    uv[1] = vertex.z  # Height along the Z-axis (/ 0.5 for 64x32 texture)
 
     doorway.data.materials.append(wall_material)
     collection.objects.link(doorway)
