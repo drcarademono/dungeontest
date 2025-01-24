@@ -13,9 +13,11 @@ def find_bridges(rooms):
     for room in rooms:
         room.pop('type', None)  # Remove any existing 'type'
         room.pop('story', None)  # Remove any existing 'story'
+        room.pop('ramp_info', None)  # Remove any existing 'ramp_info'
         room['type'] = None  # Initialize 'type' as None
         room['story'] = None  # Initialize 'story' as None
-        print(f"Cleared 'type' and 'story' for room at ({room['x']}, {room['y']}).")
+        room['ramp_info'] = None  # Initialize 'ramp_info' as None
+        print(f"Cleared 'type', 'story', and 'ramp_info' for room at ({room['x']}, {room['y']}).")
 
     # Find the connected components
     components = get_connected_components(rooms)
@@ -95,8 +97,7 @@ def find_adjacent_ramp_cluster(start_ramp, rooms):
 
     return cluster
 
-
-# Assign stories to the rooms
+# Assign stories and update ramps
 def assign_stories(rooms):
     print("Starting story assignment...")
 
@@ -107,6 +108,9 @@ def assign_stories(rooms):
     
     entrance['story'] = 0
     flood_fill_story([entrance], rooms)
+
+    # Update ramps adjacent to story 0
+    update_adjacent_ramps(rooms, story=0)
 
     # Assign story -1 to all remaining non-ramp rooms
     for room in rooms:
@@ -130,6 +134,28 @@ def flood_fill_story(start_rooms, rooms):
                 neighbor['story'] = 0
                 queue.append(neighbor)
                 print(f"Flood-filled room at ({neighbor['x']}, {neighbor['y']}) with story 0.")
+
+def update_adjacent_ramps(rooms, story):
+    """Update ramps adjacent to rooms with the specified story."""
+    for room in rooms:
+        if room['story'] == story:
+            neighbors = find_adjacent_rooms(room, rooms)
+            for neighbor in neighbors:
+                if neighbor.get('type') == 'ramp' and neighbor['story'] is None:
+                    neighbor['story'] = story  # Assign the highest story
+                    print(f"Updated ramp at ({neighbor['x']}, {neighbor['y']}) with story {neighbor['story']}.")
+
+def get_direction(room, neighbor):
+    """Determine the direction of the neighbor relative to the room."""
+    if neighbor['x'] + neighbor['w'] == room['x']:
+        return 'west'
+    elif room['x'] + room['w'] == neighbor['x']:
+        return 'east'
+    elif neighbor['y'] + neighbor['h'] == room['y']:
+        return 'south'
+    elif room['y'] + room['h'] == neighbor['y']:
+        return 'north'
+    return 'unknown'
 
 # Get connected components using flood-fill
 def get_connected_components(rooms):

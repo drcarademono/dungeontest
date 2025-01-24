@@ -247,7 +247,8 @@
                 }
             ],
             "type": null,
-            "story": 0
+            "story": 0,
+            "ramp_info": null
         },
         {
             "x": -3,
@@ -529,7 +530,8 @@
                 }
             ],
             "type": null,
-            "story": -1
+            "story": -1,
+            "ramp_info": null
         },
         {
             "x": -3,
@@ -1009,7 +1011,8 @@
                 }
             ],
             "type": null,
-            "story": -1
+            "story": -1,
+            "ramp_info": null
         },
         {
             "x": -3,
@@ -1381,7 +1384,8 @@
                 }
             ],
             "type": null,
-            "story": -1
+            "story": -1,
+            "ramp_info": null
         },
         {
             "x": -3,
@@ -1726,7 +1730,8 @@
                 }
             ],
             "type": null,
-            "story": -1
+            "story": -1,
+            "ramp_info": null
         },
         {
             "x": -3,
@@ -1864,7 +1869,8 @@
                 }
             ],
             "type": null,
-            "story": -1
+            "story": -1,
+            "ramp_info": null
         },
         {
             "x": -8,
@@ -2173,7 +2179,8 @@
                 }
             ],
             "type": null,
-            "story": -1
+            "story": -1,
+            "ramp_info": null
         },
         {
             "x": -13,
@@ -2293,7 +2300,8 @@
                 }
             ],
             "type": null,
-            "story": -1
+            "story": -1,
+            "ramp_info": null
         },
         {
             "x": -17,
@@ -2721,7 +2729,8 @@
             ],
             "exits": [],
             "type": null,
-            "story": -1
+            "story": -1,
+            "ramp_info": null
         },
         {
             "x": -21,
@@ -2825,7 +2834,8 @@
             ],
             "exits": [],
             "type": null,
-            "story": -1
+            "story": -1,
+            "ramp_info": null
         },
         {
             "x": -27,
@@ -3001,7 +3011,8 @@
             ],
             "exits": [],
             "type": null,
-            "story": -1
+            "story": -1,
+            "ramp_info": null
         },
         {
             "x": -30,
@@ -3265,7 +3276,8 @@
                 }
             ],
             "type": null,
-            "story": -1
+            "story": -1,
+            "ramp_info": null
         },
         {
             "x": -34,
@@ -3360,7 +3372,8 @@
             ],
             "exits": [],
             "type": null,
-            "story": -1
+            "story": -1,
+            "ramp_info": null
         },
         {
             "x": -42,
@@ -3608,7 +3621,8 @@
             ],
             "exits": [],
             "type": null,
-            "story": -1
+            "story": -1,
+            "ramp_info": null
         },
         {
             "x": -48,
@@ -3794,7 +3808,8 @@
             ],
             "exits": [],
             "type": null,
-            "story": -1
+            "story": -1,
+            "ramp_info": null
         },
         {
             "x": 0,
@@ -3833,7 +3848,8 @@
                 }
             ],
             "type": null,
-            "story": 0
+            "story": 0,
+            "ramp_info": null
         },
         {
             "x": -1,
@@ -3863,7 +3879,8 @@
                 }
             ],
             "type": "ramp",
-            "story": null
+            "story": 0,
+            "ramp_info": null
         },
         {
             "x": -1,
@@ -3893,7 +3910,8 @@
                 }
             ],
             "type": "ramp",
-            "story": null
+            "story": null,
+            "ramp_info": null
         },
         {
             "x": -1,
@@ -3923,7 +3941,8 @@
                 }
             ],
             "type": "ramp",
-            "story": null
+            "story": null,
+            "ramp_info": null
         },
         {
             "x": -1,
@@ -3953,7 +3972,8 @@
                 }
             ],
             "type": "ramp",
-            "story": null
+            "story": null,
+            "ramp_info": null
         },
         {
             "x": -1,
@@ -3983,7 +4003,8 @@
                 }
             ],
             "type": null,
-            "story": -1
+            "story": -1,
+            "ramp_info": null
         },
         {
             "x": -4,
@@ -4013,7 +4034,8 @@
                 }
             ],
             "type": null,
-            "story": -1
+            "story": -1,
+            "ramp_info": null
         },
         {
             "x": -9,
@@ -4043,7 +4065,8 @@
                 }
             ],
             "type": "ramp",
-            "story": null
+            "story": null,
+            "ramp_info": null
         },
         {
             "x": -14,
@@ -4073,7 +4096,8 @@
                 }
             ],
             "type": "ramp",
-            "story": null
+            "story": null,
+            "ramp_info": null
         },
         {
             "x": -18,
@@ -4103,7 +4127,8 @@
                 }
             ],
             "type": "ramp",
-            "story": null
+            "story": null,
+            "ramp_info": null
         },
         {
             "x": -22,
@@ -4133,7 +4158,8 @@
                 }
             ],
             "type": "ramp",
-            "story": null
+            "story": null,
+            "ramp_info": null
         },
         {
             "x": -28,
@@ -4163,7 +4189,8 @@
                 }
             ],
             "type": "ramp",
-            "story": null
+            "story": null,
+            "ramp_info": null
         },
         {
             "x": -31,
@@ -4193,7 +4220,8 @@
                 }
             ],
             "type": "ramp",
-            "story": null
+            "story": null,
+            "ramp_info": null
         },
         {
             "x": -35,
@@ -4223,7 +4251,8 @@
                 }
             ],
             "type": "ramp",
-            "story": null
+            "story": null,
+            "ramp_info": null
         },
         {
             "x": -43,
@@ -4253,7 +4282,8 @@
                 }
             ],
             "type": "ramp",
-            "story": null
+            "story": null,
+            "ramp_info": null
         },
         {
             "x": -33,
@@ -4292,7 +4322,8 @@
                 }
             ],
             "type": null,
-            "story": -1
+            "story": -1,
+            "ramp_info": null
         },
         {
             "x": -4,
@@ -4322,7 +4353,8 @@
                 }
             ],
             "type": null,
-            "story": -1
+            "story": -1,
+            "ramp_info": null
         }
     ],
     "doors": [
