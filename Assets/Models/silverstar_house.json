@@ -66,7 +66,8 @@
                     "level": 0
                 }
             ],
-            "type": "ramp"
+            "type": "ramp",
+            "story": null
         },
         {
             "x": 0,
@@ -185,7 +186,8 @@
                     "level": 0
                 }
             ],
-            "type": null
+            "type": null,
+            "story": -1
         },
         {
             "x": 2,
@@ -556,7 +558,8 @@
                     "level": 2
                 }
             ],
-            "type": null
+            "type": null,
+            "story": -1
         },
         {
             "x": -5,
@@ -792,7 +795,8 @@
                     "level": 1
                 }
             ],
-            "type": null
+            "type": null,
+            "story": -1
         },
         {
             "x": 4,
@@ -839,7 +843,8 @@
                     "level": 0
                 }
             ],
-            "type": "ramp"
+            "type": "ramp",
+            "story": null
         },
         {
             "x": -4,
@@ -886,7 +891,8 @@
                     "level": 0
                 }
             ],
-            "type": "ramp"
+            "type": "ramp",
+            "story": null
         },
         {
             "x": -4,
@@ -933,7 +939,8 @@
                     "level": 0
                 }
             ],
-            "type": null
+            "type": null,
+            "story": -1
         },
         {
             "x": 4,
@@ -962,7 +969,8 @@
                     "level": 0
                 }
             ],
-            "type": null
+            "type": null,
+            "story": -1
         },
         {
             "x": -4,
@@ -991,7 +999,8 @@
                     "level": 0
                 }
             ],
-            "type": null
+            "type": null,
+            "story": -1
         },
         {
             "x": -4,
@@ -1011,7 +1020,8 @@
                     "level": 0
                 }
             ],
-            "type": null
+            "type": null,
+            "story": -1
         },
         {
             "x": 2,
@@ -1031,7 +1041,8 @@
                     "level": 0
                 }
             ],
-            "type": null
+            "type": null,
+            "story": -1
         },
         {
             "x": -6,
@@ -1060,7 +1071,8 @@
                     "level": 0
                 }
             ],
-            "type": null
+            "type": null,
+            "story": -1
         },
         {
             "x": -2,
@@ -1089,7 +1101,8 @@
                     "level": 0
                 }
             ],
-            "type": null
+            "type": null,
+            "story": -1
         },
         {
             "x": -6,
@@ -1118,7 +1131,8 @@
                     "level": 0
                 }
             ],
-            "type": null
+            "type": null,
+            "story": -1
         },
         {
             "x": 0,
@@ -1300,7 +1314,8 @@
                     "level": 0
                 }
             ],
-            "type": null
+            "type": null,
+            "story": -1
         },
         {
             "x": -6,
@@ -1356,7 +1371,8 @@
                     "level": 0
                 }
             ],
-            "type": null
+            "type": null,
+            "story": -1
         },
         {
             "x": -8,
@@ -1898,7 +1914,8 @@
                     "level": 2
                 }
             ],
-            "type": null
+            "type": null,
+            "story": -1
         },
         {
             "x": -10,
@@ -2008,7 +2025,8 @@
                     "level": 0
                 }
             ],
-            "type": null
+            "type": null,
+            "story": -1
         },
         {
             "x": -6,
@@ -2037,7 +2055,8 @@
                     "level": 0
                 }
             ],
-            "type": null
+            "type": null,
+            "story": -1
         },
         {
             "x": -4,
@@ -2391,7 +2410,8 @@
                     "level": 1
                 }
             ],
-            "type": null
+            "type": null,
+            "story": -1
         },
         {
             "x": 0,
@@ -2429,7 +2449,8 @@
                     "level": 0
                 }
             ],
-            "type": null
+            "type": null,
+            "story": 0
         },
         {
             "x": 0,
@@ -2458,7 +2479,8 @@
                     "level": 0
                 }
             ],
-            "type": "ramp"
+            "type": null,
+            "story": -1
         },
         {
             "x": 1,
@@ -2487,7 +2509,8 @@
                     "level": 0
                 }
             ],
-            "type": "ramp"
+            "type": "ramp",
+            "story": null
         },
         {
             "x": -1,
@@ -2516,7 +2539,8 @@
                     "level": 0
                 }
             ],
-            "type": null
+            "type": null,
+            "story": -1
         },
         {
             "x": 4,
@@ -2545,7 +2569,8 @@
                     "level": 0
                 }
             ],
-            "type": "ramp"
+            "type": null,
+            "story": -1
         },
         {
             "x": -4,
@@ -2574,7 +2599,8 @@
                     "level": 0
                 }
             ],
-            "type": "ramp"
+            "type": null,
+            "story": -1
         },
         {
             "x": -4,
@@ -2603,7 +2629,8 @@
                     "level": 0
                 }
             ],
-            "type": null
+            "type": null,
+            "story": -1
         },
         {
             "x": 4,
@@ -2632,7 +2659,8 @@
                     "level": 0
                 }
             ],
-            "type": "ramp"
+            "type": null,
+            "story": -1
         },
         {
             "x": -4,
@@ -2661,7 +2689,8 @@
                     "level": 0
                 }
             ],
-            "type": "ramp"
+            "type": null,
+            "story": -1
         },
         {
             "x": -4,
@@ -2690,7 +2719,8 @@
                     "level": 0
                 }
             ],
-            "type": null
+            "type": null,
+            "story": -1
         },
         {
             "x": 3,
@@ -2719,7 +2749,8 @@
                     "level": 0
                 }
             ],
-            "type": "ramp"
+            "type": "ramp",
+            "story": null
         },
         {
             "x": -5,
@@ -2748,7 +2779,8 @@
                     "level": 0
                 }
             ],
-            "type": "ramp"
+            "type": "ramp",
+            "story": null
         },
         {
             "x": -3,
@@ -2777,7 +2809,8 @@
                     "level": 0
                 }
             ],
-            "type": null
+            "type": null,
+            "story": -1
         },
         {
             "x": -5,
@@ -2806,7 +2839,8 @@
                     "level": 0
                 }
             ],
-            "type": "ramp"
+            "type": "ramp",
+            "story": null
         },
         {
             "x": 2,
@@ -2835,7 +2869,8 @@
                     "level": 0
                 }
             ],
-            "type": "ramp"
+            "type": "ramp",
+            "story": null
         },
         {
             "x": -6,
@@ -2864,7 +2899,8 @@
                     "level": 0
                 }
             ],
-            "type": "ramp"
+            "type": "ramp",
+            "story": null
         },
         {
             "x": -6,
@@ -2893,7 +2929,8 @@
                     "level": 0
                 }
             ],
-            "type": "ramp"
+            "type": "ramp",
+            "story": null
         },
         {
             "x": -7,
@@ -2922,7 +2959,8 @@
                     "level": 0
                 }
             ],
-            "type": "ramp"
+            "type": "ramp",
+            "story": null
         },
         {
             "x": -6,
@@ -2951,7 +2989,8 @@
                     "level": 0
                 }
             ],
-            "type": "ramp"
+            "type": "ramp",
+            "story": null
         },
         {
             "x": -5,
@@ -2980,7 +3019,8 @@
                     "level": 0
                 }
             ],
-            "type": "ramp"
+            "type": "ramp",
+            "story": null
         },
         {
             "x": 2,
@@ -3018,7 +3058,8 @@
                     "level": 0
                 }
             ],
-            "type": null
+            "type": null,
+            "story": -1
         },
         {
             "x": 1,
@@ -3056,7 +3097,8 @@
                     "level": 0
                 }
             ],
-            "type": null
+            "type": null,
+            "story": -1
         },
         {
             "x": -1,
@@ -3085,7 +3127,8 @@
                     "level": 0
                 }
             ],
-            "type": null
+            "type": null,
+            "story": -1
         }
     ],
     "doors": [

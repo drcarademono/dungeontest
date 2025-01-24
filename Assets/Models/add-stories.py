@@ -1,13 +1,21 @@
 import os
 import json
+from collections import deque
+import random
 
 # Directory containing the JSON files
 directory = '.'
 
 def find_bridges(rooms):
-    # Initialize all rooms as unvisited and clear previous types
+    print("Starting ramp detection...")
+
+    # Initialize all rooms as unvisited and clear previous types and stories
     for room in rooms:
-        room['type'] = None
+        room.pop('type', None)  # Remove any existing 'type'
+        room.pop('story', None)  # Remove any existing 'story'
+        room['type'] = None  # Initialize 'type' as None
+        room['story'] = None  # Initialize 'story' as None
+        print(f"Cleared 'type' and 'story' for room at ({room['x']}, {room['y']}).")
 
     # Find the connected components
     components = get_connected_components(rooms)
@@ -22,8 +30,106 @@ def find_bridges(rooms):
             # If removing the room increases the number of components, it's a bridge
             if len(new_components) > len(components):
                 room['type'] = 'ramp'
+                print(f"Room at ({room['x']}, {room['y']}) marked as ramp.")
 
+    # Resolve clusters of adjacent ramps
+    resolve_adjacent_ramps(rooms)
+
+    print("Ramp detection completed.")
     return rooms
+
+def resolve_adjacent_ramps(rooms):
+    print("Resolving adjacent ramps...")
+    ramps = [room for room in rooms if room['type'] == 'ramp']
+    processed = set()
+
+    for ramp in ramps:
+        ramp_key = (ramp['x'], ramp['y'])  # Use (x, y) as a unique identifier
+        if ramp_key in processed:
+            continue
+
+        # Find all connected ramps (orthogonal adjacency only)
+        cluster = find_adjacent_ramp_cluster(ramp, rooms)
+        if len(cluster) <= 1:
+            continue  # No need to resolve single ramps
+
+        print(f"Found ramp cluster with {len(cluster)} rooms.")
+        cluster.sort(key=lambda r: (r['x'], r['y']))  # Sort to ensure deterministic ordering
+
+        # Determine the ramp to keep
+        if all(r['w'] == cluster[0]['w'] and r['h'] == cluster[0]['h'] for r in cluster):  # Same dimensions
+            if len(cluster) % 2 == 1:
+                keep = cluster[len(cluster) // 2]  # Middle one
+            else:
+                keep = random.choice(cluster)  # Pick one at random
+        else:  # Keep the longest or widest ramp
+            keep = max(cluster, key=lambda r: max(r['w'], r['h']))
+
+        # Mark all other ramps in the cluster as non-ramps
+        for r in cluster:
+            r_key = (r['x'], r['y'])
+            if r != keep:
+                r['type'] = None
+                print(f"Removed ramp designation from room at ({r['x']}, {r['y']}).")
+            processed.add(r_key)  # Mark the room as processed
+
+def find_adjacent_ramp_cluster(start_ramp, rooms):
+    """Find all ramps in the same cluster using orthogonal adjacency."""
+    cluster = []
+    queue = deque([start_ramp])
+    visited = set()
+
+    while queue:
+        current = queue.popleft()
+        current_key = (current['x'], current['y'])
+        if current_key in visited:
+            continue
+        visited.add(current_key)
+        cluster.append(current)
+
+        # Add orthogonally adjacent ramps
+        for neighbor in find_adjacent_rooms(current, rooms):
+            neighbor_key = (neighbor['x'], neighbor['y'])
+            if neighbor['type'] == 'ramp' and neighbor_key not in visited:
+                queue.append(neighbor)
+
+    return cluster
+
+
+# Assign stories to the rooms
+def assign_stories(rooms):
+    print("Starting story assignment...")
+
+    # Assign story 0 starting from the entrance
+    entrance = next((room for room in rooms if room['x'] == 0 and room['y'] == 0), None)
+    if not entrance:
+        raise ValueError("No entrance room found at (0, 0).")
+    
+    entrance['story'] = 0
+    flood_fill_story([entrance], rooms)
+
+    # Assign story -1 to all remaining non-ramp rooms
+    for room in rooms:
+        if room['story'] is None and room.get('type') != 'ramp':
+            room['story'] = -1
+            print(f"Assigned story -1 to room at ({room['x']}, {room['y']}).")
+
+    print("Story assignment completed.")
+    return rooms
+
+# Flood-fill for assigning story 0
+def flood_fill_story(start_rooms, rooms):
+    queue = deque(start_rooms)
+    while queue:
+        current_room = queue.popleft()
+        print(f"Processing room at ({current_room['x']}, {current_room['y']}) for story 0.")
+        neighbors = find_adjacent_rooms(current_room, rooms)
+
+        for neighbor in neighbors:
+            if neighbor['story'] is None and neighbor.get('type') != 'ramp':
+                neighbor['story'] = 0
+                queue.append(neighbor)
+                print(f"Flood-filled room at ({neighbor['x']}, {neighbor['y']}) with story 0.")
 
 # Get connected components using flood-fill
 def get_connected_components(rooms):
@@ -48,17 +154,25 @@ def flood_fill(start_index, rooms, visited):
         if room_index not in visited:
             visited.add(room_index)
             component.append(room_index)
-            neighbors = find_adjacent_rooms(room_index, rooms)
+            neighbors = find_adjacent_rooms_by_index(room_index, rooms)
             stack.extend(neighbors)
 
     return component
 
-# Find all adjacent rooms to a given room index
-def find_adjacent_rooms(room_index, rooms):
+# Find all adjacent rooms by index
+def find_adjacent_rooms_by_index(room_index, rooms):
     adjacent = []
     for other_index, other_room in enumerate(rooms):
         if other_index != room_index and is_adjacent(rooms[room_index], other_room):
             adjacent.append(other_index)
+    return adjacent
+
+# Find all adjacent rooms
+def find_adjacent_rooms(room, rooms):
+    adjacent = []
+    for other_room in rooms:
+        if other_room != room and is_adjacent(room, other_room):
+            adjacent.append(other_room)
     return adjacent
 
 # Check if two rooms are adjacent
@@ -103,7 +217,7 @@ def find_adjacent_rooms_by_direction(room, rooms):
 
     return neighbors
 
-# Process each JSON file in the directory
+# Process each JSON file
 for filename in os.listdir(directory):
     if filename.endswith('.json'):
         filepath = os.path.join(directory, filename)
@@ -111,12 +225,12 @@ for filename in os.listdir(directory):
         with open(filepath) as f:
             data = json.load(f)
 
-        # Find and mark bridges
-        data['rects'] = find_bridges(data['rects'])
+        print(f"Processing file: {filename}")
+        data['rects'] = find_bridges(data['rects'])  # Detect and mark ramps
+        data['rects'] = assign_stories(data['rects'])  # Assign stories
 
-        # Save the modified JSON data (overwrite the original file)
         with open(filepath, 'w') as f:
             json.dump(data, f, indent=4)
 
-print("All files processed with bridges marked as ramps.")
+print("All files processed with ramps and stories assigned.")
 
