@@ -278,7 +278,61 @@ def find_adjacent_rooms_by_direction(room, rooms):
 
     return neighbors
 
+def assign_ramp_directions(rects):
+    """
+    Assign directions to ramps based on the lowest-story adjacent room.
+    """
+    for rect in rects:
+        if rect.get('type') == 'ramp':
+            neighbors = find_adjacent_rooms_by_direction(rect, rects)
+
+            # Filter neighbors to only those with a valid story
+            valid_neighbors = {direction: room for direction, room in neighbors.items() if 'story' in room and room['story'] is not None}
+
+            if valid_neighbors:
+                # Find the neighbor with the lowest story
+                lowest_story_direction = min(valid_neighbors, key=lambda d: valid_neighbors[d]['story'])
+                rect['ramp_dir'] = lowest_story_direction
+                print(f"Assigned direction {lowest_story_direction} to ramp at ({rect['x']}, {rect['y']}) with story {rect['story']}.")
+            else:
+                rect['ramp_dir'] = 'unknown'
+                print(f"Could not determine direction for ramp at ({rect['x']}, {rect['y']}). No valid adjacent rooms.")
+
+    return rects
+
+def assign_door_stories(rects, doors):
+    """
+    Assigns the story of the corresponding room to each door in the doors array.
+
+    Parameters:
+    - rects: List of room rectangles with `x`, `y`, `w`, `h`, and `story`.
+    - doors: List of door objects with `x`, `y`, and other properties.
+
+    Returns:
+    - Updated doors array with assigned `story` values.
+    """
+    for door in doors:
+        door_x, door_y = door['x'], door['y']
+        door_story = None
+
+        # Find the room that contains this door
+        for rect in rects:
+            rect_x, rect_y, rect_w, rect_h = rect['x'], rect['y'], rect['w'], rect['h']
+            if rect_x <= door_x < rect_x + rect_w and rect_y <= door_y < rect_y + rect_h:
+                door_story = rect.get('story', 0)  # Default story is 0 if not assigned
+                break
+
+        if door_story is not None:
+            door['story'] = door_story
+            print(f"Assigned story {door_story} to door at ({door_x}, {door_y}).")
+        else:
+            print(f"Could not assign a story to door at ({door_x}, {door_y}). No matching room found.")
+
+    return doors
+
 # Process each JSON file
+directory = "./"  # Replace with your directory path
+
 for filename in os.listdir(directory):
     if filename.endswith('.json'):
         filepath = os.path.join(directory, filename)
@@ -289,9 +343,10 @@ for filename in os.listdir(directory):
         print(f"Processing file: {filename}")
         data['rects'] = find_bridges(data['rects'], data.get('doors', []))  # Pass the doors array
         data['rects'] = assign_stories(data['rects'])  # Assign stories
+        data['rects'] = assign_ramp_directions(data['rects'])  # Assign ramp directions
+        data['doors'] = assign_door_stories(data['rects'], data.get('doors', []))  # Assign door stories
 
         with open(filepath, 'w') as f:
             json.dump(data, f, indent=4)
 
-print("All files processed with ramps and stories assigned.")
-
+print("All files processed with ramps, stories, and door stories assigned.")

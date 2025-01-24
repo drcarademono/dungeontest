@@ -318,6 +318,7 @@
                 }
             ],
             "vault": 1,
+            "ramp_dir": null,
             "type": null,
             "story": 0,
             "ramp_info": null
@@ -367,6 +368,7 @@
                 }
             ],
             "vault": 1,
+            "ramp_dir": "north",
             "type": "ramp",
             "story": 0,
             "ramp_info": null
@@ -398,6 +400,7 @@
                 }
             ],
             "vault": 0,
+            "ramp_dir": null,
             "type": null,
             "story": -1,
             "ramp_info": null
@@ -825,6 +828,7 @@
                 }
             ],
             "vault": 1,
+            "ramp_dir": null,
             "type": null,
             "story": -1,
             "ramp_info": null
@@ -874,6 +878,7 @@
                 }
             ],
             "vault": 1,
+            "ramp_dir": "north",
             "type": "ramp",
             "story": -1,
             "ramp_info": null
@@ -1400,6 +1405,7 @@
                 }
             ],
             "vault": 1,
+            "ramp_dir": null,
             "type": null,
             "story": -2,
             "ramp_info": null
@@ -1755,6 +1761,7 @@
                 }
             ],
             "vault": 1,
+            "ramp_dir": null,
             "type": null,
             "story": -2,
             "ramp_info": null
@@ -2020,6 +2027,7 @@
                 }
             ],
             "vault": 1,
+            "ramp_dir": null,
             "type": null,
             "story": -2,
             "ramp_info": null
@@ -2051,6 +2059,7 @@
                 }
             ],
             "vault": 0,
+            "ramp_dir": null,
             "type": null,
             "story": -2,
             "ramp_info": null
@@ -2109,6 +2118,7 @@
                 }
             ],
             "vault": 1,
+            "ramp_dir": null,
             "type": null,
             "story": -2,
             "ramp_info": null
@@ -2131,6 +2141,7 @@
                 }
             ],
             "vault": 0,
+            "ramp_dir": null,
             "type": null,
             "story": -2,
             "ramp_info": null
@@ -2306,6 +2317,7 @@
                 }
             ],
             "vault": 1,
+            "ramp_dir": null,
             "type": null,
             "story": -2,
             "ramp_info": null
@@ -2337,6 +2349,7 @@
                 }
             ],
             "vault": 0,
+            "ramp_dir": null,
             "type": null,
             "story": -2,
             "ramp_info": null
@@ -2386,6 +2399,7 @@
                 }
             ],
             "vault": 1,
+            "ramp_dir": null,
             "type": null,
             "story": -2,
             "ramp_info": null
@@ -2444,6 +2458,7 @@
                 }
             ],
             "vault": 1,
+            "ramp_dir": null,
             "type": null,
             "story": -2,
             "ramp_info": null
@@ -3087,6 +3102,7 @@
                 }
             ],
             "vault": 1,
+            "ramp_dir": null,
             "type": null,
             "story": -2,
             "ramp_info": null
@@ -3118,6 +3134,7 @@
                 }
             ],
             "vault": 0,
+            "ramp_dir": null,
             "type": null,
             "story": -2,
             "ramp_info": null
@@ -3167,6 +3184,7 @@
                 }
             ],
             "vault": 1,
+            "ramp_dir": "south",
             "type": "ramp",
             "story": -2,
             "ramp_info": null
@@ -3279,6 +3297,7 @@
                 }
             ],
             "vault": 1,
+            "ramp_dir": null,
             "type": null,
             "story": -2,
             "ramp_info": null
@@ -3328,6 +3347,7 @@
                 }
             ],
             "vault": 1,
+            "ramp_dir": null,
             "type": null,
             "story": -2,
             "ramp_info": null
@@ -3647,6 +3667,7 @@
                 }
             ],
             "vault": 1,
+            "ramp_dir": null,
             "type": null,
             "story": -3,
             "ramp_info": null
@@ -3696,6 +3717,7 @@
                 }
             ],
             "vault": 1,
+            "ramp_dir": null,
             "type": null,
             "story": -2,
             "ramp_info": null
@@ -3727,6 +3749,7 @@
                 }
             ],
             "vault": 0,
+            "ramp_dir": null,
             "type": null,
             "story": -3,
             "ramp_info": null
@@ -3840,6 +3863,7 @@
                 }
             ],
             "vault": 1,
+            "ramp_dir": null,
             "type": null,
             "story": -4,
             "ramp_info": null
@@ -4024,6 +4048,7 @@
                 }
             ],
             "vault": 1,
+            "ramp_dir": null,
             "type": null,
             "story": -3,
             "ramp_info": null
@@ -4064,6 +4089,7 @@
                 }
             ],
             "vault": 0,
+            "ramp_dir": null,
             "type": null,
             "story": 0,
             "ramp_info": null
@@ -4095,6 +4121,7 @@
                 }
             ],
             "vault": 0,
+            "ramp_dir": null,
             "type": null,
             "story": 0,
             "ramp_info": null
@@ -4126,6 +4153,7 @@
                 }
             ],
             "vault": 0,
+            "ramp_dir": null,
             "type": null,
             "story": -1,
             "ramp_info": null
@@ -4157,6 +4185,7 @@
                 }
             ],
             "vault": 0,
+            "ramp_dir": null,
             "type": null,
             "story": -1,
             "ramp_info": null
@@ -4188,6 +4217,7 @@
                 }
             ],
             "vault": 0,
+            "ramp_dir": null,
             "type": null,
             "story": -1,
             "ramp_info": null
@@ -4219,6 +4249,7 @@
                 }
             ],
             "vault": 0,
+            "ramp_dir": null,
             "type": null,
             "story": -2,
             "ramp_info": null
@@ -4250,6 +4281,7 @@
                 }
             ],
             "vault": 0,
+            "ramp_dir": null,
             "type": null,
             "story": -2,
             "ramp_info": null
@@ -4281,6 +4313,7 @@
                 }
             ],
             "vault": 0,
+            "ramp_dir": null,
             "type": null,
             "story": -2,
             "ramp_info": null
@@ -4312,6 +4345,7 @@
                 }
             ],
             "vault": 0,
+            "ramp_dir": null,
             "type": null,
             "story": -2,
             "ramp_info": null
@@ -4343,6 +4377,7 @@
                 }
             ],
             "vault": 0,
+            "ramp_dir": null,
             "type": null,
             "story": -2,
             "ramp_info": null
@@ -4374,6 +4409,7 @@
                 }
             ],
             "vault": 0,
+            "ramp_dir": null,
             "type": null,
             "story": -2,
             "ramp_info": null
@@ -4405,6 +4441,7 @@
                 }
             ],
             "vault": 0,
+            "ramp_dir": null,
             "type": null,
             "story": -2,
             "ramp_info": null
@@ -4436,6 +4473,7 @@
                 }
             ],
             "vault": 0,
+            "ramp_dir": null,
             "type": null,
             "story": -2,
             "ramp_info": null
@@ -4467,6 +4505,7 @@
                 }
             ],
             "vault": 0,
+            "ramp_dir": null,
             "type": null,
             "story": -2,
             "ramp_info": null
@@ -4498,6 +4537,7 @@
                 }
             ],
             "vault": 0,
+            "ramp_dir": null,
             "type": null,
             "story": -2,
             "ramp_info": null
@@ -4529,6 +4569,7 @@
                 }
             ],
             "vault": 0,
+            "ramp_dir": null,
             "type": null,
             "story": -2,
             "ramp_info": null
@@ -4560,6 +4601,7 @@
                 }
             ],
             "vault": 0,
+            "ramp_dir": null,
             "type": null,
             "story": -2,
             "ramp_info": null
@@ -4591,6 +4633,7 @@
                 }
             ],
             "vault": 0,
+            "ramp_dir": null,
             "type": null,
             "story": -2,
             "ramp_info": null
@@ -4622,6 +4665,7 @@
                 }
             ],
             "vault": 0,
+            "ramp_dir": null,
             "type": null,
             "story": -2,
             "ramp_info": null
@@ -4653,6 +4697,7 @@
                 }
             ],
             "vault": 0,
+            "ramp_dir": null,
             "type": null,
             "story": -2,
             "ramp_info": null
@@ -4684,6 +4729,7 @@
                 }
             ],
             "vault": 0,
+            "ramp_dir": "east",
             "type": "ramp",
             "story": -2,
             "ramp_info": null
@@ -4715,6 +4761,7 @@
                 }
             ],
             "vault": 0,
+            "ramp_dir": null,
             "type": null,
             "story": -2,
             "ramp_info": null
@@ -4746,6 +4793,7 @@
                 }
             ],
             "vault": 0,
+            "ramp_dir": null,
             "type": null,
             "story": -3,
             "ramp_info": null
@@ -4777,6 +4825,7 @@
                 }
             ],
             "vault": 0,
+            "ramp_dir": "north",
             "type": "ramp",
             "story": -3,
             "ramp_info": null
@@ -4808,6 +4857,7 @@
                 }
             ],
             "vault": 0,
+            "ramp_dir": null,
             "type": null,
             "story": -3,
             "ramp_info": null
@@ -4839,6 +4889,7 @@
                 }
             ],
             "vault": 0,
+            "ramp_dir": null,
             "type": null,
             "story": -2,
             "ramp_info": null
@@ -4870,6 +4921,7 @@
                 }
             ],
             "vault": 0,
+            "ramp_dir": null,
             "type": null,
             "story": -2,
             "ramp_info": null
@@ -4901,6 +4953,7 @@
                 }
             ],
             "vault": 0,
+            "ramp_dir": null,
             "type": null,
             "story": -2,
             "ramp_info": null
@@ -4914,7 +4967,8 @@
                 "x": 1,
                 "y": 0
             },
-            "type": 3
+            "type": 3,
+            "story": 0
         },
         {
             "x": 3,
@@ -4923,7 +4977,8 @@
                 "x": 0,
                 "y": 1
             },
-            "type": 1
+            "type": 1,
+            "story": 0
         },
         {
             "x": 3,
@@ -4932,7 +4987,8 @@
                 "x": 0,
                 "y": 1
             },
-            "type": 0
+            "type": 0,
+            "story": -1
         },
         {
             "x": 2,
@@ -4941,7 +4997,8 @@
                 "x": -1,
                 "y": 0
             },
-            "type": 1
+            "type": 1,
+            "story": -1
         },
         {
             "x": 0,
@@ -4950,7 +5007,8 @@
                 "x": 0,
                 "y": 1
             },
-            "type": 9
+            "type": 9,
+            "story": -1
         },
         {
             "x": 0,
@@ -4959,7 +5017,8 @@
                 "x": 0,
                 "y": 1
             },
-            "type": 1
+            "type": 1,
+            "story": -2
         },
         {
             "x": -2,
@@ -4968,7 +5027,8 @@
                 "x": -1,
                 "y": 0
             },
-            "type": 0
+            "type": 0,
+            "story": -2
         },
         {
             "x": -3,
@@ -4977,7 +5037,8 @@
                 "x": 0,
                 "y": 1
             },
-            "type": 1
+            "type": 1,
+            "story": -2
         },
         {
             "x": 0,
@@ -4986,7 +5047,8 @@
                 "x": 1,
                 "y": 0
             },
-            "type": 1
+            "type": 1,
+            "story": -2
         },
         {
             "x": -2,
@@ -4995,7 +5057,8 @@
                 "x": 0,
                 "y": 1
             },
-            "type": 1
+            "type": 1,
+            "story": -2
         },
         {
             "x": 1,
@@ -5004,7 +5067,8 @@
                 "x": 0,
                 "y": -1
             },
-            "type": 0
+            "type": 0,
+            "story": -2
         },
         {
             "x": -1,
@@ -5013,7 +5077,8 @@
                 "x": 1,
                 "y": 0
             },
-            "type": 0
+            "type": 0,
+            "story": -2
         },
         {
             "x": -2,
@@ -5022,7 +5087,8 @@
                 "x": 0,
                 "y": 1
             },
-            "type": 0
+            "type": 0,
+            "story": -2
         },
         {
             "x": 2,
@@ -5031,7 +5097,8 @@
                 "x": 1,
                 "y": 0
             },
-            "type": 0
+            "type": 0,
+            "story": -2
         },
         {
             "x": 2,
@@ -5040,7 +5107,8 @@
                 "x": 1,
                 "y": 0
             },
-            "type": 1
+            "type": 1,
+            "story": -2
         },
         {
             "x": -3,
@@ -5049,7 +5117,8 @@
                 "x": -1,
                 "y": 0
             },
-            "type": 2
+            "type": 2,
+            "story": -2
         },
         {
             "x": 3,
@@ -5058,7 +5127,8 @@
                 "x": 0,
                 "y": 1
             },
-            "type": 0
+            "type": 0,
+            "story": -2
         },
         {
             "x": 4,
@@ -5067,7 +5137,8 @@
                 "x": 0,
                 "y": -1
             },
-            "type": 0
+            "type": 0,
+            "story": -2
         },
         {
             "x": 6,
@@ -5076,7 +5147,8 @@
                 "x": 1,
                 "y": 0
             },
-            "type": 6
+            "type": 6,
+            "story": -2
         },
         {
             "x": 3,
@@ -5085,7 +5157,8 @@
                 "x": 0,
                 "y": -1
             },
-            "type": 0
+            "type": 0,
+            "story": -2
         },
         {
             "x": 6,
@@ -5094,7 +5167,8 @@
                 "x": 1,
                 "y": 0
             },
-            "type": 0
+            "type": 0,
+            "story": -2
         },
         {
             "x": -5,
@@ -5103,7 +5177,8 @@
                 "x": 0,
                 "y": -1
             },
-            "type": 0
+            "type": 0,
+            "story": -2
         },
         {
             "x": 4,
@@ -5112,7 +5187,8 @@
                 "x": 0,
                 "y": -1
             },
-            "type": 0
+            "type": 0,
+            "story": -3
         },
         {
             "x": 7,
@@ -5121,7 +5197,8 @@
                 "x": 0,
                 "y": 1
             },
-            "type": 5
+            "type": 5,
+            "story": -3
         },
         {
             "x": 5,
@@ -5130,7 +5207,8 @@
                 "x": 1,
                 "y": 0
             },
-            "type": 6
+            "type": 6,
+            "story": -3
         },
         {
             "x": 3,
@@ -5139,7 +5217,8 @@
                 "x": 0,
                 "y": 1
             },
-            "type": 0
+            "type": 0,
+            "story": -2
         },
         {
             "x": 1,
@@ -5148,7 +5227,8 @@
                 "x": 0,
                 "y": 1
             },
-            "type": 2
+            "type": 2,
+            "story": -2
         },
         {
             "x": -5,
@@ -5157,7 +5237,8 @@
                 "x": 0,
                 "y": 1
             },
-            "type": 0
+            "type": 0,
+            "story": -2
         }
     ],
     "notes": [

@@ -13,8 +13,10 @@ def create_materials():
     wall_material = bpy.data.materials.new(name="WallMaterial")
     return floor_material, wall_material
 
-def create_floor(x, y, w, h, floor_material):
-    bpy.ops.mesh.primitive_plane_add(size=1, enter_editmode=False, align='WORLD', location=(x + w/2, y + h/2, 0))
+def create_floor(x, y, w, h, floor_material, story=0):
+    """Create a floor and adjust its Z-position based on the story."""
+    z_offset = -abs(story)  # Move down based on the story
+    bpy.ops.mesh.primitive_plane_add(size=1, enter_editmode=False, align='WORLD', location=(x + w / 2, y + h / 2, z_offset))
     plane = bpy.context.active_object
     plane.scale[0] = w
     plane.scale[1] = h
@@ -23,7 +25,78 @@ def create_floor(x, y, w, h, floor_material):
     plane.data.materials.append(floor_material)
     return plane
 
-def create_circle_quadrant(x, y, radius, collection, quadrant=1, floor_material=None, wall_material=None, levels=1):
+def create_ramp(rect, collection, ramp_material):
+    """
+    Create a sloped ramp as a room.
+    Adjust the vertices of the ramp to slope in the specified direction.
+    """
+    x, y, w, h, story = rect['x'], rect['y'], rect['w'], rect['h'], rect['story']
+    direction = rect.get('ramp_dir', 'north')  # Default to north if no direction is specified
+    slope_height = 1  # Height difference between stories (1 Blender unit per story)
+
+    # Adjust vertices based on the direction
+    if direction == 'north':
+        verts = [
+            (x, y, -abs(story)),                         # Bottom-left
+            (x + w, y, -abs(story)),                     # Bottom-right
+            (x + w, y + h, -abs(story + 1)),             # Top-right (lower story)
+            (x, y + h, -abs(story + 1))                  # Top-left (lower story)
+        ]
+    elif direction == 'south':
+        verts = [
+            (x, y, -abs(story + 1)),                     # Bottom-left (lower story)
+            (x + w, y, -abs(story + 1)),                 # Bottom-right (lower story)
+            (x + w, y + h, -abs(story)),                 # Top-right
+            (x, y + h, -abs(story))                      # Top-left
+        ]
+    elif direction == 'east':
+        verts = [
+            (x, y, -abs(story)),                         # Bottom-left
+            (x + w, y, -abs(story + 1)),                 # Bottom-right (lower story)
+            (x + w, y + h, -abs(story + 1)),             # Top-right (lower story)
+            (x, y + h, -abs(story))                      # Top-left
+        ]
+    elif direction == 'west':
+        verts = [
+            (x, y, -abs(story + 1)),                     # Bottom-left (lower story)
+            (x + w, y, -abs(story)),                     # Bottom-right
+            (x + w, y + h, -abs(story)),                 # Top-right
+            (x, y + h, -abs(story + 1))                  # Top-left (lower story)
+        ]
+    else:
+        raise ValueError(f"Invalid ramp direction: {direction}")
+
+    # Create the mesh and object
+    mesh = bpy.data.meshes.new("Ramp")
+    ramp_obj = bpy.data.objects.new("Ramp", mesh)
+    collection.objects.link(ramp_obj)
+
+    # Define faces and create the mesh
+    faces = [(0, 1, 2, 3)]
+    mesh.from_pydata(verts, [], faces)
+    mesh.update()
+
+    # Apply material and UVs
+    add_uvs(ramp_obj, w, h)
+    if ramp_material:
+        ramp_obj.data.materials.append(ramp_material)
+
+    return ramp_obj
+
+def create_circle_quadrant(x, y, radius, collection, quadrant=1, floor_material=None, wall_material=None, levels=1, story=0):
+    """
+    Create a circular quadrant floor with optional walls.
+
+    Parameters:
+    - x, y: Bottom-left position.
+    - radius: Radius of the quadrant.
+    - collection: Blender collection to link the object.
+    - quadrant: Quadrant number (1-4).
+    - floor_material: Material for the floor.
+    - wall_material: Material for the walls.
+    - levels: Number of vertical levels for walls.
+    - story: The story (floor level) of the quadrant.
+    """
     segment_length = 1.0
     arc_length = (math.pi / 2) * radius
     segments = max(1, int(arc_length / segment_length))
@@ -32,13 +105,17 @@ def create_circle_quadrant(x, y, radius, collection, quadrant=1, floor_material=
     angle_start = (quadrant - 1) * angle_offset
     angle_end = quadrant * angle_offset
 
+    # Adjust Z-offset based on story
+    z_offset = -abs(story)
+
+    # Create the floor of the quadrant
     mesh = bpy.data.meshes.new("CircleQuadrant")
     obj = bpy.data.objects.new("CircleQuadrant", mesh)
     collection.objects.link(obj)
 
-    verts = [(x, y, 0)]
+    verts = [(x, y, z_offset)]
     verts += [(x + math.cos(angle_start + angle_offset * i / segments) * radius, 
-               y + math.sin(angle_start + angle_offset * i / segments) * radius, 0) 
+               y + math.sin(angle_start + angle_offset * i / segments) * radius, z_offset) 
               for i in range(segments + 1)]
     edges = []
     faces = [tuple(range(len(verts)))]
@@ -50,28 +127,42 @@ def create_circle_quadrant(x, y, radius, collection, quadrant=1, floor_material=
     if floor_material:
         obj.data.materials.append(floor_material)
 
+    # Create the walls for the quadrant
     walls = []
     for i in range(1, len(verts) - 1):
         start_vert = verts[i]
         end_vert = verts[i + 1]
-        walls.extend(create_vertical_face(start_vert, end_vert, collection, wall_material, levels))
+        walls.extend(create_vertical_face(start_vert, end_vert, collection, wall_material, levels, story))
 
     return obj, walls
 
+def create_vertical_face(start_vert, end_vert, collection, wall_material=None, levels=1, story=0):
+    """
+    Creates vertical faces (walls) with height adjustment based on story and levels.
 
+    Parameters:
+    - start_vert: Starting vertex of the wall.
+    - end_vert: Ending vertex of the wall.
+    - collection: The Blender collection to link the wall objects to.
+    - wall_material: Material to apply to the walls.
+    - levels: Number of vertical levels to create (default = 1).
+    - story: The story (floor level) of the walls, used to adjust Z-position.
 
-def create_vertical_face(start_vert, end_vert, collection, wall_material=None, levels=1):
+    Returns:
+    - walls: A list of created wall objects.
+    """
     walls = []
     width = math.sqrt((end_vert[0] - start_vert[0]) ** 2 + (end_vert[1] - start_vert[1]) ** 2)
-    height = 0.5
+    height = 0.5  # Base height for UV scaling
 
     for level in range(levels + 1):
-        z_offset = level
+        z_offset = -abs(story) + level  # Adjust Z-position based on story and level
         
-        mesh = bpy.data.meshes.new(f"Wall_Level_{level}")
-        obj = bpy.data.objects.new(f"Wall_Level_{level}", mesh)
+        mesh = bpy.data.meshes.new(f"Wall_Level_{level}_Story_{story}")
+        obj = bpy.data.objects.new(f"Wall_Level_{level}_Story_{story}", mesh)
         collection.objects.link(obj)
 
+        # Define vertices for the wall
         verts = [
             (start_vert[0], start_vert[1], z_offset),
             (end_vert[0], end_vert[1], z_offset),
@@ -81,36 +172,68 @@ def create_vertical_face(start_vert, end_vert, collection, wall_material=None, l
         edges = []
         faces = [(0, 1, 2, 3)]
 
+        # Create the wall mesh
         mesh.from_pydata(verts, edges, faces)
         mesh.update()
 
+        # Add UV mapping for the wall
         add_rotunda_uvs(obj, width, height)
+
+        # Assign the material to the wall
         if wall_material:
             obj.data.materials.append(wall_material)
         
+        # Append the wall object to the list
         walls.append(obj)
 
     return walls
 
 
 def create_rotunda_quadrants(rect, collection, floor_material=None, wall_material=None):
+    """
+    Create a rotunda with circular quadrant floors and walls.
+
+    Parameters:
+    - rect: Rect dictionary containing position (x, y), size (w, h), and story.
+    - collection: Blender collection to link objects.
+    - floor_material: Material for floors.
+    - wall_material: Material for walls.
+    """
     x, y, w, h = rect['x'], rect['y'], rect['w'], rect['h']
     radius = (min(w, h) - 1) / 2
     offset = h / 2 - 0.5
+    story = rect.get('story', 0)
+    levels = rect.get('ceiling', 1)  # Default to 1 level if not specified
 
     objs = []
     walls = []
-    levels = rect.get('ceiling', 1)  # default to 1 if ceiling is not specified
-    obj, quadrant_walls = create_circle_quadrant(x + w - offset, y + h - offset, radius, collection, quadrant=1, floor_material=floor_material, wall_material=wall_material, levels=levels)
+
+    # Create the quadrants
+    obj, quadrant_walls = create_circle_quadrant(
+        x + w - offset, y + h - offset, radius, collection, quadrant=1, 
+        floor_material=floor_material, wall_material=wall_material, levels=levels, story=story
+    )
     objs.append(obj)
     walls.extend(quadrant_walls)
-    obj, quadrant_walls = create_circle_quadrant(x + offset, y + h - offset, radius, collection, quadrant=2, floor_material=floor_material, wall_material=wall_material, levels=levels)
+
+    obj, quadrant_walls = create_circle_quadrant(
+        x + offset, y + h - offset, radius, collection, quadrant=2, 
+        floor_material=floor_material, wall_material=wall_material, levels=levels, story=story
+    )
     objs.append(obj)
     walls.extend(quadrant_walls)
-    obj, quadrant_walls = create_circle_quadrant(x + offset, y + offset, radius, collection, quadrant=3, floor_material=floor_material, wall_material=wall_material, levels=levels)
+
+    obj, quadrant_walls = create_circle_quadrant(
+        x + offset, y + offset, radius, collection, quadrant=3, 
+        floor_material=floor_material, wall_material=wall_material, levels=levels, story=story
+    )
     objs.append(obj)
     walls.extend(quadrant_walls)
-    obj, quadrant_walls = create_circle_quadrant(x + w - offset, y + offset, radius, collection, quadrant=4, floor_material=floor_material, wall_material=wall_material, levels=levels)
+
+    obj, quadrant_walls = create_circle_quadrant(
+        x + w - offset, y + offset, radius, collection, quadrant=4, 
+        floor_material=floor_material, wall_material=wall_material, levels=levels, story=story
+    )
     objs.append(obj)
     walls.extend(quadrant_walls)
 
@@ -139,20 +262,42 @@ def add_rotunda_uvs(obj, width, height):
             uv[0] = uv[0] * width
             uv[1] = uv[1] / height * 0.5
 
-def create_rotunda_plus(x, y, w, h, floor_material):
+def create_rotunda_plus(x, y, w, h, floor_material, story=0):
+    """
+    Creates a plus-shaped floor layout for the rotunda, adjusting for the story level.
+
+    Parameters:
+    - x, y: Bottom-left position of the rotunda.
+    - w, h: Width and height of the rotunda.
+    - floor_material: Material to apply to the floor.
+    - story: The story (floor level) of the rotunda.
+    """
     objs = []
     center_x = x + w / 2
     center_y = y + h / 2
+    z_offset = -abs(story)  # Adjust Z-position for the story
 
+    # Create horizontal arms of the plus
     for i in range(w):
-        bpy.ops.mesh.primitive_plane_add(size=1, enter_editmode=False, align='WORLD', location=(x + i + 0.5, center_y, 0))
+        bpy.ops.mesh.primitive_plane_add(
+            size=1, 
+            enter_editmode=False, 
+            align='WORLD', 
+            location=(x + i + 0.5, center_y, z_offset)
+        )
         plane = bpy.context.active_object
         objs.append(plane)
         add_uvs(plane, 1, 1)
         plane.data.materials.append(floor_material)
-    
+
+    # Create vertical arms of the plus
     for j in range(h):
-        bpy.ops.mesh.primitive_plane_add(size=1, enter_editmode=False, align='WORLD', location=(center_x, y + j + 0.5, 0))
+        bpy.ops.mesh.primitive_plane_add(
+            size=1, 
+            enter_editmode=False, 
+            align='WORLD', 
+            location=(center_x, y + j + 0.5, z_offset)
+        )
         plane = bpy.context.active_object
         objs.append(plane)
         add_uvs(plane, 1, 1)
@@ -160,9 +305,10 @@ def create_rotunda_plus(x, y, w, h, floor_material):
 
     return objs
 
-def create_wall(x, y, dir_x, dir_y, rect_x, rect_y, rect_w, rect_h, wall_material, level=0):
-    wall = None
-    height_offset = level  # Each level is 1 unit above the previous
+
+def create_wall(x, y, dir_x, dir_y, rect_x, rect_y, rect_w, rect_h, wall_material, story=0, level=0):
+    """Create a wall and adjust its height based on the room's story."""
+    height_offset = -abs(story) + level  # Each level is 1 unit above the previous
     if dir_x == 1 and dir_y == 0:  # West-facing wall
         bpy.ops.mesh.primitive_plane_add(size=1, location=(x + 0.5, y, 0.5 + height_offset))
         wall = bpy.context.active_object
@@ -189,30 +335,45 @@ def create_wall(x, y, dir_x, dir_y, rect_x, rect_y, rect_w, rect_h, wall_materia
     wall.data.materials.append(wall_material)
     return wall
 
-def create_doorway(x, y, dir_x, dir_y, collection, wall_material):
-    # Create a doorway wall with a rectangular hole
+def create_doorway(x, y, dir_x, dir_y, collection, wall_material, story=0):
+    """
+    Create a doorway wall with a rectangular hole, adjusted for the story level.
+
+    Parameters:
+    - x, y: Position of the doorway.
+    - dir_x, dir_y: Direction of the wall the doorway is part of.
+    - collection: Blender collection to add the doorway object.
+    - wall_material: Material to apply to the doorway.
+    - story: The story (floor level) of the doorway, used to adjust the Z offset.
+    """
     thickness = 0.2
     door_width = 0.48
     door_height = 0.9
+    z_offset = -abs(story)  # Adjust vertical position based on story
 
-    if dir_x != 0:
-        # Vertical wall
-        bpy.ops.mesh.primitive_cube_add(size=1, enter_editmode=False, align='WORLD', location=(x + 0.5, y + 0.5, 0.5))
+    # Create the doorway wall
+    if dir_x != 0:  # Vertical wall
+        bpy.ops.mesh.primitive_cube_add(
+            size=1, enter_editmode=False, align='WORLD', location=(x + 0.5, y + 0.5, 0.5 + z_offset)
+        )
         doorway = bpy.context.active_object
         doorway.scale = (thickness, 1, 1)
-    elif dir_y != 0:
-        # Horizontal wall
-        bpy.ops.mesh.primitive_cube_add(size=1, enter_editmode=False, align='WORLD', location=(x + 0.5, y + 0.5, 0.5))
+    elif dir_y != 0:  # Horizontal wall
+        bpy.ops.mesh.primitive_cube_add(
+            size=1, enter_editmode=False, align='WORLD', location=(x + 0.5, y + 0.5, 0.5 + z_offset)
+        )
         doorway = bpy.context.active_object
         doorway.scale = (1, thickness, 1)
 
     # Create the hole
-    bpy.ops.mesh.primitive_cube_add(size=1, enter_editmode=False, align='WORLD', location=(x + 0.5, y + 0.5, 0.45))
+    bpy.ops.mesh.primitive_cube_add(
+        size=1, enter_editmode=False, align='WORLD', location=(x + 0.5, y + 0.5, 0.45 + z_offset)
+    )
     hole = bpy.context.active_object
     hole.scale = (door_width, door_width, door_height)
     collection.objects.link(hole)
 
-    # Apply the boolean modifier
+    # Apply the boolean modifier to create the hole
     bpy.context.view_layer.objects.active = doorway
     bpy.ops.object.modifier_add(type='BOOLEAN')
     bpy.context.object.modifiers["Boolean"].operation = 'DIFFERENCE'
@@ -220,7 +381,7 @@ def create_doorway(x, y, dir_x, dir_y, collection, wall_material):
     bpy.ops.object.modifier_apply(modifier="Boolean")
     bpy.data.objects.remove(hole)
 
-    # Manually set UVs for the doorway
+    # Add UV mapping for the doorway
     bpy.context.view_layer.objects.active = doorway
     bpy.ops.object.mode_set(mode='EDIT')
     bpy.ops.mesh.select_all(action='SELECT')
@@ -231,39 +392,41 @@ def create_doorway(x, y, dir_x, dir_y, collection, wall_material):
 
     for poly in doorway.data.polygons:
         normal = poly.normal
-        # Reset UVs for each polygon before setting new UVs
-        for loop_index in poly.loop_indices:
-            uv = uv_layer[loop_index].uv
-
-        # Now set the UVs based on orientation and adjust for thickness
         for loop_index in poly.loop_indices:
             uv = uv_layer[loop_index].uv
             vertex = doorway.data.vertices[doorway.data.loops[loop_index].vertex_index].co
 
+            # Set UVs based on orientation and adjust for thickness
             if dir_x != 0:  # Vertical wall
-                if abs(normal.z) > 0.99:
+                if abs(normal.z) > 0.99:  # Top or bottom face
                     uv[1] = (vertex.y - 0.5)
                     uv[0] = vertex.x / 4
-                elif abs(normal.y) > 0.99:  # Faces on the thickness axis
-                    uv[1] = (vertex.z - 0.5)
+                elif abs(normal.y) > 0.99:  # Side faces
+                    uv[1] = (vertex.z - z_offset - 0.5)
                     uv[0] = vertex.x / 4
                 else:  # Other faces
-                    uv[0] = vertex.y  # Width along the Y-axis
-                    uv[1] = vertex.z # Height along the Z-axis (/ 0.5 for 64x32 texture)
-            if dir_y != 0:  # Horizontal wall
-                if abs(normal.z) > 0.99:
+                    uv[0] = vertex.y
+                    uv[1] = vertex.z - z_offset
+            elif dir_y != 0:  # Horizontal wall
+                if abs(normal.z) > 0.99:  # Top or bottom face
                     uv[1] = (vertex.x - 0.5)
                     uv[0] = vertex.y / 4
-                elif abs(normal.x) > 0.99:  # Faces on the thickness axis
-                    uv[1] = (vertex.z - 0.5)
+                elif abs(normal.x) > 0.99:  # Side faces
+                    uv[1] = (vertex.z - z_offset - 0.5)
                     uv[0] = vertex.y / 4
                 else:  # Other faces
-                    uv[0] = vertex.x  # Width along the X-axis
-                    uv[1] = vertex.z  # Height along the Z-axis (/ 0.5 for 64x32 texture)
+                    uv[0] = vertex.x
+                    uv[1] = vertex.z - z_offset
 
-    doorway.data.materials.append(wall_material)
+    # Apply wall material
+    if wall_material:
+        doorway.data.materials.append(wall_material)
+
+    # Link the doorway to the collection
     collection.objects.link(doorway)
+
     return doorway
+
 
 
 def flip_wall_normals(wall):
@@ -341,7 +504,7 @@ def add_uvs_pyramid(obj, base_width, base_height, vaulted_height, texture_unit_s
                 uv[0] = vertex.x / texture_unit_size
                 uv[1] = vertex.y / texture_unit_size
 
-def create_truncated_pyramid_ceiling(x, y, w, h, room_ceiling_height, ceiling_material, top_scale=0.5, vaulted_ceiling_height=0.5):
+def create_truncated_pyramid_ceiling(x, y, w, h, room_ceiling_height, ceiling_material, top_scale=0.5, vaulted_ceiling_height=0.5, story=0):
     """
     Creates a truncated pyramid ceiling with a fixed height to minimize texture stretching.
     
@@ -352,10 +515,14 @@ def create_truncated_pyramid_ceiling(x, y, w, h, room_ceiling_height, ceiling_ma
     - ceiling_material: Material to apply to the pyramid.
     - top_scale: Ratio of the top's width/height to the base's width/height (default = 0.5).
     - vaulted_ceiling_height: Fixed height for all vaulted ceilings (default = 0.5).
+    - story: The story (floor level) of the room, used to adjust the Z offset.
     """
-    # Adjust vaulted_ceiling_height if either x or y is 1
+    # Adjust vaulted_ceiling_height if either w or h is 1
     if w == 1 or h == 1:
         vaulted_ceiling_height = 0.25
+
+    # Calculate Z-offset based on story
+    z_offset = -abs(story)
 
     # Create a new mesh and object for the ceiling
     mesh = bpy.data.meshes.new("TruncatedPyramidCeiling")
@@ -364,18 +531,18 @@ def create_truncated_pyramid_ceiling(x, y, w, h, room_ceiling_height, ceiling_ma
     
     # Base vertices (matching room's dimensions)
     base_verts = [
-        (x, y, room_ceiling_height),               # Bottom-left
-        (x + w, y, room_ceiling_height),           # Bottom-right
-        (x + w, y + h, room_ceiling_height),       # Top-right
-        (x, y + h, room_ceiling_height)            # Top-left
+        (x, y, room_ceiling_height + z_offset),               # Bottom-left
+        (x + w, y, room_ceiling_height + z_offset),           # Bottom-right
+        (x + w, y + h, room_ceiling_height + z_offset),       # Top-right
+        (x, y + h, room_ceiling_height + z_offset)            # Top-left
     ]
     
     # Top vertices (scaled down from base, fixed height for the top)
     top_verts = [
-        (x + w * (1 - top_scale) / 2, y + h * (1 - top_scale) / 2, room_ceiling_height + vaulted_ceiling_height),  # Bottom-left
-        (x + w * (1 + top_scale) / 2, y + h * (1 - top_scale) / 2, room_ceiling_height + vaulted_ceiling_height),  # Bottom-right
-        (x + w * (1 + top_scale) / 2, y + h * (1 + top_scale) / 2, room_ceiling_height + vaulted_ceiling_height),  # Top-right
-        (x + w * (1 - top_scale) / 2, y + h * (1 + top_scale) / 2, room_ceiling_height + vaulted_ceiling_height)   # Top-left
+        (x + w * (1 - top_scale) / 2, y + h * (1 - top_scale) / 2, room_ceiling_height + vaulted_ceiling_height + z_offset),  # Bottom-left
+        (x + w * (1 + top_scale) / 2, y + h * (1 - top_scale) / 2, room_ceiling_height + vaulted_ceiling_height + z_offset),  # Bottom-right
+        (x + w * (1 + top_scale) / 2, y + h * (1 + top_scale) / 2, room_ceiling_height + vaulted_ceiling_height + z_offset),  # Top-right
+        (x + w * (1 - top_scale) / 2, y + h * (1 + top_scale) / 2, room_ceiling_height + vaulted_ceiling_height + z_offset)   # Top-left
     ]
     
     # Combine vertices
@@ -410,8 +577,10 @@ def flip_normals(obj):
     bpy.ops.mesh.flip_normals()
     bpy.ops.object.mode_set(mode='OBJECT')
 
-def create_ceiling(x, y, w, h, ceiling_height, ceiling_material):
-    bpy.ops.mesh.primitive_plane_add(size=1, enter_editmode=False, align='WORLD', location=(x + w/2, y + h/2, ceiling_height))
+def create_ceiling(x, y, w, h, ceiling_height, ceiling_material, story=0):
+    """Create a ceiling and adjust its Z-position based on the story."""
+    z_offset = -abs(story) + ceiling_height
+    bpy.ops.mesh.primitive_plane_add(size=1, enter_editmode=False, align='WORLD', location=(x + w / 2, y + h / 2, z_offset))
     plane = bpy.context.active_object
     plane.scale[0] = w
     plane.scale[1] = h
@@ -420,13 +589,6 @@ def create_ceiling(x, y, w, h, ceiling_height, ceiling_material):
     plane.data.materials.append(ceiling_material)
     flip_normals(plane)
     return plane
-
-def add_ceiling_to_room(rect, collection, ceiling_material):
-    x, y, w, h, ceiling = rect['x'], rect['y'], rect['w'], rect['h'], rect.get('ceiling', 1)
-    ceiling_height = ceiling + 1
-    pyramid_ceiling = create_truncated_pyramid_ceiling(x, y, w, h, ceiling_height, ceiling_material)
-    collection.objects.link(pyramid_ceiling)
-    return pyramid_ceiling
 
 def create_circle_quadrant_ceiling(x, y, radius, collection, quadrant=1, ceiling_material=None, ceiling_height=1):
     segment_length = 1.0
@@ -656,66 +818,71 @@ def create_rotunda_plus_ceiling(x, y, w, h, ceiling_material, ceiling_height):
 
     return objs
 
-def add_rotunda_ceiling(rect, collection, ceiling_material):
+def add_rotunda_ceiling(rect, collection, ceiling_material, story):
     """
     Adds a rotunda ceiling consisting of truncated circle quadrant ceilings and a central plus ceiling.
 
     Parameters:
-    - rect: The dictionary containing room parameters (x, y, w, h, ceiling).
+    - rect: The dictionary containing room parameters (x, y, w, h, ceiling, story).
     - collection: The Blender collection to which the ceiling objects will be linked.
     - ceiling_material: The material to be applied to the ceiling.
     """
-    x, y, w, h, ceiling = rect['x'], rect['y'], rect['w'], rect['h'], rect.get('ceiling', 1)
-    room_ceiling_height = ceiling + 1  # Adjust height to start at the top of the walls
+    x, y, w, h = rect['x'], rect['y'], rect['w'], rect['h']
+    ceiling = rect.get('ceiling', 1)
+    story = rect.get('story', 0)
+    z_offset = -abs(story)  # Adjust Z-offset based on story
+
+    room_ceiling_height = ceiling + z_offset + 1  # Adjust height to account for story
     fixed_height = 0.5
 
     objs = []
     # Create truncated pyramid ceilings for circle quadrants
     radius = (min(w, h) - 1) / 2
+
     obj = create_truncated_circle_quadrant_ceiling(
-        x + w - (h / 2 - 0.5), 
-        y + h - (h / 2 - 0.5), 
-        radius, 
-        collection, 
-        quadrant=1, 
-        ceiling_material=ceiling_material, 
-        room_ceiling_height=room_ceiling_height, 
+        x + w - (h / 2 - 0.5),
+        y + h - (h / 2 - 0.5),
+        radius,
+        collection,
+        quadrant=1,
+        ceiling_material=ceiling_material,
+        room_ceiling_height=room_ceiling_height,
         fixed_height=fixed_height
     )
     objs.append(obj)
 
     obj = create_truncated_circle_quadrant_ceiling(
-        x + (h / 2 - 0.5), 
-        y + h - (h / 2 - 0.5), 
-        radius, 
-        collection, 
-        quadrant=2, 
-        ceiling_material=ceiling_material, 
-        room_ceiling_height=room_ceiling_height, 
+        x + (h / 2 - 0.5),
+        y + h - (h / 2 - 0.5),
+        radius,
+        collection,
+        quadrant=2,
+        ceiling_material=ceiling_material,
+        room_ceiling_height=room_ceiling_height,
         fixed_height=fixed_height
     )
     objs.append(obj)
 
     obj = create_truncated_circle_quadrant_ceiling(
-        x + (h / 2 - 0.5), 
-        y + (h / 2 - 0.5), 
-        radius, 
-        collection, 
-        quadrant=3, 
-        ceiling_material=ceiling_material, 
-        room_ceiling_height=room_ceiling_height, 
+        x + (h / 2 - 0.5),
+        y + (h / 2 - 0.5),
+        radius,
+        collection,
+        quadrant=3,
+        ceiling_material=ceiling_material,
+        room_ceiling_height=room_ceiling_height,
         fixed_height=fixed_height
     )
     objs.append(obj)
 
     obj = create_truncated_circle_quadrant_ceiling(
-        x + w - (h / 2 - 0.5), 
-        y + (h / 2 - 0.5), 
-        radius, 
-        collection, 
-        quadrant=4, 
-        ceiling_material=ceiling_material, 
-        room_ceiling_height=room_ceiling_height, 
+        x + w - (h / 2 - 0.5),
+        y + (h / 2 - 0.5),
+        radius,
+        collection,
+        quadrant=4,
+        ceiling_material=ceiling_material,
+        room_ceiling_height=room_ceiling_height,
         fixed_height=fixed_height
     )
     objs.append(obj)
@@ -758,21 +925,49 @@ def process_json_file(json_file):
     for rect in data['rects']:
         objects_to_merge = []
 
+        # Get the story value (default to 0 if not provided)
+        story = rect.get('story', 0)
+
         if 'rotunda' in rect and rect['rotunda']:
-            quadrant_objs, quadrant_walls = create_rotunda_quadrants(rect, collection, floor_material=floor_material, wall_material=wall_material)
+            quadrant_objs, quadrant_walls = create_rotunda_quadrants(
+                rect, collection, floor_material=floor_material, wall_material=wall_material
+            )
             objects_to_merge.extend(quadrant_objs)
             objects_to_merge.extend(quadrant_walls)
-            objects_to_merge.extend(create_rotunda_plus(rect['x'], rect['y'], rect['w'], rect['h'], floor_material=floor_material))
+            objects_to_merge.extend(
+                create_rotunda_plus(rect['x'], rect['y'], rect['w'], rect['h'], floor_material=floor_material, story=story)
+            )
 
             rect['walls'] = keep_cardinal_walls(rect)
             if 'walls' in rect:
                 for wall in rect['walls']:
-                    objects_to_merge.append(create_wall(wall['x'], wall['y'], wall['dir']['x'], wall['dir']['y'], rect['x'], rect['y'], rect['w'], rect['h'], wall_material=wall_material, level=wall['level']))
+                    objects_to_merge.append(
+                        create_wall(
+                            wall['x'], wall['y'], wall['dir']['x'], wall['dir']['y'],
+                            rect['x'], rect['y'], rect['w'], rect['h'], wall_material=wall_material,
+                            story=story, level=wall['level']
+                        )
+                    )
+
+        # Check if the rect is a ramp
+        elif rect['type'] == 'ramp':
+            ramp_obj = create_ramp(rect, collection, floor_material)  # Create the ramp as a sloped room
+            objects_to_merge.append(ramp_obj)
+
+        # Process as a standard room
         else:
-            objects_to_merge.append(create_floor(rect['x'], rect['y'], rect['w'], rect['h'], floor_material=floor_material))
+            objects_to_merge.append(
+                create_floor(rect['x'], rect['y'], rect['w'], rect['h'], floor_material=floor_material, story=story)
+            )
             if 'walls' in rect:
                 for wall in rect['walls']:
-                    objects_to_merge.append(create_wall(wall['x'], wall['y'], wall['dir']['x'], wall['dir']['y'], rect['x'], rect['y'], rect['w'], rect['h'], wall_material=wall_material, level=wall['level']))
+                    objects_to_merge.append(
+                        create_wall(
+                            wall['x'], wall['y'], wall['dir']['x'], wall['dir']['y'],
+                            rect['x'], rect['y'], rect['w'], rect['h'], wall_material=wall_material,
+                            story=story, level=wall['level']
+                        )
+                    )
 
         if objects_to_merge:
             room_name = f"Room_{rect['x']}_{rect['y']}"
@@ -782,17 +977,21 @@ def process_json_file(json_file):
         # Add ceiling to room
         ceiling_objs = []
         if 'rotunda' in rect and rect['rotunda']:
-            ceiling_objs = add_rotunda_ceiling(rect, collection, ceiling_material)
+            ceiling_objs = add_rotunda_ceiling(rect, collection, ceiling_material, story)
         else:
             # Check the "vault" key to determine the type of ceiling
             if rect.get('vault', 0) == 1:  # Vaulted ceiling
-                ceiling_objs.append(create_truncated_pyramid_ceiling(
-                    rect['x'], rect['y'], rect['w'], rect['h'], rect.get('ceiling', 1) + 1, ceiling_material
-                ))
+                ceiling_objs.append(
+                    create_truncated_pyramid_ceiling(
+                        rect['x'], rect['y'], rect['w'], rect['h'], rect.get('ceiling', 1) + 1, ceiling_material, story=story
+                    )
+                )
             else:  # Standard flat ceiling
-                ceiling_objs.append(create_ceiling(
-                    rect['x'], rect['y'], rect['w'], rect['h'], rect.get('ceiling', 1) + 1, ceiling_material
-                ))
+                ceiling_objs.append(
+                    create_ceiling(
+                        rect['x'], rect['y'], rect['w'], rect['h'], rect.get('ceiling', 1) + 1, ceiling_material, story=story
+                    )
+                )
 
         if room_name and room_name in room_objects:
             room_obj = bpy.data.objects.get(room_objects[room_name])
@@ -804,13 +1003,20 @@ def process_json_file(json_file):
                 bpy.ops.object.join()
                 room_objects[room_name] = bpy.context.view_layer.objects.active.name
 
+    # Handle doors
     for door in data.get('doors', []):
         # Skip doors that don't meet the criteria
         if not (door.get('type') in [1, 2, 4, 6, 7] or (door['x'] == 0 and door['y'] == 0)):
             continue
 
+        # Retrieve the story from the door object
+        door_story = door.get('story', 0)  # Default to 0 if no story is assigned
+
         # Create the doorway if conditions are met
-        doorway = create_doorway(door['x'], door['y'], door['dir']['x'], door['dir']['y'], collection, wall_material)
+        doorway = create_doorway(
+            door['x'], door['y'], door['dir']['x'], door['dir']['y'], collection, wall_material, story=door_story
+        )
+
         room_name = None
         for rect in data['rects']:
             if rect['x'] <= door['x'] < rect['x'] + rect['w'] and rect['y'] <= door['y'] < rect['y'] + rect['h']:
@@ -828,7 +1034,7 @@ def process_json_file(json_file):
 
     output_file_blend = json_file.replace('.json', '.blend')
     output_file_fbx = json_file.replace('.json', '.fbx')
-    #bpy.ops.wm.save_as_mainfile(filepath=output_file_blend)
+    # bpy.ops.wm.save_as_mainfile(filepath=output_file_blend)
     bpy.ops.export_scene.fbx(filepath=output_file_fbx, use_selection=False)
 
 def main():
