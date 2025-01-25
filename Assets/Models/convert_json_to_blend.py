@@ -2,6 +2,8 @@ import bpy
 import json
 import os
 import math
+import mathutils
+
 
 def clear_default_scene():
     bpy.ops.object.select_all(action='DESELECT')
@@ -24,64 +26,6 @@ def create_floor(x, y, w, h, floor_material, story=0):
     add_uvs(plane, 1, 1)
     plane.data.materials.append(floor_material)
     return plane
-
-def create_ramp(rect, collection, ramp_material):
-    """
-    Create a sloped ramp as a room.
-    Adjust the vertices of the ramp to slope in the specified direction.
-    """
-    x, y, w, h, story = rect['x'], rect['y'], rect['w'], rect['h'], rect['story']
-    direction = rect.get('ramp_dir', 'north')  # Default to north if no direction is specified
-    slope_height = 1  # Height difference between stories (1 Blender unit per story)
-
-    # Adjust vertices based on the direction
-    if direction == 'north':
-        verts = [
-            (x, y, -abs(story)),                         # Bottom-left
-            (x + w, y, -abs(story)),                     # Bottom-right
-            (x + w, y + h, -abs(story + 1)),             # Top-right (lower story)
-            (x, y + h, -abs(story + 1))                  # Top-left (lower story)
-        ]
-    elif direction == 'south':
-        verts = [
-            (x, y, -abs(story + 1)),                     # Bottom-left (lower story)
-            (x + w, y, -abs(story + 1)),                 # Bottom-right (lower story)
-            (x + w, y + h, -abs(story)),                 # Top-right
-            (x, y + h, -abs(story))                      # Top-left
-        ]
-    elif direction == 'east':
-        verts = [
-            (x, y, -abs(story)),                         # Bottom-left
-            (x + w, y, -abs(story + 1)),                 # Bottom-right (lower story)
-            (x + w, y + h, -abs(story + 1)),             # Top-right (lower story)
-            (x, y + h, -abs(story))                      # Top-left
-        ]
-    elif direction == 'west':
-        verts = [
-            (x, y, -abs(story + 1)),                     # Bottom-left (lower story)
-            (x + w, y, -abs(story)),                     # Bottom-right
-            (x + w, y + h, -abs(story)),                 # Top-right
-            (x, y + h, -abs(story + 1))                  # Top-left (lower story)
-        ]
-    else:
-        raise ValueError(f"Invalid ramp direction: {direction}")
-
-    # Create the mesh and object
-    mesh = bpy.data.meshes.new("Ramp")
-    ramp_obj = bpy.data.objects.new("Ramp", mesh)
-    collection.objects.link(ramp_obj)
-
-    # Define faces and create the mesh
-    faces = [(0, 1, 2, 3)]
-    mesh.from_pydata(verts, [], faces)
-    mesh.update()
-
-    # Apply material and UVs
-    add_uvs(ramp_obj, w, h)
-    if ramp_material:
-        ramp_obj.data.materials.append(ramp_material)
-
-    return ramp_obj
 
 def create_circle_quadrant(x, y, radius, collection, quadrant=1, floor_material=None, wall_material=None, levels=1, story=0):
     """
@@ -907,12 +851,71 @@ def merge_objects(objs, name):
     objs[0].name = name
     return objs[0]
 
+def apply_ramp_slope(obj, rect):
+    """
+    Apply a slope to the ramp object, adjusting all vertices (floor, walls, ceiling),
+    and ensure the normals face inwards toward the center of the mesh.
+
+    Parameters:
+    - obj: The Blender object representing the ramp room.
+    - rect: The rectangle describing the ramp (x, y, w, h, ramp_dir).
+    """
+    direction = rect.get('ramp_dir', 'north')  # Default to 'north' if not specified
+    slope_amount = 1  # Height difference for the slope (1 Blender unit per story)
+
+    # Access the mesh's vertices
+    bpy.context.view_layer.objects.active = obj
+    bpy.ops.object.mode_set(mode='OBJECT')
+
+    # Apply the slope
+    for vert in obj.data.vertices:
+        # Determine the vertex's position relative to the ramp
+        local_x, local_y = vert.co.x, vert.co.y
+        global_x = obj.location.x + local_x
+        global_y = obj.location.y + local_y
+
+        # Apply slope adjustment based on direction
+        if direction == "north":
+            vert.co.z -= slope_amount * (global_y - rect['y']) / rect['h']
+        elif direction == "south":
+            vert.co.z -= slope_amount * (rect['y'] + rect['h'] - global_y) / rect['h']
+        elif direction == "east":
+            vert.co.z -= slope_amount * (global_x - rect['x']) / rect['w']
+        elif direction == "west":
+            vert.co.z -= slope_amount * (rect['x'] + rect['w'] - global_x) / rect['w']
+
+    # Update the mesh to reflect the vertex changes
+    obj.data.update()
+
+    # Recalculate normals programmatically to ensure they face the center of the mesh
+    recalculate_inward_normals(obj)
+
+
+def recalculate_inward_normals(obj):
+    """
+    Recalculate normals to ensure they face inward toward the mesh's centroid.
+
+    Parameters:
+    - obj: The Blender object whose normals need adjustment.
+    """
+    # Calculate the centroid of the mesh
+    centroid = sum((vert.co for vert in obj.data.vertices), start=mathutils.Vector()) / len(obj.data.vertices)
+
+    # Adjust normals to point toward the centroid
+    for poly in obj.data.polygons:
+        face_center = sum((obj.data.vertices[vert_idx].co for vert_idx in poly.vertices), start=mathutils.Vector()) / len(poly.vertices)
+        normal_vector = (centroid - face_center).normalized()
+
+        # Check if the current normal points outward, and flip if necessary
+        if poly.normal.dot(normal_vector) < 0:  # Dot product < 0 means facing away
+            poly.flip()
+
 def process_json_file(json_file):
     with open(json_file, 'r') as f:
         data = json.load(f)
-    
+
     clear_default_scene()
-    
+
     collection_name = os.path.splitext(os.path.basename(json_file))[0]
     collection = bpy.data.collections.new(collection_name)
     bpy.context.scene.collection.children.link(collection)
@@ -922,6 +925,7 @@ def process_json_file(json_file):
 
     room_objects = {}
 
+    # Step 1: Create all rooms (including ramps) as flat
     for rect in data['rects']:
         objects_to_merge = []
 
@@ -949,12 +953,7 @@ def process_json_file(json_file):
                         )
                     )
 
-        # Check if the rect is a ramp
-        elif rect['type'] == 'ramp':
-            ramp_obj = create_ramp(rect, collection, floor_material)  # Create the ramp as a sloped room
-            objects_to_merge.append(ramp_obj)
-
-        # Process as a standard room
+        # Process as a standard room or ramp (flat at this stage)
         else:
             objects_to_merge.append(
                 create_floor(rect['x'], rect['y'], rect['w'], rect['h'], floor_material=floor_material, story=story)
@@ -1002,6 +1001,15 @@ def process_json_file(json_file):
                 room_obj.select_set(True)
                 bpy.ops.object.join()
                 room_objects[room_name] = bpy.context.view_layer.objects.active.name
+
+    # Apply slope to ramp rooms
+    for rect in data['rects']:
+        if rect['type'] == 'ramp':
+            room_name = f"Room_{rect['x']}_{rect['y']}"
+            ramp_obj = bpy.data.objects.get(room_objects.get(room_name))
+            if ramp_obj:
+                print(f"Applying slope and UVs to ramp: {room_name}, Direction: {rect['ramp_dir']}")
+                apply_ramp_slope(ramp_obj, rect)
 
     # Handle doors
     for door in data.get('doors', []):
