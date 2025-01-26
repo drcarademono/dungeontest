@@ -1,0 +1,186 @@
+{
+    "Position": 28470621,
+    "Index": 1046,
+    "Name": "M0000000.RDB",
+    "Type": "Rdb",
+    "RmbBlock": {
+        "FldHeader": {
+            "NumBlockDataRecords": 0,
+            "NumMisc3dObjectRecords": 0,
+            "NumMiscFlatObjectRecords": 0,
+            "BlockPositions": null,
+            "BuildingDataList": null,
+            "BlockDataSizes": null,
+            "GroundData": {
+
+            },
+            "AutoMapData": null,
+            "Name": null,
+            "OtherNames": null
+        },
+        "SubRecords": null,
+        "Misc3dObjectRecords": null,
+        "MiscFlatObjectRecords": null
+    },
+    "RdbBlock": {
+        "ModelReferenceList": [
+            {
+                "ModelId": "REF_C",
+                "ModelIdNum": 0,
+                "Description": "UBE"
+            },
+            {
+                "ModelId": "58051",
+                "ModelIdNum": 58051,
+                "Description": "CRP"
+            },
+            {
+                "ModelId": "67019",
+                "ModelIdNum": 67019,
+                "Description": "C09"
+            },
+            {
+                "ModelId": "67025",
+                "ModelIdNum": 67025,
+                "Description": "C0D"
+            },
+            {
+                "ModelId": "67009",
+                "ModelIdNum": 67009,
+                "Description": "C0I"
+            },
+            {
+                "ModelId": "67015",
+                "ModelIdNum": 67015,
+                "Description": "C1O"
+            },
+            {
+                "ModelId": "67005",
+                "ModelIdNum": 67005,
+                "Description": "C0E"
+            },
+            {
+                "ModelId": "72010",
+                "ModelIdNum": 72010,
+                "Description": "R41"
+            },
+            {
+                "ModelId": "41323",
+                "ModelIdNum": 41323,
+                "Description": "XXX"
+            },
+            {
+                "ModelId": "55004",
+                "ModelIdNum": 55004,
+                "Description": "DOR"
+            },
+            {
+                "ModelId": "41317",
+                "ModelIdNum": 41317,
+                "Description": "XXX"
+            },
+            {
+                "ModelId": "71403",
+                "ModelIdNum": 71403,
+                "Description": "MOD"
+            },
+            {
+                "ModelId": "51110",
+                "ModelIdNum": 51110,
+                "Description": "MOD"
+            }
+        ],
+        "ObjectRootList": [
+            {
+                "RdbObjects": [
+                    {
+                        "Position": 71636,
+                        "Index": 0,
+                        "XPos": 64,
+                        "YPos": 0,
+                        "ZPos": 64,
+                        "Type": "Model",
+                        "Resources": {
+                            "ModelResource": {
+                                "XRotation": 0,
+                                "YRotation": 0,
+                                "ZRotation": 0,
+                                "ModelIndex": 11,
+                                "TriggerFlag_StartingLock": 0,
+                                "SoundIndex": 0,
+                                "ActionResource": {
+                                    "Position": 0,
+                                    "Axis": 0,
+                                    "Duration": 0,
+                                    "Magnitude": 0,
+                                    "NextObjectOffset": 0,
+                                    "PreviousObjectOffset": 0,
+                                    "NextObjectIndex": 0,
+                                    "Flags": 0
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "Position": 91186,
+                        "Index": 1,
+                        "XPos": 0,
+                        "YPos": -25,
+                        "ZPos": 0,
+                        "Type": "Model",
+                        "Resources": {
+                            "ModelResource": {
+                                "XRotation": 0,
+                                "YRotation": 0,
+                                "ZRotation": 0,
+                                "ModelIndex": 12,
+                                "TriggerFlag_StartingLock": 0,
+                                "SoundIndex": 0,
+                                "ActionResource": {
+                                    "Position": 0,
+                                    "Axis": 0,
+                                    "Duration": 0,
+                                    "Magnitude": 0,
+                                    "NextObjectOffset": 0,
+                                    "PreviousObjectOffset": 0,
+                                    "NextObjectIndex": 0,
+                                    "Flags": 0
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "RdbObjects": null
+            },
+            {
+                "RdbObjects": null
+            },
+            {
+                "RdbObjects": null
+            },
+            {
+                "RdbObjects": null
+            },
+            {
+                "RdbObjects": null
+            },
+            {
+                "RdbObjects": null
+            },
+            {
+                "RdbObjects": null
+            },
+            {
+                "RdbObjects": null
+            },
+            {
+                "RdbObjects": null
+            }
+        ]
+    },
+    "RdiBlock": {
+        "Data": null
+    }
+}

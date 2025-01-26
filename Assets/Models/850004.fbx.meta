@@ -37,6 +37,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: CeilingMaterial.006
+    second: {fileID: 2100000, guid: ddd1468aad75ace069ed4de4b7ef56d6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: FloorMaterial
     second: {fileID: 2100000, guid: b49bc01c673d107338ca8bdd3921d491, type: 2}
   - first:
@@ -63,6 +68,11 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: FloorMaterial.005
+    second: {fileID: 2100000, guid: b49bc01c673d107338ca8bdd3921d491, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: FloorMaterial.006
     second: {fileID: 2100000, guid: b49bc01c673d107338ca8bdd3921d491, type: 2}
   - first:
       type: UnityEngine:Material
@@ -94,6 +104,11 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: WallMaterial.005
     second: {fileID: 2100000, guid: d0b9bdbecaa68998f837bd48b6df0211, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: WallMaterial.006
+    second: {fileID: 2100000, guid: f8b44d2e71b68134ea10bdeaf12cae46, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
