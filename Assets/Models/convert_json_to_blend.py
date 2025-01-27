@@ -854,11 +854,8 @@ def merge_objects(objs, name):
 def apply_ramp_slope(obj, rect):
     """
     Apply a slope to the ramp object, adjusting all vertices (floor, walls, ceiling),
-    and ensure the normals face inwards toward the center of the mesh.
-
-    Parameters:
-    - obj: The Blender object representing the ramp room.
-    - rect: The rectangle describing the ramp (x, y, w, h, ramp_dir).
+    and ensure the normals face inwards toward the center of the mesh. Also, rotate the UVs
+    of wall materials to remain level.
     """
     direction = rect.get('ramp_dir', 'north')  # Default to 'north' if not specified
     slope_amount = 1  # Height difference for the slope (1 Blender unit per story)
@@ -889,6 +886,58 @@ def apply_ramp_slope(obj, rect):
 
     # Recalculate normals programmatically to ensure they face the center of the mesh
     recalculate_inward_normals(obj)
+
+    # Adjust UVs for wall materials
+    # adjust_wall_uvs(obj, direction)
+
+
+def adjust_wall_uvs(obj, rect, direction):
+    """
+    Adjust UVs for walls in a merged object based on their orientation.
+
+    Parameters:
+    - obj: The merged Blender object representing the room.
+    - rect: Dictionary containing ramp parameters (x, y, w, h).
+    - direction: Ramp direction ('north', 'south', 'east', 'west').
+    - slope_amount: The height difference per Blender unit of slope.
+    """
+    print(f"Adjusting UVs for walls in merged object: {obj.name}, direction: {direction}")
+
+    slope_amount = 1
+
+    uv_layer = obj.data.uv_layers.active
+    if not uv_layer:
+        print(f"Object {obj.name} has no active UV layer. Skipping.")
+        return
+
+    for poly in obj.data.polygons:
+        # Identify wall polygons by their normal orientation
+        if abs(poly.normal.z) < 0.01:  # Walls are vertical (not horizontal floors/ceilings)
+            for loop_index in poly.loop_indices:
+                uv = uv_layer.data[loop_index].uv
+                vertex = obj.data.vertices[obj.data.loops[loop_index].vertex_index].co
+
+                # Determine the vertex's global position
+                local_x, local_y = vertex.x, vertex.y
+                global_x = obj.location.x + local_x
+                global_y = obj.location.y + local_y
+
+                # Reverse the slope adjustment for UVs
+                if direction == "north":
+                    adjustment = slope_amount * (global_y - rect['y']) / rect['h']
+                elif direction == "south":
+                    adjustment = slope_amount * (rect['y'] + rect['h'] - global_y) / rect['h']
+                elif direction == "east":
+                    adjustment = slope_amount * (global_x - rect['x']) / rect['w']
+                elif direction == "west":
+                    adjustment = slope_amount * (rect['x'] + rect['w'] - global_x) / rect['w']
+                else:
+                    adjustment = 0
+
+                # Adjust the UVs by reversing the slope effect
+                uv.y += -adjustment
+
+    print(f"UV adjustment completed for object: {obj.name}")
 
 
 def recalculate_inward_normals(obj):
@@ -1009,7 +1058,13 @@ def process_json_file(json_file):
             ramp_obj = bpy.data.objects.get(room_objects.get(room_name))
             if ramp_obj:
                 print(f"Applying slope and UVs to ramp: {room_name}, Direction: {rect['ramp_dir']}")
+                
+                # Apply slope to the entire ramp object
                 apply_ramp_slope(ramp_obj, rect)
+
+                # Adjust UVs for walls in the merged object
+                adjust_wall_uvs(ramp_obj, rect, rect['ramp_dir'])
+
 
     # Handle doors
     for door in data.get('doors', []):
