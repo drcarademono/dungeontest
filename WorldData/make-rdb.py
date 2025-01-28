@@ -60,13 +60,13 @@ def calculate_door_position(door):
     # Adjust within doorframe based on direction
     direction = door.get("dir", {})
     if direction == {"x": 0, "y": -1}:
-        x_pos -= 32
+        x_pos -= 24
     elif direction == {"x": 0, "y": 1}:
-        x_pos += 32
+        x_pos += 24
     elif direction == {"x": 1, "y": 0}:
-        z_pos += 32
+        z_pos += 24
     elif direction == {"x": -1, "y": 0}:
-        z_pos -= 32
+        z_pos -= 24
 
     return {"XPos": x_pos, "ZPos": z_pos}
 

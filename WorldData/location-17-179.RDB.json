@@ -1,7 +1,7 @@
 {
     "Position": 0,
     "Index": 0,
-    "Name": "S0000999.RDB",
+    "Name": "location-17-179.RDB",
     "Type": "Rdb",
     "RmbBlock": {
         "FldHeader": {
@@ -11,9 +11,7 @@
             "BlockPositions": null,
             "BuildingDataList": null,
             "BlockDataSizes": null,
-            "GroundData": {
-
-            },
+            "GroundData": {},
             "AutoMapData": null,
             "Name": null,
             "OtherNames": null
@@ -33,6 +31,11 @@
                 "ModelId": "70300",
                 "ModelIdNum": 70300,
                 "Description": "EXT"
+            },
+            {
+                "ModelId": "55005",
+                "ModelIdNum": 55005,
+                "Description": "DOR"
             }
         ],
         "ObjectRootList": [
@@ -41,9 +44,9 @@
                     {
                         "Position": 66580,
                         "Index": 0,
-                        "XPos": 50,
+                        "XPos": 64,
                         "YPos": 0,
-                        "ZPos": 50,
+                        "ZPos": 64,
                         "Type": "Model",
                         "Resources": {
                             "ModelResource": {
@@ -97,7 +100,7 @@
                     {
                         "Position": 38028,
                         "Index": 2,
-                        "XPos": 100,
+                        "XPos": 128,
                         "YPos": 0,
                         "ZPos": 0,
                         "Type": "Flat",

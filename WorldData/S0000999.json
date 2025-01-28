@@ -65,7 +65,11 @@
                     },
                     "level": 0
                 }
-            ]
+            ],
+            "ramp_dir": "north",
+            "type": "ramp",
+            "story": 0,
+            "ramp_info": null
         },
         {
             "x": 0,
@@ -183,7 +187,11 @@
                     },
                     "level": 0
                 }
-            ]
+            ],
+            "ramp_dir": null,
+            "type": null,
+            "story": -1,
+            "ramp_info": null
         },
         {
             "x": 2,
@@ -553,7 +561,11 @@
                     },
                     "level": 2
                 }
-            ]
+            ],
+            "ramp_dir": null,
+            "type": null,
+            "story": -1,
+            "ramp_info": null
         },
         {
             "x": -5,
@@ -788,7 +800,11 @@
                     },
                     "level": 1
                 }
-            ]
+            ],
+            "ramp_dir": null,
+            "type": null,
+            "story": -1,
+            "ramp_info": null
         },
         {
             "x": 4,
@@ -834,7 +850,11 @@
                     },
                     "level": 0
                 }
-            ]
+            ],
+            "ramp_dir": "north",
+            "type": "ramp",
+            "story": -1,
+            "ramp_info": null
         },
         {
             "x": -4,
@@ -880,7 +900,11 @@
                     },
                     "level": 0
                 }
-            ]
+            ],
+            "ramp_dir": "south",
+            "type": "ramp",
+            "story": -1,
+            "ramp_info": null
         },
         {
             "x": -4,
@@ -926,7 +950,11 @@
                     },
                     "level": 0
                 }
-            ]
+            ],
+            "ramp_dir": null,
+            "type": null,
+            "story": -1,
+            "ramp_info": null
         },
         {
             "x": 4,
@@ -954,7 +982,11 @@
                     },
                     "level": 0
                 }
-            ]
+            ],
+            "ramp_dir": null,
+            "type": null,
+            "story": -2,
+            "ramp_info": null
         },
         {
             "x": -4,
@@ -982,7 +1014,11 @@
                     },
                     "level": 0
                 }
-            ]
+            ],
+            "ramp_dir": null,
+            "type": null,
+            "story": -2,
+            "ramp_info": null
         },
         {
             "x": -4,
@@ -1001,7 +1037,11 @@
                     },
                     "level": 0
                 }
-            ]
+            ],
+            "ramp_dir": null,
+            "type": null,
+            "story": -1,
+            "ramp_info": null
         },
         {
             "x": 2,
@@ -1020,7 +1060,11 @@
                     },
                     "level": 0
                 }
-            ]
+            ],
+            "ramp_dir": null,
+            "type": null,
+            "story": -2,
+            "ramp_info": null
         },
         {
             "x": -6,
@@ -1048,7 +1092,11 @@
                     },
                     "level": 0
                 }
-            ]
+            ],
+            "ramp_dir": null,
+            "type": null,
+            "story": -3,
+            "ramp_info": null
         },
         {
             "x": -2,
@@ -1076,7 +1124,11 @@
                     },
                     "level": 0
                 }
-            ]
+            ],
+            "ramp_dir": null,
+            "type": null,
+            "story": -1,
+            "ramp_info": null
         },
         {
             "x": -6,
@@ -1104,7 +1156,11 @@
                     },
                     "level": 0
                 }
-            ]
+            ],
+            "ramp_dir": null,
+            "type": null,
+            "story": -2,
+            "ramp_info": null
         },
         {
             "x": 0,
@@ -1285,7 +1341,11 @@
                     },
                     "level": 0
                 }
-            ]
+            ],
+            "ramp_dir": null,
+            "type": null,
+            "story": -3,
+            "ramp_info": null
         },
         {
             "x": -6,
@@ -1340,7 +1400,11 @@
                     },
                     "level": 0
                 }
-            ]
+            ],
+            "ramp_dir": null,
+            "type": null,
+            "story": -4,
+            "ramp_info": null
         },
         {
             "x": -8,
@@ -1881,7 +1945,11 @@
                     },
                     "level": 2
                 }
-            ]
+            ],
+            "ramp_dir": null,
+            "type": null,
+            "story": -3,
+            "ramp_info": null
         },
         {
             "x": -10,
@@ -1990,7 +2058,11 @@
                     },
                     "level": 0
                 }
-            ]
+            ],
+            "ramp_dir": null,
+            "type": null,
+            "story": -4,
+            "ramp_info": null
         },
         {
             "x": -6,
@@ -2018,7 +2090,11 @@
                     },
                     "level": 0
                 }
-            ]
+            ],
+            "ramp_dir": null,
+            "type": null,
+            "story": -5,
+            "ramp_info": null
         },
         {
             "x": -4,
@@ -2371,7 +2447,11 @@
                     },
                     "level": 1
                 }
-            ]
+            ],
+            "ramp_dir": null,
+            "type": null,
+            "story": -5,
+            "ramp_info": null
         },
         {
             "x": 0,
@@ -2408,7 +2488,11 @@
                     },
                     "level": 0
                 }
-            ]
+            ],
+            "ramp_dir": null,
+            "type": null,
+            "story": 0,
+            "ramp_info": null
         },
         {
             "x": 0,
@@ -2436,7 +2520,11 @@
                     },
                     "level": 0
                 }
-            ]
+            ],
+            "ramp_dir": null,
+            "type": null,
+            "story": -1,
+            "ramp_info": null
         },
         {
             "x": 1,
@@ -2464,7 +2552,11 @@
                     },
                     "level": 0
                 }
-            ]
+            ],
+            "ramp_dir": null,
+            "type": null,
+            "story": -1,
+            "ramp_info": null
         },
         {
             "x": -1,
@@ -2492,7 +2584,11 @@
                     },
                     "level": 0
                 }
-            ]
+            ],
+            "ramp_dir": null,
+            "type": null,
+            "story": -1,
+            "ramp_info": null
         },
         {
             "x": 4,
@@ -2520,7 +2616,11 @@
                     },
                     "level": 0
                 }
-            ]
+            ],
+            "ramp_dir": null,
+            "type": null,
+            "story": -1,
+            "ramp_info": null
         },
         {
             "x": -4,
@@ -2548,7 +2648,11 @@
                     },
                     "level": 0
                 }
-            ]
+            ],
+            "ramp_dir": null,
+            "type": null,
+            "story": -1,
+            "ramp_info": null
         },
         {
             "x": -4,
@@ -2576,7 +2680,11 @@
                     },
                     "level": 0
                 }
-            ]
+            ],
+            "ramp_dir": null,
+            "type": null,
+            "story": -1,
+            "ramp_info": null
         },
         {
             "x": 4,
@@ -2604,7 +2712,11 @@
                     },
                     "level": 0
                 }
-            ]
+            ],
+            "ramp_dir": null,
+            "type": null,
+            "story": -2,
+            "ramp_info": null
         },
         {
             "x": -4,
@@ -2632,7 +2744,11 @@
                     },
                     "level": 0
                 }
-            ]
+            ],
+            "ramp_dir": null,
+            "type": null,
+            "story": -2,
+            "ramp_info": null
         },
         {
             "x": -4,
@@ -2660,7 +2776,11 @@
                     },
                     "level": 0
                 }
-            ]
+            ],
+            "ramp_dir": null,
+            "type": null,
+            "story": -1,
+            "ramp_info": null
         },
         {
             "x": 3,
@@ -2688,7 +2808,11 @@
                     },
                     "level": 0
                 }
-            ]
+            ],
+            "ramp_dir": null,
+            "type": null,
+            "story": -2,
+            "ramp_info": null
         },
         {
             "x": -5,
@@ -2716,7 +2840,11 @@
                     },
                     "level": 0
                 }
-            ]
+            ],
+            "ramp_dir": "west",
+            "type": "ramp",
+            "story": -2,
+            "ramp_info": null
         },
         {
             "x": -3,
@@ -2744,7 +2872,11 @@
                     },
                     "level": 0
                 }
-            ]
+            ],
+            "ramp_dir": null,
+            "type": null,
+            "story": -1,
+            "ramp_info": null
         },
         {
             "x": -5,
@@ -2772,7 +2904,11 @@
                     },
                     "level": 0
                 }
-            ]
+            ],
+            "ramp_dir": "west",
+            "type": "ramp",
+            "story": -1,
+            "ramp_info": null
         },
         {
             "x": 2,
@@ -2800,7 +2936,11 @@
                     },
                     "level": 0
                 }
-            ]
+            ],
+            "ramp_dir": "north",
+            "type": "ramp",
+            "story": -2,
+            "ramp_info": null
         },
         {
             "x": -6,
@@ -2828,7 +2968,11 @@
                     },
                     "level": 0
                 }
-            ]
+            ],
+            "ramp_dir": "south",
+            "type": "ramp",
+            "story": -3,
+            "ramp_info": null
         },
         {
             "x": -6,
@@ -2856,7 +3000,11 @@
                     },
                     "level": 0
                 }
-            ]
+            ],
+            "ramp_dir": "north",
+            "type": "ramp",
+            "story": -2,
+            "ramp_info": null
         },
         {
             "x": -7,
@@ -2884,7 +3032,11 @@
                     },
                     "level": 0
                 }
-            ]
+            ],
+            "ramp_dir": null,
+            "type": null,
+            "story": -4,
+            "ramp_info": null
         },
         {
             "x": -6,
@@ -2912,7 +3064,11 @@
                     },
                     "level": 0
                 }
-            ]
+            ],
+            "ramp_dir": "south",
+            "type": "ramp",
+            "story": -4,
+            "ramp_info": null
         },
         {
             "x": -5,
@@ -2940,7 +3096,11 @@
                     },
                     "level": 0
                 }
-            ]
+            ],
+            "ramp_dir": null,
+            "type": null,
+            "story": -5,
+            "ramp_info": null
         },
         {
             "x": 2,
@@ -2977,7 +3137,11 @@
                     },
                     "level": 0
                 }
-            ]
+            ],
+            "ramp_dir": null,
+            "type": null,
+            "story": -2,
+            "ramp_info": null
         },
         {
             "x": 1,
@@ -3014,7 +3178,11 @@
                     },
                     "level": 0
                 }
-            ]
+            ],
+            "ramp_dir": null,
+            "type": null,
+            "story": -5,
+            "ramp_info": null
         },
         {
             "x": -1,
@@ -3042,7 +3210,11 @@
                     },
                     "level": 0
                 }
-            ]
+            ],
+            "ramp_dir": null,
+            "type": null,
+            "story": -1,
+            "ramp_info": null
         }
     ],
     "doors": [
@@ -3053,7 +3225,8 @@
                 "x": 0,
                 "y": 1
             },
-            "type": 3
+            "type": 3,
+            "story": 0
         },
         {
             "x": 0,
@@ -3062,7 +3235,8 @@
                 "x": 0,
                 "y": 1
             },
-            "type": 0
+            "type": 0,
+            "story": -1
         },
         {
             "x": 1,
@@ -3071,7 +3245,8 @@
                 "x": 1,
                 "y": 0
             },
-            "type": 2
+            "type": 2,
+            "story": -1
         },
         {
             "x": -1,
@@ -3080,7 +3255,8 @@
                 "x": -1,
                 "y": 0
             },
-            "type": 2
+            "type": 2,
+            "story": -1
         },
         {
             "x": 4,
@@ -3089,7 +3265,8 @@
                 "x": 0,
                 "y": 1
             },
-            "type": 2
+            "type": 2,
+            "story": -1
         },
         {
             "x": -4,
@@ -3098,7 +3275,8 @@
                 "x": 0,
                 "y": -1
             },
-            "type": 5
+            "type": 5,
+            "story": -1
         },
         {
             "x": -4,
@@ -3107,7 +3285,8 @@
                 "x": 0,
                 "y": 1
             },
-            "type": 2
+            "type": 2,
+            "story": -1
         },
         {
             "x": 4,
@@ -3116,7 +3295,8 @@
                 "x": 0,
                 "y": 1
             },
-            "type": 0
+            "type": 0,
+            "story": -2
         },
         {
             "x": -4,
@@ -3125,7 +3305,8 @@
                 "x": 0,
                 "y": -1
             },
-            "type": 0
+            "type": 0,
+            "story": -2
         },
         {
             "x": -4,
@@ -3134,7 +3315,8 @@
                 "x": 0,
                 "y": 1
             },
-            "type": 0
+            "type": 0,
+            "story": -1
         },
         {
             "x": 3,
@@ -3143,7 +3325,8 @@
                 "x": -1,
                 "y": 0
             },
-            "type": 6
+            "type": 6,
+            "story": -2
         },
         {
             "x": -5,
@@ -3152,7 +3335,8 @@
                 "x": -1,
                 "y": 0
             },
-            "type": 0
+            "type": 0,
+            "story": -2
         },
         {
             "x": -3,
@@ -3161,7 +3345,8 @@
                 "x": 1,
                 "y": 0
             },
-            "type": 0
+            "type": 0,
+            "story": -1
         },
         {
             "x": -5,
@@ -3170,7 +3355,8 @@
                 "x": -1,
                 "y": 0
             },
-            "type": 0
+            "type": 0,
+            "story": -1
         },
         {
             "x": 2,
@@ -3179,7 +3365,8 @@
                 "x": 0,
                 "y": 1
             },
-            "type": 0
+            "type": 0,
+            "story": -2
         },
         {
             "x": -6,
@@ -3188,7 +3375,8 @@
                 "x": 0,
                 "y": -1
             },
-            "type": 0
+            "type": 0,
+            "story": -3
         },
         {
             "x": -6,
@@ -3197,7 +3385,8 @@
                 "x": 0,
                 "y": 1
             },
-            "type": 0
+            "type": 0,
+            "story": -2
         },
         {
             "x": -7,
@@ -3206,7 +3395,8 @@
                 "x": -1,
                 "y": 0
             },
-            "type": 6
+            "type": 6,
+            "story": -4
         },
         {
             "x": -6,
@@ -3215,7 +3405,8 @@
                 "x": 0,
                 "y": -1
             },
-            "type": 0
+            "type": 0,
+            "story": -4
         },
         {
             "x": -5,
@@ -3224,7 +3415,8 @@
                 "x": 1,
                 "y": 0
             },
-            "type": 1
+            "type": 1,
+            "story": -5
         },
         {
             "x": 2,
@@ -3233,7 +3425,8 @@
                 "x": 0,
                 "y": 1
             },
-            "type": 3
+            "type": 3,
+            "story": -2
         },
         {
             "x": 1,
@@ -3242,7 +3435,8 @@
                 "x": 1,
                 "y": 0
             },
-            "type": 8
+            "type": 8,
+            "story": -5
         },
         {
             "x": -1,
@@ -3251,7 +3445,8 @@
                 "x": -1,
                 "y": 0
             },
-            "type": 9
+            "type": 9,
+            "story": -1
         }
     ],
     "notes": [

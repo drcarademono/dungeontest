@@ -25,13 +25,13 @@ def calculate_player_position(door_dir):
     Ensure only one of XPos or ZPos is non-zero.
     """
     if door_dir == {"x": 0, "y": -1}:  # South
-        return {"XPos": 0, "ZPos": 100}
+        return {"XPos": 0, "ZPos": 128}
     elif door_dir == {"x": 0, "y": 1}:  # North
-        return {"XPos": 0, "ZPos": -100}
+        return {"XPos": 0, "ZPos": -128}
     elif door_dir == {"x": 1, "y": 0}:  # East
-        return {"XPos": -100, "ZPos": 0}
+        return {"XPos": -128, "ZPos": 0}
     elif door_dir == {"x": -1, "y": 0}:  # West
-        return {"XPos": 100, "ZPos": 0}
+        return {"XPos": 128, "ZPos": 0}
     else:
         return {"XPos": 0, "ZPos": 0}  # Default (no adjustment)
 
@@ -54,19 +54,19 @@ def calculate_door_position(door):
     then adjust its placement within the doorframe based on its facing direction.
     """
     # Convert door grid coordinates to world coordinates
-    x_pos = door["x"] * -100
-    z_pos = door["y"] * -100
+    x_pos = door["x"] * -128
+    z_pos = door["y"] * -128
 
     # Adjust within doorframe based on direction
     direction = door.get("dir", {})
     if direction == {"x": 0, "y": -1}:
-        x_pos -= 24
+        x_pos -= 16
     elif direction == {"x": 0, "y": 1}:
-        x_pos += 24
+        x_pos += 16
     elif direction == {"x": 1, "y": 0}:
-        z_pos += 24
+        z_pos += 16
     elif direction == {"x": -1, "y": 0}:
-        z_pos -= 24
+        z_pos -= 16
 
     return {"XPos": x_pos, "ZPos": z_pos}
 
@@ -111,7 +111,7 @@ def add_doors(output_data, doors):
             door_position = calculate_door_position(door)
             y_rotation = door_yrotation(door["dir"])  # Determine direction
             story = door.get("story", 0)  # Get story value, default to 0
-            y_pos = story * -100  # Adjust YPos based on story
+            y_pos = story * -128  # Adjust YPos based on story
 
             # Create the door object
             door_object = {
@@ -180,8 +180,8 @@ def place_monsters_in_room(room, monster_count, faction_ids, rdb_objects):
     monster_positions = random.sample(room_tiles, min(len(room_tiles), monster_count))
 
     for i, (tile_x, tile_y) in enumerate(monster_positions):
-        x_pos = tile_x * -100
-        z_pos = tile_y * -100
+        x_pos = tile_x * -128
+        z_pos = tile_y * -128
         position_value = random.randint(10000, 30000)
 
         monster_object = {
@@ -258,9 +258,9 @@ def add_monster(output_data, x, y, faction_id, story=0):
     index = len(rdb_objects)  # Sequential index for the object
 
     # Convert coordinates to world positions
-    x_pos = x * -100
-    z_pos = y * -100
-    y_pos = story * -100  # Adjust YPos based on the story
+    x_pos = x * -128
+    z_pos = y * -128
+    y_pos = story * -128  # Adjust YPos based on the story
 
     # Define the monster object
     monster = {
@@ -330,9 +330,9 @@ def process_json(input_file):
                         {
                             "Position": 66580,
                             "Index": 0,
-                            "XPos": 50,
+                            "XPos": 64,
                             "YPos": 0,
-                            "ZPos": 50,
+                            "ZPos": 64,
                             "Type": "Model",
                             "Resources": {
                                 "ModelResource": {
@@ -386,7 +386,7 @@ def process_json(input_file):
                         {
                             "Position": 38028,
                             "Index": 2,
-                            "XPos": 100,
+                            "XPos": 128,
                             "YPos": 0,
                             "ZPos": 0,
                             "Type": "Flat",

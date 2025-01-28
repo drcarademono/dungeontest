@@ -291,8 +291,8 @@ def create_doorway(x, y, dir_x, dir_y, collection, wall_material, story=0):
     - story: The story (floor level) of the doorway, used to adjust the Z offset.
     """
     thickness = 0.2
-    door_width = 0.48
-    door_height = 0.9
+    door_width = 0.375
+    door_height = 0.6875
     z_offset = -abs(story)  # Adjust vertical position based on story
 
     # Create the doorway wall
@@ -311,7 +311,7 @@ def create_doorway(x, y, dir_x, dir_y, collection, wall_material, story=0):
 
     # Create the hole
     bpy.ops.mesh.primitive_cube_add(
-        size=1, enter_editmode=False, align='WORLD', location=(x + 0.5, y + 0.5, 0.45 + z_offset)
+        size=1, enter_editmode=False, align='WORLD', location=(x + 0.5, y + 0.5, 0.34 + z_offset)
     )
     hole = bpy.context.active_object
     hole.scale = (door_width, door_width, door_height)
@@ -959,6 +959,32 @@ def recalculate_inward_normals(obj):
         if poly.normal.dot(normal_vector) < 0:  # Dot product < 0 means facing away
             poly.flip()
 
+def scale_and_translate_dungeon(scale_factor=1.28, translation=(1, -0.5, -0.5)):
+    """
+    Scales and translates all objects in the current Blender scene.
+
+    Parameters:
+    - scale_factor: The uniform scale factor to apply to the entire dungeon.
+    - translation: A tuple representing the translation offset (x, y, z).
+    """
+    print(f"Scaling dungeon by a factor of {scale_factor} and translating by {translation}...")
+
+    # Select all objects in the scene
+    bpy.ops.object.select_all(action='DESELECT')
+    bpy.ops.object.select_all(action='SELECT')
+
+    # Apply scaling
+    bpy.ops.transform.resize(value=(scale_factor, scale_factor, scale_factor))
+
+    # Apply translation
+    bpy.ops.transform.translate(value=translation)
+
+    # Apply transformations to bake the changes
+    bpy.ops.object.transform_apply(location=True, rotation=False, scale=True)
+
+    print("Scaling and translation completed.")
+
+
 def process_json_file(json_file):
     with open(json_file, 'r') as f:
         data = json.load(f)
@@ -1094,6 +1120,9 @@ def process_json_file(json_file):
                 room_obj.select_set(True)
                 bpy.ops.object.join()
                 room_objects[room_name] = bpy.context.view_layer.objects.active.name
+
+    # Scale and translate the entire dungeon
+    scale_and_translate_dungeon(scale_factor=1.28, translation=(-0.56, 1.26, -0.69))
 
     output_file_blend = json_file.replace('.json', '.blend')
     output_file_fbx = json_file.replace('.json', '.fbx')

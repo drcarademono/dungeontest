@@ -1,7 +1,7 @@
 {
     "Position": 0,
     "Index": 0,
-    "Name": "forgotten_lair_of_the_silent_general.RDB",
+    "Name": "850004.RDB",
     "Type": "Rdb",
     "RmbBlock": {
         "FldHeader": {
@@ -44,9 +44,9 @@
                     {
                         "Position": 66580,
                         "Index": 0,
-                        "XPos": 50,
+                        "XPos": 64,
                         "YPos": 0,
-                        "ZPos": 50,
+                        "ZPos": 64,
                         "Type": "Model",
                         "Resources": {
                             "ModelResource": {
@@ -79,7 +79,7 @@
                         "Resources": {
                             "ModelResource": {
                                 "XRotation": 0,
-                                "YRotation": 0,
+                                "YRotation": 512,
                                 "ZRotation": 0,
                                 "ModelIndex": 1,
                                 "TriggerFlag_StartingLock": 0,
@@ -100,9 +100,9 @@
                     {
                         "Position": 38028,
                         "Index": 2,
-                        "XPos": -100,
+                        "XPos": 0,
                         "YPos": 0,
-                        "ZPos": 0,
+                        "ZPos": -128,
                         "Type": "Flat",
                         "Resources": {
                             "FlatResource": {
@@ -120,16 +120,16 @@
                         }
                     },
                     {
-                        "Position": 10047,
+                        "Position": 23732,
                         "Index": 3,
-                        "XPos": -276,
-                        "YPos": 0,
-                        "ZPos": -300,
+                        "XPos": -128,
+                        "YPos": 128,
+                        "ZPos": -608,
                         "Type": "Model",
                         "Resources": {
                             "ModelResource": {
                                 "XRotation": 0,
-                                "YRotation": 1024,
+                                "YRotation": 1536,
                                 "ZRotation": 0,
                                 "ModelIndex": 2,
                                 "TriggerFlag_StartingLock": 0,
@@ -148,11 +148,11 @@
                         }
                     },
                     {
-                        "Position": 14634,
+                        "Position": 20985,
                         "Index": 4,
-                        "XPos": -200,
-                        "YPos": 0,
-                        "ZPos": -724,
+                        "XPos": 128,
+                        "YPos": 128,
+                        "ZPos": -672,
                         "Type": "Model",
                         "Resources": {
                             "ModelResource": {
@@ -176,11 +176,11 @@
                         }
                     },
                     {
-                        "Position": 24194,
+                        "Position": 28413,
                         "Index": 5,
-                        "XPos": 24,
-                        "YPos": 0,
-                        "ZPos": -1200,
+                        "XPos": -480,
+                        "YPos": 128,
+                        "ZPos": -896,
                         "Type": "Model",
                         "Resources": {
                             "ModelResource": {
@@ -204,11 +204,11 @@
                         }
                     },
                     {
-                        "Position": 19856,
+                        "Position": 10144,
                         "Index": 6,
-                        "XPos": 324,
-                        "YPos": 0,
-                        "ZPos": -2100,
+                        "XPos": 544,
+                        "YPos": 128,
+                        "ZPos": -896,
                         "Type": "Model",
                         "Resources": {
                             "ModelResource": {
@@ -232,16 +232,16 @@
                         }
                     },
                     {
-                        "Position": 23346,
+                        "Position": 18098,
                         "Index": 7,
-                        "XPos": 0,
-                        "YPos": 0,
-                        "ZPos": -2276,
+                        "XPos": -384,
+                        "YPos": 256,
+                        "ZPos": -1440,
                         "Type": "Model",
                         "Resources": {
                             "ModelResource": {
                                 "XRotation": 0,
-                                "YRotation": 1536,
+                                "YRotation": 512,
                                 "ZRotation": 0,
                                 "ModelIndex": 2,
                                 "TriggerFlag_StartingLock": 0,
@@ -260,16 +260,16 @@
                         }
                     },
                     {
-                        "Position": 18105,
+                        "Position": 15818,
                         "Index": 8,
-                        "XPos": 224,
-                        "YPos": 0,
-                        "ZPos": -2500,
+                        "XPos": 896,
+                        "YPos": 512,
+                        "ZPos": 352,
                         "Type": "Model",
                         "Resources": {
                             "ModelResource": {
                                 "XRotation": 0,
-                                "YRotation": 1024,
+                                "YRotation": 512,
                                 "ZRotation": 0,
                                 "ModelIndex": 2,
                                 "TriggerFlag_StartingLock": 0,
@@ -288,11 +288,11 @@
                         }
                     },
                     {
-                        "Position": 20086,
+                        "Position": 13602,
                         "Index": 9,
-                        "XPos": -200,
-                        "YPos": 0,
-                        "ZPos": -2776,
+                        "XPos": 640,
+                        "YPos": 640,
+                        "ZPos": 928,
                         "Type": "Model",
                         "Resources": {
                             "ModelResource": {
@@ -316,253 +316,59 @@
                         }
                     },
                     {
-                        "Position": 19608,
+                        "Position": 18630,
                         "Index": 10,
-                        "XPos": -600,
-                        "YPos": 0,
-                        "ZPos": -2076,
-                        "Type": "Model",
+                        "XPos": -384,
+                        "YPos": 128,
+                        "ZPos": -512,
+                        "Type": "Flat",
                         "Resources": {
-                            "ModelResource": {
-                                "XRotation": 0,
-                                "YRotation": 1536,
-                                "ZRotation": 0,
-                                "ModelIndex": 2,
-                                "TriggerFlag_StartingLock": 0,
-                                "SoundIndex": 70,
-                                "ActionResource": {
-                                    "Position": 0,
-                                    "Axis": 0,
-                                    "Duration": 0,
-                                    "Magnitude": 0,
-                                    "NextObjectOffset": 0,
-                                    "PreviousObjectOffset": -1,
-                                    "NextObjectIndex": 0,
-                                    "Flags": 16
-                                }
+                            "FlatResource": {
+                                "Position": 18630,
+                                "TextureArchive": 199,
+                                "TextureRecord": 15,
+                                "Flags": 0,
+                                "Magnitude": 0,
+                                "SoundIndex": 0,
+                                "FactionOrMobileId": 512,
+                                "NextObjectOffset": 0,
+                                "Action": 0,
+                                "IsCustomData": false
                             }
                         }
                     },
                     {
-                        "Position": 28681,
+                        "Position": 25230,
                         "Index": 11,
-                        "XPos": -676,
-                        "YPos": 0,
-                        "ZPos": -3000,
-                        "Type": "Model",
+                        "XPos": 1280,
+                        "YPos": 512,
+                        "ZPos": 512,
+                        "Type": "Flat",
                         "Resources": {
-                            "ModelResource": {
-                                "XRotation": 0,
-                                "YRotation": 1024,
-                                "ZRotation": 0,
-                                "ModelIndex": 2,
-                                "TriggerFlag_StartingLock": 0,
-                                "SoundIndex": 70,
-                                "ActionResource": {
-                                    "Position": 0,
-                                    "Axis": 0,
-                                    "Duration": 0,
-                                    "Magnitude": 0,
-                                    "NextObjectOffset": 0,
-                                    "PreviousObjectOffset": -1,
-                                    "NextObjectIndex": 0,
-                                    "Flags": 16
-                                }
+                            "FlatResource": {
+                                "Position": 25230,
+                                "TextureArchive": 199,
+                                "TextureRecord": 15,
+                                "Flags": 0,
+                                "Magnitude": 0,
+                                "SoundIndex": 0,
+                                "FactionOrMobileId": 512,
+                                "NextObjectOffset": 0,
+                                "Action": 0,
+                                "IsCustomData": false
                             }
                         }
                     },
                     {
-                        "Position": 12091,
+                        "Position": 23605,
                         "Index": 12,
-                        "XPos": -500,
-                        "YPos": 0,
-                        "ZPos": -1576,
-                        "Type": "Model",
-                        "Resources": {
-                            "ModelResource": {
-                                "XRotation": 0,
-                                "YRotation": 1536,
-                                "ZRotation": 0,
-                                "ModelIndex": 2,
-                                "TriggerFlag_StartingLock": 0,
-                                "SoundIndex": 70,
-                                "ActionResource": {
-                                    "Position": 0,
-                                    "Axis": 0,
-                                    "Duration": 0,
-                                    "Magnitude": 0,
-                                    "NextObjectOffset": 0,
-                                    "PreviousObjectOffset": -1,
-                                    "NextObjectIndex": 0,
-                                    "Flags": 16
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "Position": 21718,
-                        "Index": 13,
-                        "XPos": -400,
-                        "YPos": 0,
-                        "ZPos": 200,
-                        "Type": "Flat",
-                        "Resources": {
-                            "FlatResource": {
-                                "Position": 21718,
-                                "TextureArchive": 199,
-                                "TextureRecord": 15,
-                                "Flags": 0,
-                                "Magnitude": 0,
-                                "SoundIndex": 0,
-                                "FactionOrMobileId": 512,
-                                "NextObjectOffset": 0,
-                                "Action": 0,
-                                "IsCustomData": false
-                            }
-                        }
-                    },
-                    {
-                        "Position": 29016,
-                        "Index": 14,
-                        "XPos": -100,
-                        "YPos": 0,
-                        "ZPos": 0,
-                        "Type": "Flat",
-                        "Resources": {
-                            "FlatResource": {
-                                "Position": 29016,
-                                "TextureArchive": 199,
-                                "TextureRecord": 15,
-                                "Flags": 0,
-                                "Magnitude": 0,
-                                "SoundIndex": 0,
-                                "FactionOrMobileId": 512,
-                                "NextObjectOffset": 0,
-                                "Action": 0,
-                                "IsCustomData": false
-                            }
-                        }
-                    },
-                    {
-                        "Position": 24692,
-                        "Index": 15,
-                        "XPos": -400,
-                        "YPos": 0,
-                        "ZPos": -100,
-                        "Type": "Flat",
-                        "Resources": {
-                            "FlatResource": {
-                                "Position": 24692,
-                                "TextureArchive": 199,
-                                "TextureRecord": 15,
-                                "Flags": 0,
-                                "Magnitude": 0,
-                                "SoundIndex": 0,
-                                "FactionOrMobileId": 512,
-                                "NextObjectOffset": 0,
-                                "Action": 0,
-                                "IsCustomData": false
-                            }
-                        }
-                    },
-                    {
-                        "Position": 13300,
-                        "Index": 16,
                         "XPos": 0,
-                        "YPos": 0,
-                        "ZPos": -1900,
+                        "YPos": 640,
+                        "ZPos": 1152,
                         "Type": "Flat",
                         "Resources": {
                             "FlatResource": {
-                                "Position": 13300,
-                                "TextureArchive": 199,
-                                "TextureRecord": 15,
-                                "Flags": 0,
-                                "Magnitude": 0,
-                                "SoundIndex": 0,
-                                "FactionOrMobileId": 512,
-                                "NextObjectOffset": 0,
-                                "Action": 0,
-                                "IsCustomData": false
-                            }
-                        }
-                    },
-                    {
-                        "Position": 27262,
-                        "Index": 17,
-                        "XPos": 0,
-                        "YPos": 0,
-                        "ZPos": -1600,
-                        "Type": "Flat",
-                        "Resources": {
-                            "FlatResource": {
-                                "Position": 27262,
-                                "TextureArchive": 199,
-                                "TextureRecord": 15,
-                                "Flags": 0,
-                                "Magnitude": 0,
-                                "SoundIndex": 0,
-                                "FactionOrMobileId": 512,
-                                "NextObjectOffset": 0,
-                                "Action": 0,
-                                "IsCustomData": false
-                            }
-                        }
-                    },
-                    {
-                        "Position": 29748,
-                        "Index": 18,
-                        "XPos": -800,
-                        "YPos": 0,
-                        "ZPos": -3300,
-                        "Type": "Flat",
-                        "Resources": {
-                            "FlatResource": {
-                                "Position": 29748,
-                                "TextureArchive": 199,
-                                "TextureRecord": 15,
-                                "Flags": 0,
-                                "Magnitude": 0,
-                                "SoundIndex": 0,
-                                "FactionOrMobileId": 512,
-                                "NextObjectOffset": 0,
-                                "Action": 0,
-                                "IsCustomData": false
-                            }
-                        }
-                    },
-                    {
-                        "Position": 26439,
-                        "Index": 19,
-                        "XPos": -700,
-                        "YPos": 0,
-                        "ZPos": -3100,
-                        "Type": "Flat",
-                        "Resources": {
-                            "FlatResource": {
-                                "Position": 26439,
-                                "TextureArchive": 199,
-                                "TextureRecord": 15,
-                                "Flags": 0,
-                                "Magnitude": 0,
-                                "SoundIndex": 0,
-                                "FactionOrMobileId": 512,
-                                "NextObjectOffset": 0,
-                                "Action": 0,
-                                "IsCustomData": false
-                            }
-                        }
-                    },
-                    {
-                        "Position": 14170,
-                        "Index": 20,
-                        "XPos": -1000,
-                        "YPos": 0,
-                        "ZPos": -1800,
-                        "Type": "Flat",
-                        "Resources": {
-                            "FlatResource": {
-                                "Position": 14170,
+                                "Position": 23605,
                                 "TextureArchive": 199,
                                 "TextureRecord": 15,
                                 "Flags": 0,
