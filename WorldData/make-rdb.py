@@ -111,7 +111,7 @@ def add_doors(output_data, doors):
             door_position = calculate_door_position(door)
             y_rotation = door_yrotation(door["dir"])  # Determine direction
             story = door.get("story", 0)  # Get story value, default to 0
-            y_pos = story * -128  # Adjust YPos based on story
+            y_pos = (story * -128) + 1  # Adjust YPos based on story
 
             # Create the door object
             door_object = {
@@ -241,8 +241,6 @@ def add_monsters_by_rooms(output_data, rects, entrance_coords, door_coords):
                     add_monster(output_data, x, y, faction_id=512, story=story)  # Pass story
                     break
 
-import random
-
 def add_monster(output_data, x, y, faction_id, story=0):
     """
     Add a monster to the RdbObjects list in output_data.
@@ -289,7 +287,97 @@ def add_monster(output_data, x, y, faction_id, story=0):
     # Add the monster to the RdbObjects list
     rdb_objects.append(monster)
 
+def add_quest_marker(output_data, rooms):
+    """
+    Selects a random quest marker file from the QuestMarkers subdirectory
+    and places it inside a room that is at least as big as required.
 
+    Parameters:
+    - output_data: The dungeon JSON data being modified.
+    - rooms: The list of room rectangles in the dungeon.
+    """
+    quest_marker_dir = "QuestMarkers"
+    quest_marker_files = [
+        f for f in os.listdir(quest_marker_dir) if f.endswith(".json")
+    ]
+    
+    if not quest_marker_files:
+        print("No quest marker files found.")
+        return
+    
+    # Pick a random quest marker file
+    quest_marker_file = random.choice(quest_marker_files)
+    quest_marker_path = os.path.join(quest_marker_dir, quest_marker_file)
+
+    # Extract required dimensions from filename (e.g., "2x2_QuestMarker_00.json")
+    parts = quest_marker_file.split("_")
+    required_width, required_height = map(int, parts[0].split("x"))
+
+    # Find a suitable room (at least required_width x required_height)
+    eligible_rooms = [
+        room for room in rooms if room["w"] >= required_width and room["h"] >= required_height
+    ]
+
+    if not eligible_rooms:
+        print(f"No suitable room found for quest marker requiring size ({required_width}, {required_height}).")
+        return
+    
+    # Pick a random eligible room
+    selected_room = random.choice(eligible_rooms)
+    room_x, room_y = selected_room["x"], selected_room["y"]
+    room_story = selected_room.get("story", 0)
+
+    print(f"Adding quest marker from {quest_marker_file} to room at ({room_x}, {room_y}).")
+
+    # Load the quest marker JSON
+    with open(quest_marker_path, "r") as file:
+        quest_marker_data = json.load(file)
+
+    # Ensure the ModelReferenceList exists
+    model_reference_list = output_data["RdbBlock"].setdefault("ModelReferenceList", [])
+
+    # Add new model references from quest marker data if not already present
+    for model in quest_marker_data["RdbBlock"].get("ModelReferenceList", []):
+        if model not in model_reference_list:
+            model_reference_list.append(model)
+
+    # Get the updated index for newly added models
+    model_index_map = {
+        model["ModelId"]: i for i, model in enumerate(model_reference_list)
+    }
+
+    # Ensure at least one ObjectRoot exists in the ObjectRootList
+    object_root_list = output_data["RdbBlock"].setdefault("ObjectRootList", [])
+    if not object_root_list:
+        object_root_list.append({"RdbObjects": []})
+
+    rdb_objects = object_root_list[0].setdefault("RdbObjects", [])
+
+    # Adjust positions and add quest marker objects
+    for obj in quest_marker_data["RdbBlock"]["ObjectRootList"][0]["RdbObjects"]:
+        adjusted_obj = obj.copy()
+
+        # Compute the center offset for the room
+        room_center_x = room_x + (selected_room["w"] / 2)
+        room_center_y = room_y + (selected_room["h"] / 2)
+
+        # Compute the offset for the quest marker dimensions
+        marker_offset_x = required_width / 2
+        marker_offset_y = required_height / 2
+
+        # Adjust X, Y, Z positions based on the room's center and the marker's size
+        adjusted_obj["XPos"] += ((room_center_x - marker_offset_x + .5) * -128)
+        adjusted_obj["ZPos"] += ((room_center_y - marker_offset_y + .5) * -128)
+        adjusted_obj["YPos"] += room_story * -128
+
+        # Adjust ModelIndex to match new model reference index
+        if adjusted_obj["Type"] == "Model":
+            model_id = quest_marker_data["RdbBlock"]["ModelReferenceList"][obj["Resources"]["ModelResource"]["ModelIndex"]]["ModelId"]
+            adjusted_obj["Resources"]["ModelResource"]["ModelIndex"] = model_index_map[model_id]
+
+        # Append adjusted object to the RdbObjects list
+        adjusted_obj["Index"] = len(rdb_objects)  # Set correct index
+        rdb_objects.append(adjusted_obj)
 
 def process_json(input_file):
     # Read the input JSON
@@ -462,6 +550,8 @@ def process_json(input_file):
     # Add monsters by rooms
     add_monsters_by_rooms(output_data, data.get("rects", []), entrance_coords, door_coords)
 
+    # Add quest marker
+    add_quest_marker(output_data, data.get("rects", []))
 
     # Write the modified data to the output file
     output_file = os.path.splitext(input_file)[0] + ".RDB.json"

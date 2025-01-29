@@ -36,6 +36,11 @@
                 "ModelId": "55005",
                 "ModelIdNum": 55005,
                 "Description": "DOR"
+            },
+            {
+                "ModelId": "51110",
+                "ModelIdNum": 51110,
+                "Description": "MOD"
             }
         ],
         "ObjectRootList": [
@@ -120,10 +125,10 @@
                         }
                     },
                     {
-                        "Position": 21667,
+                        "Position": 17650,
                         "Index": 3,
                         "XPos": -128,
-                        "YPos": 128,
+                        "YPos": 129,
                         "ZPos": -616,
                         "Type": "Model",
                         "Resources": {
@@ -148,10 +153,10 @@
                         }
                     },
                     {
-                        "Position": 16403,
+                        "Position": 15097,
                         "Index": 4,
                         "XPos": 128,
-                        "YPos": 128,
+                        "YPos": 129,
                         "ZPos": -664,
                         "Type": "Model",
                         "Resources": {
@@ -176,10 +181,10 @@
                         }
                     },
                     {
-                        "Position": 15298,
+                        "Position": 21727,
                         "Index": 5,
                         "XPos": -488,
-                        "YPos": 128,
+                        "YPos": 129,
                         "ZPos": -896,
                         "Type": "Model",
                         "Resources": {
@@ -204,10 +209,10 @@
                         }
                     },
                     {
-                        "Position": 11270,
+                        "Position": 14732,
                         "Index": 6,
                         "XPos": 536,
-                        "YPos": 128,
+                        "YPos": 129,
                         "ZPos": -896,
                         "Type": "Model",
                         "Resources": {
@@ -232,10 +237,10 @@
                         }
                     },
                     {
-                        "Position": 20716,
+                        "Position": 27273,
                         "Index": 7,
                         "XPos": -384,
-                        "YPos": 256,
+                        "YPos": 257,
                         "ZPos": -1432,
                         "Type": "Model",
                         "Resources": {
@@ -260,10 +265,10 @@
                         }
                     },
                     {
-                        "Position": 14691,
+                        "Position": 25195,
                         "Index": 8,
                         "XPos": 896,
-                        "YPos": 512,
+                        "YPos": 513,
                         "ZPos": 360,
                         "Type": "Model",
                         "Resources": {
@@ -288,10 +293,10 @@
                         }
                     },
                     {
-                        "Position": 10457,
+                        "Position": 15496,
                         "Index": 9,
                         "XPos": 640,
-                        "YPos": 640,
+                        "YPos": 641,
                         "ZPos": 920,
                         "Type": "Model",
                         "Resources": {
@@ -316,15 +321,15 @@
                         }
                     },
                     {
-                        "Position": 11932,
+                        "Position": 11851,
                         "Index": 10,
-                        "XPos": 1024,
-                        "YPos": 512,
-                        "ZPos": 256,
+                        "XPos": -128,
+                        "YPos": 384,
+                        "ZPos": -2176,
                         "Type": "Flat",
                         "Resources": {
                             "FlatResource": {
-                                "Position": 11932,
+                                "Position": 11851,
                                 "TextureArchive": 199,
                                 "TextureRecord": 15,
                                 "Flags": 0,
@@ -334,6 +339,320 @@
                                 "NextObjectOffset": 0,
                                 "Action": 0,
                                 "IsCustomData": false
+                            }
+                        }
+                    },
+                    {
+                        "Position": 16527,
+                        "Index": 11,
+                        "XPos": -512,
+                        "YPos": 384,
+                        "ZPos": -1920,
+                        "Type": "Flat",
+                        "Resources": {
+                            "FlatResource": {
+                                "Position": 16527,
+                                "TextureArchive": 199,
+                                "TextureRecord": 15,
+                                "Flags": 0,
+                                "Magnitude": 0,
+                                "SoundIndex": 0,
+                                "FactionOrMobileId": 512,
+                                "NextObjectOffset": 0,
+                                "Action": 0,
+                                "IsCustomData": false
+                            }
+                        }
+                    },
+                    {
+                        "Position": 21502,
+                        "Index": 12,
+                        "XPos": 256,
+                        "YPos": 640,
+                        "ZPos": 1152,
+                        "Type": "Flat",
+                        "Resources": {
+                            "FlatResource": {
+                                "Position": 21502,
+                                "TextureArchive": 199,
+                                "TextureRecord": 15,
+                                "Flags": 0,
+                                "Magnitude": 0,
+                                "SoundIndex": 0,
+                                "FactionOrMobileId": 512,
+                                "NextObjectOffset": 0,
+                                "Action": 0,
+                                "IsCustomData": false
+                            }
+                        }
+                    },
+                    {
+                        "Position": 25352,
+                        "Index": 13,
+                        "XPos": 512,
+                        "YPos": 640,
+                        "ZPos": 640,
+                        "Type": "Flat",
+                        "Resources": {
+                            "FlatResource": {
+                                "Position": 25352,
+                                "TextureArchive": 199,
+                                "TextureRecord": 15,
+                                "Flags": 0,
+                                "Magnitude": 0,
+                                "SoundIndex": 0,
+                                "FactionOrMobileId": 512,
+                                "NextObjectOffset": 0,
+                                "Action": 0,
+                                "IsCustomData": false
+                            }
+                        }
+                    },
+                    {
+                        "Position": 91186,
+                        "Index": 14,
+                        "XPos": 448.0,
+                        "YPos": 103,
+                        "ZPos": -640.0,
+                        "Type": "Model",
+                        "Resources": {
+                            "ModelResource": {
+                                "XRotation": 0,
+                                "YRotation": 0,
+                                "ZRotation": 0,
+                                "ModelIndex": 3,
+                                "TriggerFlag_StartingLock": 0,
+                                "SoundIndex": 0,
+                                "ActionResource": {
+                                    "Position": 0,
+                                    "Axis": 0,
+                                    "Duration": 0,
+                                    "Magnitude": 0,
+                                    "NextObjectOffset": 0,
+                                    "PreviousObjectOffset": 0,
+                                    "NextObjectIndex": 0,
+                                    "Flags": 0
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "Position": 39619,
+                        "Index": 15,
+                        "XPos": 448.0,
+                        "YPos": 44,
+                        "ZPos": -640.0,
+                        "Type": "Flat",
+                        "Resources": {
+                            "FlatResource": {
+                                "Position": 0,
+                                "TextureArchive": 97,
+                                "TextureRecord": 17,
+                                "Flags": 0,
+                                "Magnitude": 0,
+                                "SoundIndex": 0,
+                                "FactionOrMobileId": 0,
+                                "NextObjectOffset": 0,
+                                "Action": 0,
+                                "IsCustomData": true
+                            }
+                        }
+                    },
+                    {
+                        "Position": 65722,
+                        "Index": 16,
+                        "XPos": 482.0,
+                        "YPos": 77,
+                        "ZPos": -640.0,
+                        "Type": "Flat",
+                        "Resources": {
+                            "FlatResource": {
+                                "Position": 0,
+                                "TextureArchive": 210,
+                                "TextureRecord": 5,
+                                "Flags": 0,
+                                "Magnitude": 0,
+                                "SoundIndex": 0,
+                                "FactionOrMobileId": 0,
+                                "NextObjectOffset": 0,
+                                "Action": 0,
+                                "IsCustomData": true
+                            }
+                        }
+                    },
+                    {
+                        "Position": 45647,
+                        "Index": 17,
+                        "XPos": 414.0,
+                        "YPos": 77,
+                        "ZPos": -640.0,
+                        "Type": "Flat",
+                        "Resources": {
+                            "FlatResource": {
+                                "Position": 0,
+                                "TextureArchive": 210,
+                                "TextureRecord": 5,
+                                "Flags": 0,
+                                "Magnitude": 0,
+                                "SoundIndex": 0,
+                                "FactionOrMobileId": 0,
+                                "NextObjectOffset": 0,
+                                "Action": 0,
+                                "IsCustomData": true
+                            }
+                        }
+                    },
+                    {
+                        "Position": 10864,
+                        "Index": 18,
+                        "XPos": 448.0,
+                        "YPos": 107,
+                        "ZPos": -590.0,
+                        "Type": "Flat",
+                        "Resources": {
+                            "FlatResource": {
+                                "Position": 0,
+                                "TextureArchive": 199,
+                                "TextureRecord": 18,
+                                "Flags": 0,
+                                "Magnitude": 0,
+                                "SoundIndex": 0,
+                                "FactionOrMobileId": 0,
+                                "NextObjectOffset": 0,
+                                "Action": 0,
+                                "IsCustomData": true
+                            }
+                        }
+                    },
+                    {
+                        "Position": 61600,
+                        "Index": 19,
+                        "XPos": 448.0,
+                        "YPos": 107,
+                        "ZPos": -690.0,
+                        "Type": "Flat",
+                        "Resources": {
+                            "FlatResource": {
+                                "Position": 0,
+                                "TextureArchive": 199,
+                                "TextureRecord": 11,
+                                "Flags": 0,
+                                "Magnitude": 0,
+                                "SoundIndex": 0,
+                                "FactionOrMobileId": 0,
+                                "NextObjectOffset": 0,
+                                "Action": 0,
+                                "IsCustomData": true
+                            }
+                        }
+                    },
+                    {
+                        "Position": 31486,
+                        "Index": 20,
+                        "XPos": 516.0,
+                        "YPos": 90,
+                        "ZPos": -638.0,
+                        "Type": "Flat",
+                        "Resources": {
+                            "FlatResource": {
+                                "Position": 0,
+                                "TextureArchive": 199,
+                                "TextureRecord": 19,
+                                "Flags": 0,
+                                "Magnitude": 0,
+                                "SoundIndex": 0,
+                                "FactionOrMobileId": 0,
+                                "NextObjectOffset": 0,
+                                "Action": 0,
+                                "IsCustomData": true
+                            }
+                        }
+                    },
+                    {
+                        "Position": 40674,
+                        "Index": 21,
+                        "XPos": 498.0,
+                        "YPos": 86,
+                        "ZPos": -684.0,
+                        "Type": "Flat",
+                        "Resources": {
+                            "FlatResource": {
+                                "Position": 0,
+                                "TextureArchive": 210,
+                                "TextureRecord": 21,
+                                "Flags": 0,
+                                "Magnitude": 0,
+                                "SoundIndex": 0,
+                                "FactionOrMobileId": 0,
+                                "NextObjectOffset": 0,
+                                "Action": 0,
+                                "IsCustomData": true
+                            }
+                        }
+                    },
+                    {
+                        "Position": 28164,
+                        "Index": 22,
+                        "XPos": 398.0,
+                        "YPos": 86,
+                        "ZPos": -684.0,
+                        "Type": "Flat",
+                        "Resources": {
+                            "FlatResource": {
+                                "Position": 0,
+                                "TextureArchive": 210,
+                                "TextureRecord": 21,
+                                "Flags": 0,
+                                "Magnitude": 0,
+                                "SoundIndex": 0,
+                                "FactionOrMobileId": 0,
+                                "NextObjectOffset": 0,
+                                "Action": 0,
+                                "IsCustomData": true
+                            }
+                        }
+                    },
+                    {
+                        "Position": 16992,
+                        "Index": 23,
+                        "XPos": 414.0,
+                        "YPos": 113,
+                        "ZPos": -588.0,
+                        "Type": "Flat",
+                        "Resources": {
+                            "FlatResource": {
+                                "Position": 0,
+                                "TextureArchive": 210,
+                                "TextureRecord": 2,
+                                "Flags": 0,
+                                "Magnitude": 0,
+                                "SoundIndex": 0,
+                                "FactionOrMobileId": 0,
+                                "NextObjectOffset": 0,
+                                "Action": 0,
+                                "IsCustomData": true
+                            }
+                        }
+                    },
+                    {
+                        "Position": 10501,
+                        "Index": 24,
+                        "XPos": 424.0,
+                        "YPos": 113,
+                        "ZPos": -575.0,
+                        "Type": "Flat",
+                        "Resources": {
+                            "FlatResource": {
+                                "Position": 0,
+                                "TextureArchive": 210,
+                                "TextureRecord": 2,
+                                "Flags": 0,
+                                "Magnitude": 0,
+                                "SoundIndex": 0,
+                                "FactionOrMobileId": 0,
+                                "NextObjectOffset": 0,
+                                "Action": 0,
+                                "IsCustomData": true
                             }
                         }
                     }

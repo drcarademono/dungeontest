@@ -959,30 +959,123 @@ def recalculate_inward_normals(obj):
         if poly.normal.dot(normal_vector) < 0:  # Dot product < 0 means facing away
             poly.flip()
 
-def scale_and_translate_dungeon(scale_factor=1.28, translation=(1, -0.5, -0.5)):
+
+def create_hexagonal_column(x, y, story, room_height, vaulted_ceiling_height=0, column_material=None):
     """
-    Scales and translates all objects in the current Blender scene.
+    Creates an hexagonal column at the specified position and story, with height based on room height and vaulted ceiling.
+
+    Parameters:
+    - x, y: Coordinates of the column's position.
+    - story: The story (floor level) of the column, used to adjust the Z offset.
+    - room_height: The height of the room.
+    - vaulted_ceiling_height: Additional height if the room has a vaulted ceiling.
+    - column_material: The material to apply to the column.
+    """
+    total_height = 1 + room_height + vaulted_ceiling_height  # Total column height
+    z_offset = -abs(story)  # Adjust Z-position based on story
+    radius = 0.125  # Radius of the column (half the thickness)
+
+    # Create a cylinder with 6 sides (octagon)
+    bpy.ops.mesh.primitive_cylinder_add(
+        vertices=6,
+        radius=radius,
+        depth=total_height, 
+        location=(x, y, z_offset + total_height / 2)  # Centered vertically
+    )
+    column = bpy.context.active_object
+
+    # Assign the material
+    if column_material:
+        column.data.materials.append(column_material)
+
+    # Adjust the UVs for proper scaling
+    adjust_column_uvs(column, total_height)
+
+    # Return the created column object
+    return column
+
+def adjust_column_uvs(column, total_height):
+    """
+    Adjusts the UVs of the column to scale properly along its height.
+
+    Parameters:
+    - column: The Blender object representing the column.
+    - total_height: The total height of the column.
+    """
+    # Ensure the column has an active UV map
+    if not column.data.uv_layers:
+        column.data.uv_layers.new(name="UVMap")
+
+    # Switch to object mode to access UVs
+    bpy.context.view_layer.objects.active = column
+    bpy.ops.object.mode_set(mode='OBJECT')
+
+    uv_layer = column.data.uv_layers.active.data
+
+    # Adjust UVs for each polygon in the column
+    for poly in column.data.polygons:
+        for loop_index in poly.loop_indices:
+            uv = uv_layer[loop_index].uv
+            vertex = column.data.vertices[column.data.loops[loop_index].vertex_index].co
+
+            if abs(poly.normal.z) < 0.01:  # Vertical faces (not top/bottom caps)
+                uv[1] = vertex.z / total_height * 4  # Scale UV Y based on vertex height
+
+    # Update the mesh to reflect UV changes
+    column.data.update()
+
+    print(f"Adjusted UVs for column '{column.name}' with height {total_height}.")
+
+
+def scale_and_translate_dungeon(scale_factor=1.28):
+    """
+    Scales all objects in the Blender scene and then translates the entire dungeon
+    so that the room at (0,0) is correctly positioned at the origin.
 
     Parameters:
     - scale_factor: The uniform scale factor to apply to the entire dungeon.
-    - translation: A tuple representing the translation offset (x, y, z).
     """
-    print(f"Scaling dungeon by a factor of {scale_factor} and translating by {translation}...")
+    print(f"Scaling dungeon by a factor of {scale_factor}...")
 
-    # Select all objects in the scene
+    # Ensure all objects are deselected
     bpy.ops.object.select_all(action='DESELECT')
+
+    # Select all objects
     bpy.ops.object.select_all(action='SELECT')
 
-    # Apply scaling
+    # Apply uniform scaling to the entire dungeon
     bpy.ops.transform.resize(value=(scale_factor, scale_factor, scale_factor))
+    bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
 
-    # Apply translation
-    bpy.ops.transform.translate(value=translation)
+    print("Scaling applied.")
 
-    # Apply transformations to bake the changes
+    # Find the object corresponding to the room at (0,0)
+    room_at_origin = None
+    for obj in bpy.context.scene.objects:
+        if obj.type == 'MESH' and obj.name.startswith("Room_0_0"):  # Adjust naming pattern if necessary
+            room_at_origin = obj
+            break
+
+    if room_at_origin is None:
+        print("Room at (0, 0) not found. Aborting translation.")
+        return
+
+    # Get the current location of the room at (0,0) AFTER scaling
+    room_position = room_at_origin.location
+    print(f"Room at (0, 0) is currently located at: {room_position}")
+
+    # Calculate the translation needed to move the room to the origin
+    translation_to_origin = (-room_position.x + 0.64, -room_position.y + 0.64, -room_position.z)
+    print(f"Translating the dungeon by {translation_to_origin} to align (0,0) room with the origin.")
+
+    # Apply translation to align the room at (0,0) to the origin
+    bpy.ops.transform.translate(value=translation_to_origin)
     bpy.ops.object.transform_apply(location=True, rotation=False, scale=True)
 
-    print("Scaling and translation completed.")
+    # Final debug check
+    print(f"After translation, Room_0_0 should be at: {room_at_origin.location}")
+
+    print("Scaling and translation completed successfully.")
 
 
 def process_json_file(json_file):
@@ -997,6 +1090,7 @@ def process_json_file(json_file):
 
     floor_material, wall_material = create_materials()
     ceiling_material = bpy.data.materials.new(name="CeilingMaterial")
+    column_material = bpy.data.materials.new(name="ColumnMaterial")
 
     room_objects = {}
 
@@ -1121,8 +1215,23 @@ def process_json_file(json_file):
                 bpy.ops.object.join()
                 room_objects[room_name] = bpy.context.view_layer.objects.active.name
 
+    # Create columns
+    for column in data.get('columns', []):
+        x, y = column['x'], column['y']
+        story = column.get('story', 0)  # Default story is 0 if not specified
+        
+        # Find the corresponding room for this column
+        room = next(
+            (rect for rect in data['rects'] if rect['x'] <= x < rect['x'] + rect['w'] and rect['y'] <= y < rect['y'] + rect['h']),
+            None
+        )
+        if room:
+            room_height = room.get('ceiling', 1)  # Default room height if not provided
+            vaulted_ceiling_height = 0.5 if room.get('vault', 0) == 1 else 0  # Additional height for vaulted ceilings
+            create_hexagonal_column(x, y, story, room_height, vaulted_ceiling_height, column_material)
+
     # Scale and translate the entire dungeon
-    scale_and_translate_dungeon(scale_factor=1.28, translation=(-0.56, 1.26, -0.69))
+    scale_and_translate_dungeon(scale_factor=1.28)
 
     output_file_blend = json_file.replace('.json', '.blend')
     output_file_fbx = json_file.replace('.json', '.fbx')

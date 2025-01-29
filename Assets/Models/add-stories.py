@@ -330,6 +330,36 @@ def assign_door_stories(rects, doors):
 
     return doors
 
+def assign_column_stories(rects, columns):
+    """
+    Assign the correct story to each column based on the room it is in.
+
+    Parameters:
+    - rects: List of room rectangles with `x`, `y`, `w`, `h`, and `story`.
+    - columns: List of column objects with `x` and `y`.
+
+    Returns:
+    - Updated columns array with assigned `story` values.
+    """
+    for column in columns:
+        column_x, column_y = column['x'], column['y']
+        column_story = None
+
+        # Find the room that contains this column
+        for rect in rects:
+            rect_x, rect_y, rect_w, rect_h = rect['x'], rect['y'], rect['w'], rect['h']
+            if rect_x <= column_x < rect_x + rect_w and rect_y <= column_y < rect_y + rect_h:
+                column_story = rect.get('story', 0)  # Default story is 0 if not assigned
+                break
+
+        if column_story is not None:
+            column['story'] = column_story
+            print(f"Assigned story {column_story} to column at ({column_x}, {column_y}).")
+        else:
+            print(f"Could not assign a story to column at ({column_x}, {column_y}). No matching room found.")
+
+    return columns
+
 # Process each JSON file
 directory = "./"  # Replace with your directory path
 
@@ -345,6 +375,7 @@ for filename in os.listdir(directory):
         data['rects'] = assign_stories(data['rects'])  # Assign stories
         data['rects'] = assign_ramp_directions(data['rects'])  # Assign ramp directions
         data['doors'] = assign_door_stories(data['rects'], data.get('doors', []))  # Assign door stories
+        data['columns'] = assign_column_stories(data['rects'], data.get('columns', []))  # Assign column stories
 
         with open(filepath, 'w') as f:
             json.dump(data, f, indent=4)
