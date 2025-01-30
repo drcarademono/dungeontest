@@ -7,14 +7,14 @@ def exit_yrotation(door_dir):
     """
     Map the door's direction to a specific YRotation value.
     """
-    if door_dir == {"x": 0, "y": 1}:  # Silverstar House
-        return 512
-    elif door_dir == {"x": 1, "y": 0}:  # Forgotten Lair
+    if door_dir == {"x": 1, "y": 0}:  # Forgotten Lair
         return 0
-    elif door_dir == {"x": 0, "y": -1}:  # Tomb of the Demon Priest
-        return 1536
+    elif door_dir == {"x": 0, "y": 1}:  # Silverstar House
+        return 512
     elif door_dir == {"x": -1, "y": 0}:  # Temple of Riellis
         return 1024
+    elif door_dir == {"x": 0, "y": -1}:  # Tomb of the Demon Priest
+        return 1536
     else:
         return 0  # Default rotation
 
@@ -34,6 +34,49 @@ def calculate_player_position(door_dir):
         return {"XPos": 128, "ZPos": 0}
     else:
         return {"XPos": 0, "ZPos": 0}  # Default (no adjustment)
+
+
+def calculate_object_position(x, y, direction="north", base_x=0, base_z=0):
+    """
+    Calculates the world position for any object, adjusting for rotation and offsets.
+
+    Parameters:
+        x (int): Grid x-coordinate of the object.
+        y (int): Grid y-coordinate of the object.
+        direction (str): Object's facing direction ("north", "east", "south", "west").
+        base_x (int): Base offset for a north-facing object (adjust as needed).
+        base_z (int): Base offset for a north-facing object (adjust as needed).
+
+    Returns:
+        dict: {"XPos", "ZPos"} with calculated world positions.
+    """
+    # Convert tile coordinates to world space
+    x_pos = x * -128
+    z_pos = y * -128
+
+    # Adjust offsets based on direction
+    if direction == "north":
+        x_offset = base_x
+        z_offset = base_z
+    elif direction == "east":
+        x_offset = -base_z
+        z_offset = base_x
+    elif direction == "south":
+        x_offset = -base_x
+        z_offset = -base_z
+    elif direction == "west":
+        x_offset = base_z
+        z_offset = -base_x
+    else:  # Default to no offset if direction is invalid
+        x_offset = 0
+        z_offset = 0
+
+    # Apply adjusted offsets
+    x_pos += x_offset
+    z_pos += z_offset
+
+    return {"XPos": x_pos, "ZPos": z_pos}
+
 
 def add_door_model_reference(output_data):
     """Add the door model reference to the ModelReferenceList if not already present."""
@@ -60,13 +103,13 @@ def calculate_door_position(door):
     # Adjust within doorframe based on direction
     direction = door.get("dir", {})
     if direction == {"x": 0, "y": -1}:
-        x_pos -= 24
-    elif direction == {"x": 0, "y": 1}:
         x_pos += 24
+    elif direction == {"x": 0, "y": 1}:
+        x_pos -= 24
     elif direction == {"x": 1, "y": 0}:
-        z_pos += 24
-    elif direction == {"x": -1, "y": 0}:
         z_pos -= 24
+    elif direction == {"x": -1, "y": 0}:
+        z_pos += 24
 
     return {"XPos": x_pos, "ZPos": z_pos}
 
@@ -75,50 +118,54 @@ def door_yrotation(door_dir):
     Map the door's direction to a specific YRotation value.
     """
     if door_dir == {"x": 0, "y": 1}:
-        return 1024
-    elif door_dir == {"x": 1, "y": 0}:
-        return 1536
-    elif door_dir == {"x": 0, "y": -1}:
         return 0
-    elif door_dir == {"x": -1, "y": 0}:
+    elif door_dir == {"x": 1, "y": 0}:
         return 512
+    elif door_dir == {"x": 0, "y": -1}:
+        return 1024
+    elif door_dir == {"x": -1, "y": 0}:
+        return 1536
     else:
         return 0  # Default rotation
 
-
-
 def add_doors(output_data, doors):
     """Add doors to the ObjectRootList > RdbObjects."""
-    # Add the door model to the ModelReferenceList if not already present
     door_model = {"ModelId": "55005", "ModelIdNum": 55005, "Description": "DOR"}
     if door_model not in output_data["RdbBlock"]["ModelReferenceList"]:
         output_data["RdbBlock"]["ModelReferenceList"].append(door_model)
-    
-    # Get the index of the door model in the ModelReferenceList
+
     door_model_index = len(output_data["RdbBlock"]["ModelReferenceList"]) - 1
-    
-    # Ensure at least one ObjectRoot exists in the ObjectRootList
     object_root_list = output_data["RdbBlock"].setdefault("ObjectRootList", [])
     if not object_root_list:
         object_root_list.append({"RdbObjects": []})
 
-    # Access the first ObjectRoot's RdbObjects
     rdb_objects = object_root_list[0].setdefault("RdbObjects", [])
 
     for door in doors:
-        # Filter for door types 1, 4, and 7
-        if door["type"] in {1, 2, 4, 6, 7}:
-            door_position = calculate_door_position(door)
-            y_rotation = door_yrotation(door["dir"])  # Determine direction
-            story = door.get("story", 0)  # Get story value, default to 0
-            y_pos = (story * -128) + 1  # Adjust YPos based on story
+        if door["type"] in {1, 2, 4, 6, 7}:  
+            dir_map = {
+                (0, 1): "north",
+                (1, 0): "east",
+                (0, -1): "south",
+                (-1, 0): "west"
+            }
 
-            # Create the door object
+            # Convert the 'dir' dictionary into a tuple before looking it up
+            direction_tuple = tuple(door.get("dir", {}).values())  # Converts {'x': 0, 'y': 1} → (0, 1)
+            direction = dir_map.get(direction_tuple, "north")  # Default to "north" if not found
+
+            # Calculate the door position
+            door_position = calculate_object_position(door["x"], door["y"], direction, base_x=-24, base_z=64)
+
+            y_rotation = door_yrotation(door["dir"])
+            story = door.get("story", 0)
+            y_pos = (story * -128)
+
             door_object = {
-                "Position": random.randint(10000, 30000),  # Unique random number
-                "Index": len(rdb_objects),  # Index in RdbObjects
+                "Position": random.randint(10000, 30000),
+                "Index": len(rdb_objects),
                 "XPos": door_position["XPos"],
-                "YPos": y_pos,  # Adjusted for story
+                "YPos": y_pos,
                 "ZPos": door_position["ZPos"],
                 "Type": "Model",
                 "Resources": {
@@ -143,7 +190,6 @@ def add_doors(output_data, doors):
                 }
             }
 
-            # Add the door object to the RdbObjects list
             rdb_objects.append(door_object)
 
 
@@ -448,12 +494,12 @@ def process_json(input_file):
                             "Index": 1,
                             "XPos": 0,
                             "YPos": 0,
-                            "ZPos": 0,
+                            "ZPos": 64,
                             "Type": "Model",
                             "Resources": {
                                 "ModelResource": {
                                     "XRotation": 0,
-                                    "YRotation": -1024,  # Placeholder; will adjust
+                                    "YRotation": 1024,  # Placeholder; will adjust
                                     "ZRotation": 0,
                                     "ModelIndex": 1,
                                     "TriggerFlag_StartingLock": 0,

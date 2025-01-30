@@ -1057,7 +1057,7 @@ def scale_and_translate_dungeon(scale_factor=1.28):
     print(f"Room at (0, 0) is currently located at: {room_position}")
 
     # Calculate the translation needed to move the room to the origin
-    translation_to_origin = (-room_position.x + 0.64, -room_position.y + 0.64, -room_position.z)
+    translation_to_origin = (-room_position.x, -room_position.y, -room_position.z)
     print(f"Translating the dungeon by {translation_to_origin} to align (0,0) room with the origin.")
 
     # Apply translation to align the room at (0,0) to the origin

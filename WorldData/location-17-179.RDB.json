@@ -74,12 +74,12 @@
                         "Index": 1,
                         "XPos": 0,
                         "YPos": 0,
-                        "ZPos": 0,
+                        "ZPos": 64,
                         "Type": "Model",
                         "Resources": {
                             "ModelResource": {
                                 "XRotation": 0,
-                                "YRotation": -1024,
+                                "YRotation": 1024,
                                 "ZRotation": 0,
                                 "ModelIndex": 1,
                                 "TriggerFlag_StartingLock": 0,
