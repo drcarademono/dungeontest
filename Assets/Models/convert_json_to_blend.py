@@ -257,120 +257,104 @@ def create_wall(x, y, dir_x, dir_y, rect_x, rect_y, rect_w, rect_h, wall_materia
         bpy.ops.mesh.primitive_plane_add(size=1, location=(x + 0.5, y, 0.5 + height_offset))
         wall = bpy.context.active_object
         wall.rotation_euler[0] = math.radians(90)
+        add_uvs(wall, 1, 1, flip_uv=True, uv_offset_x=-0.5)
         if y == rect_y:  # West side
             flip_wall_normals(wall)
+            add_uvs(wall, 1, 1, flip_uv=False, uv_offset_x=-0.5)
     elif dir_x == 0 and dir_y == 1:  # North-facing wall
         bpy.ops.mesh.primitive_plane_add(size=1, location=(x, y + 0.5, 0.5 + height_offset))
         wall = bpy.context.active_object
         wall.rotation_euler[0] = math.radians(90)
         wall.rotation_euler[2] = math.radians(90)
+        add_uvs(wall, 1, 1, flip_uv=True)
         if x != rect_x:  # North side
             flip_wall_normals(wall)
+            add_uvs(wall, 1, 1, flip_uv=False)
     elif dir_x == -1 and dir_y == 0:  # East-facing wall
         bpy.ops.mesh.primitive_plane_add(size=1, location=(x - 0.5, y, 0.5 + height_offset))
         wall = bpy.context.active_object
         wall.rotation_euler[0] = math.radians(90)
+        add_uvs(wall, 1, 1, flip_uv=False)
     elif dir_x == 0 and dir_y == -1:  # South-facing wall
         bpy.ops.mesh.primitive_plane_add(size=1, location=(x, y - 0.5, 0.5 + height_offset))
         wall = bpy.context.active_object
         wall.rotation_euler[0] = math.radians(90)
         wall.rotation_euler[2] = math.radians(90)
-    add_uvs(wall, 1, 1)  # Accounts for Daggerfall dungeon wall textures being 64x32
+        add_uvs(wall, 1, 1, flip_uv=False)
     wall.data.materials.append(wall_material)
     return wall
 
-def create_doorway(x, y, dir_x, dir_y, collection, wall_material, story=0):
+# Global variable to store the standardized doorway material
+DOORWAY_MATERIALS = None
+
+DOORWAY_MATERIALS = None  # Global variable to store the correct materials
+
+def create_doorway(x, y, dir_x, dir_y, collection, story=0):
     """
-    Create a doorway wall with a rectangular hole, adjusted for the story level.
+    Imports a predefined doorway from doorway.fbx and places it at (x, y), ensuring consistent materials.
 
     Parameters:
     - x, y: Position of the doorway.
     - dir_x, dir_y: Direction of the wall the doorway is part of.
     - collection: Blender collection to add the doorway object.
-    - wall_material: Material to apply to the doorway.
     - story: The story (floor level) of the doorway, used to adjust the Z offset.
     """
-    thickness = 0.2
-    door_width = 0.375
-    door_height = 0.6875
-    z_offset = -abs(story)  # Adjust vertical position based on story
+    global DOORWAY_MATERIALS
 
-    # Create the doorway wall
-    if dir_x != 0:  # Vertical wall
-        bpy.ops.mesh.primitive_cube_add(
-            size=1, enter_editmode=False, align='WORLD', location=(x + 0.5, y + 0.5, 0.5 + z_offset)
-        )
-        doorway = bpy.context.active_object
-        doorway.scale = (thickness, 1, 1)
-    elif dir_y != 0:  # Horizontal wall
-        bpy.ops.mesh.primitive_cube_add(
-            size=1, enter_editmode=False, align='WORLD', location=(x + 0.5, y + 0.5, 0.5 + z_offset)
-        )
-        doorway = bpy.context.active_object
-        doorway.scale = (1, thickness, 1)
+    # Ensure the doorway file exists
+    doorway_fbx_path = os.path.join(os.getcwd(), "doorway.fbx")
+    if not os.path.exists(doorway_fbx_path):
+        print(f"Error: {doorway_fbx_path} not found.")
+        return None
 
-    # Create the hole
-    bpy.ops.mesh.primitive_cube_add(
-        size=1, enter_editmode=False, align='WORLD', location=(x + 0.5, y + 0.5, 0.34 + z_offset)
-    )
-    hole = bpy.context.active_object
-    hole.scale = (door_width, door_width, door_height)
-    collection.objects.link(hole)
+    # Import the FBX doorway
+    bpy.ops.import_scene.fbx(filepath=doorway_fbx_path)
+    
+    # Get the imported object (assumes a single object in the FBX)
+    imported_objects = bpy.context.selected_objects
+    if not imported_objects:
+        print("Error: No objects found in doorway.fbx import.")
+        return None
 
-    # Apply the boolean modifier to create the hole
-    bpy.context.view_layer.objects.active = doorway
-    bpy.ops.object.modifier_add(type='BOOLEAN')
-    bpy.context.object.modifiers["Boolean"].operation = 'DIFFERENCE'
-    bpy.context.object.modifiers["Boolean"].object = hole
-    bpy.ops.object.modifier_apply(modifier="Boolean")
-    bpy.data.objects.remove(hole)
+    doorway = imported_objects[0]  # Assume first imported object is the doorway
+    doorway.name = f"Doorway_{x}_{y}"
 
-    # Add UV mapping for the doorway
-    bpy.context.view_layer.objects.active = doorway
-    bpy.ops.object.mode_set(mode='EDIT')
-    bpy.ops.mesh.select_all(action='SELECT')
-    bpy.ops.uv.reset()
-    bpy.ops.object.mode_set(mode='OBJECT')
+    # Calculate Z offset based on the story level
+    z_offset = -abs(story)
+    doorway.location = (x + 0.5, y + 0.5, z_offset)  # Adjust as needed
 
-    uv_layer = doorway.data.uv_layers.active.data
+    # Rotate based on direction
+    if dir_x == 1:  # West-facing wall
+        doorway.rotation_euler = (0, 0, math.radians(180))
+    elif dir_x == -1:  # East-facing wall
+        doorway.rotation_euler = (0, 0, 0)
+    elif dir_y == 1:  # North-facing wall
+        doorway.rotation_euler = (0, 0, math.radians(90))
+    elif dir_y == -1:  # South-facing wall
+        doorway.rotation_euler = (0, 0, math.radians(-90))
 
-    for poly in doorway.data.polygons:
-        normal = poly.normal
-        for loop_index in poly.loop_indices:
-            uv = uv_layer[loop_index].uv
-            vertex = doorway.data.vertices[doorway.data.loops[loop_index].vertex_index].co
+    # If this is the first doorway, store its materials (ensuring all materials are kept)
+    if DOORWAY_MATERIALS is None:
+        DOORWAY_MATERIALS = [mat for mat in doorway.data.materials]
 
-            # Set UVs based on orientation and adjust for thickness
-            if dir_x != 0:  # Vertical wall
-                if abs(normal.z) > 0.99:  # Top or bottom face
-                    uv[1] = (vertex.y - 0.5)
-                    uv[0] = vertex.x / 4
-                elif abs(normal.y) > 0.99:  # Side faces
-                    uv[1] = (vertex.z - z_offset - 0.5)
-                    uv[0] = vertex.x / 4
-                else:  # Other faces
-                    uv[0] = vertex.y
-                    uv[1] = vertex.z - z_offset
-            elif dir_y != 0:  # Horizontal wall
-                if abs(normal.z) > 0.99:  # Top or bottom face
-                    uv[1] = (vertex.x - 0.5)
-                    uv[0] = vertex.y / 4
-                elif abs(normal.x) > 0.99:  # Side faces
-                    uv[1] = (vertex.z - z_offset - 0.5)
-                    uv[0] = vertex.y / 4
-                else:  # Other faces
-                    uv[0] = vertex.x
-                    uv[1] = vertex.z - z_offset
+    # Ensure the new doorway has the same materials
+    if DOORWAY_MATERIALS:
+        # Ensure the doorway has the correct number of material slots
+        if len(doorway.data.materials) < len(DOORWAY_MATERIALS):
+            for _ in range(len(DOORWAY_MATERIALS) - len(doorway.data.materials)):
+                doorway.data.materials.append(None)
 
-    # Apply wall material
-    if wall_material:
-        doorway.data.materials.append(wall_material)
+        # Assign materials in the correct order
+        for i, mat in enumerate(DOORWAY_MATERIALS):
+            if i < len(doorway.data.materials):
+                doorway.data.materials[i] = mat
+            else:
+                doorway.data.materials.append(mat)
 
     # Link the doorway to the collection
     collection.objects.link(doorway)
 
     return doorway
-
 
 
 def flip_wall_normals(wall):
@@ -406,17 +390,25 @@ def keep_cardinal_walls(rect):
 
     return cardinal_walls
 
-def add_uvs(obj, width, height):
+def add_uvs(obj, width, height, flip_uv=True, uv_offset_x=0.0, uv_offset_y=0.0):
+    """Adds UV mapping to an object with optional horizontal flipping and translation."""
     if not obj.data.uv_layers:
         obj.data.uv_layers.new()
-    
+
     uv_layer = obj.data.uv_layers.active.data
+
     for poly in obj.data.polygons:
         for loop_index in poly.loop_indices:
             uv = uv_layer[loop_index].uv
             vertex = obj.data.vertices[obj.data.loops[loop_index].vertex_index].co
-            uv[0] = (vertex.x - obj.location.x) / width
-            uv[1] = (vertex.y - obj.location.y) / height
+
+            # Standard UV mapping
+            uv[0] = (vertex.x - obj.location.x) / width + uv_offset_x
+            uv[1] = (vertex.y - obj.location.y) / height + uv_offset_y
+
+            # Flip U (horizontal) if specified
+            if flip_uv:
+                uv[0] = 1.0 - uv[0]
 
 def add_uvs_pyramid(obj, base_width, base_height, vaulted_height, texture_unit_size=1):
     """
@@ -1094,12 +1086,36 @@ def process_json_file(json_file):
 
     room_objects = {}
 
+    # Identify rooms that have doorways
+    rooms_with_doorways = set()
+    for door in data.get('doors', []):
+        for rect in data['rects']:
+            if rect['x'] <= door['x'] < rect['x'] + rect['w'] and rect['y'] <= door['y'] < rect['y'] + rect['h']:
+                rooms_with_doorways.add((rect['x'], rect['y']))
+
     # Step 1: Create all rooms (including ramps) as flat
+    rooms_with_doorways = set()
+    for door in data.get('doors', []):
+        if door.get('type') in [1, 2, 4, 6, 7] or (door['x'] == 0 and door['y'] == 0):  # Only consider valid door types
+            for rect in data['rects']:
+                if rect['x'] <= door['x'] < rect['x'] + rect['w'] and rect['y'] <= door['y'] < rect['y'] + rect['h']:
+                    rooms_with_doorways.add((rect['x'], rect['y']))
+
+    # Step 2: Create all rooms, ensuring an object exists even if a doorway is present
     for rect in data['rects']:
+        room_coords = (rect['x'], rect['y'])
+        story = rect.get('story', 0)
+
         objects_to_merge = []
 
-        # Get the story value (default to 0 if not provided)
-        story = rect.get('story', 0)
+        # **Only create an empty object for rooms that have valid doorways**
+        if room_coords in rooms_with_doorways:
+            room_name = f"Room_{rect['x']}_{rect['y']}"
+            empty_mesh = bpy.data.meshes.new(room_name)
+            empty_obj = bpy.data.objects.new(room_name, empty_mesh)
+            collection.objects.link(empty_obj)
+            room_objects[room_name] = empty_obj.name
+            continue  # Skip floor, walls, and ceiling creation
 
         if 'rotunda' in rect and rect['rotunda']:
             quadrant_objs, quadrant_walls = create_rotunda_quadrants(
@@ -1197,7 +1213,7 @@ def process_json_file(json_file):
 
         # Create the doorway if conditions are met
         doorway = create_doorway(
-            door['x'], door['y'], door['dir']['x'], door['dir']['y'], collection, wall_material, story=door_story
+            door['x'], door['y'], door['dir']['x'], door['dir']['y'], collection, story=door_story
         )
 
         room_name = None
