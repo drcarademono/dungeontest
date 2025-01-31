@@ -36,46 +36,51 @@ def calculate_player_position(door_dir):
         return {"XPos": 0, "ZPos": 0}  # Default (no adjustment)
 
 
-def calculate_object_position(x, y, direction="north", base_x=0, base_z=0):
+def calculate_object_position(x, y, direction="north", base_x=0, base_z=0, base_y=0, base_yrotation=0, story=0):
     """
-    Calculates the world position for any object, adjusting for rotation and offsets.
+    Calculates the world position and rotation for any object, adjusting for rotation and story height.
 
     Parameters:
-        x (int): Grid x-coordinate of the object.
-        y (int): Grid y-coordinate of the object.
-        direction (str): Object's facing direction ("north", "east", "south", "west").
-        base_x (int): Base offset for a north-facing object (adjust as needed).
-        base_z (int): Base offset for a north-facing object (adjust as needed).
+        x (int): X grid coordinate.
+        y (int): Y grid coordinate.
+        direction (str): Direction ("north", "east", "south", "west").
+        base_x (int): Base offset for a north-facing object.
+        base_z (int): Base offset for a north-facing object.
+        base_y (int): Base Y offset (elevation).
+        base_yrotation (int): Default Y rotation (for north-facing object).
+        story (int): The floor level of the object (adjusts Y position).
 
     Returns:
-        dict: {"XPos", "ZPos"} with calculated world positions.
+        dict: {"XPos", "YPos", "ZPos", "YRotation"} with calculated values.
     """
-    # Convert tile coordinates to world space
+
+    # Convert grid coordinates to world space
     x_pos = x * -128
     z_pos = y * -128
+    y_pos = base_y + (story * -128)  # Adjust for story height
 
-    # Adjust offsets based on direction
+    # Adjust X and Z offsets based on direction
     if direction == "north":
-        x_offset = base_x
-        z_offset = base_z
+        x_offset, z_offset = base_x, base_z
+        y_rotation = base_yrotation
     elif direction == "east":
-        x_offset = -base_z
-        z_offset = base_x
+        x_offset, z_offset = -base_z, base_x
+        y_rotation = base_yrotation + 512
     elif direction == "south":
-        x_offset = -base_x
-        z_offset = -base_z
+        x_offset, z_offset = -base_x, -base_z
+        y_rotation = base_yrotation + 1024
     elif direction == "west":
-        x_offset = base_z
-        z_offset = -base_x
-    else:  # Default to no offset if direction is invalid
-        x_offset = 0
-        z_offset = 0
+        x_offset, z_offset = base_z, -base_x
+        y_rotation = base_yrotation + 1536
+    else:
+        x_offset, z_offset = 0, 0  # Default to no offset if invalid direction
+        y_rotation = base_yrotation
 
-    # Apply adjusted offsets
+    # Apply final offsets
     x_pos += x_offset
     z_pos += z_offset
 
-    return {"XPos": x_pos, "ZPos": z_pos}
+    return {"XPos": x_pos, "YPos": y_pos, "ZPos": z_pos, "YRotation": y_rotation}
 
 
 def add_door_model_reference(output_data):
@@ -141,37 +146,43 @@ def add_doors(output_data, doors):
 
     rdb_objects = object_root_list[0].setdefault("RdbObjects", [])
 
+    # Define direction mapping using tuples instead of dicts
+    dir_map = {
+        (0, 1): "north",
+        (1, 0): "east",
+        (0, -1): "south",
+        (-1, 0): "west"
+    }
+
     for door in doors:
         if door["type"] in {1, 2, 4, 6, 7}:  
-            dir_map = {
-                (0, 1): "north",
-                (1, 0): "east",
-                (0, -1): "south",
-                (-1, 0): "west"
-            }
-
-            # Convert the 'dir' dictionary into a tuple before looking it up
-            direction_tuple = tuple(door.get("dir", {}).values())  # Converts {'x': 0, 'y': 1} → (0, 1)
-            direction = dir_map.get(direction_tuple, "north")  # Default to "north" if not found
+            # Convert dir dictionary into a tuple before lookup
+            direction_tuple = tuple(door.get("dir", {}).values())  
+            direction = dir_map.get(direction_tuple, "north")  # Default to north
 
             # Calculate the door position
-            door_position = calculate_object_position(door["x"], door["y"], direction, base_x=-24, base_z=64)
-
-            y_rotation = door_yrotation(door["dir"])
-            story = door.get("story", 0)
-            y_pos = (story * -128)
+            door_position = calculate_object_position(
+                x=door["x"], 
+                y=door["y"], 
+                direction=direction, 
+                base_x=-24, 
+                base_z=64, 
+                base_y=0, 
+                base_yrotation=0, 
+                story=door.get("story", 0)
+            )
 
             door_object = {
                 "Position": random.randint(10000, 30000),
                 "Index": len(rdb_objects),
                 "XPos": door_position["XPos"],
-                "YPos": y_pos,
+                "YPos": door_position["YPos"],
                 "ZPos": door_position["ZPos"],
                 "Type": "Model",
                 "Resources": {
                     "ModelResource": {
                         "XRotation": 0,
-                        "YRotation": y_rotation,
+                        "YRotation": door_position["YRotation"],
                         "ZRotation": 0,
                         "ModelIndex": door_model_index,
                         "TriggerFlag_StartingLock": 0,
@@ -191,6 +202,7 @@ def add_doors(output_data, doors):
             }
 
             rdb_objects.append(door_object)
+
 
 
 def calculate_monster_count(room_size):
