@@ -9,7 +9,7 @@ directory = '.'
 def generate_walls(rooms):
     for room in rooms:
         # Add vault value: 0 for 1x1 rooms, 1 otherwise
-        room['vault'] = 0 if room['w'] == 1 and room['h'] == 1 else 1
+        room['vault'] = 0 if room['w'] == 1 or room['h'] == 1 else 1
         
         # Determine the ceiling height
         ceiling = determine_ceiling(room)
