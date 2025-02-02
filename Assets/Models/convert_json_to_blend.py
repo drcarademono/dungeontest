@@ -250,44 +250,126 @@ def create_rotunda_plus(x, y, w, h, floor_material, story=0):
     return objs
 
 
+# Global variables to store the standardized materials
+WALL_MATERIALS = None  # Procedural walls
+TILESET_WALL_MATERIALS = None  # Imported Tileset walls
+
 def create_wall(x, y, dir_x, dir_y, rect_x, rect_y, rect_w, rect_h, wall_material, story=0, level=0):
-    """Create a wall and adjust its height based on the room's story."""
-    height_offset = -abs(story) + level  # Each level is 1 unit above the previous
+    """
+    Create a wall, replacing it with an imported model if the room is 1xN, Nx1, or 1x1.
+
+    Ensures that all walls, whether imported or created procedurally, share the same material.
+
+    Parameters:
+    - x, y: Wall position.
+    - dir_x, dir_y: Wall direction.
+    - rect_x, rect_y, rect_w, rect_h: Room dimensions.
+    - wall_material: Wall material.
+    - story: Floor level.
+    - level: Wall height level.
+    """
+    global WALL_MATERIALS
+    global TILESET_WALL_MATERIALS
+    height_offset = -abs(story) + level  # Adjust Z-position
+
+    # Detect all single-width and single-height rooms, including 1x1
+    is_1xN = rect_w == 1 or rect_h == 1  
+
+    if is_1xN:
+        # Ensure the file exists before importing
+        fbx_wall_path = os.path.join(os.getcwd(), "Tileset01-Wall00.fbx")
+        if os.path.exists(fbx_wall_path):
+            bpy.ops.import_scene.fbx(filepath=fbx_wall_path)
+
+            # Get the imported object (assume first imported is the wall)
+            imported_objects = bpy.context.selected_objects
+            if imported_objects:
+                wall = imported_objects[0]
+                wall.name = f"Wall_{x}_{y}_Story_{story}"
+
+                # Set correct position to match manual wall placement
+                if dir_x == 1 and dir_y == 0:  # West-facing
+                    wall.location = (x + 0.5, y, height_offset)
+                    wall.rotation_euler = (0, 0, math.radians(0))
+                    if y == rect_y:
+                        wall.rotation_euler = (0, 0, math.radians(180))
+                elif dir_x == 0 and dir_y == 1:  # North-facing
+                    wall.location = (x, y + 0.5, height_offset)
+                    wall.rotation_euler = (0, 0, math.radians(90))
+                    if x != rect_x:
+                        wall.rotation_euler = (0, 0, -math.radians(90))
+                elif dir_x == -1 and dir_y == 0:  # East-facing
+                    wall.location = (x - 0.5, y, height_offset)
+                    wall.rotation_euler = (0, 0, 0)
+                elif dir_x == 0 and dir_y == -1:  # South-facing
+                    wall.location = (x, y - 0.5, height_offset)
+                    wall.rotation_euler = (0, 0, -math.radians(90))
+
+                # If this is the first doorway, store its materials (ensuring all materials are kept)
+                if TILESET_WALL_MATERIALS is None:
+                    TILESET_WALL_MATERIALS = [mat for mat in wall.data.materials]
+
+                # Ensure the new doorway has the same materials
+                if TILESET_WALL_MATERIALS:
+                    # Ensure the doorway has the correct number of material slots
+                    if len(wall.data.materials) < len(TILESET_WALL_MATERIALS):
+                        for _ in range(len(TILESET_WALL_MATERIALS) - len(wall.data.materials)):
+                            wall.data.materials.append(None)
+
+                    # Assign materials in the correct order
+                    for i, mat in enumerate(TILESET_WALL_MATERIALS):
+                        if i < len(wall.data.materials):
+                            wall.data.materials[i] = mat
+                        else:
+                            wall.data.materials.append(mat)
+
+                return wall
+
+        print(f"Warning: {fbx_wall_path} not found. Falling back to default wall creation.")
+
+    # Regular walls (Procedural generation)
+    bpy.ops.mesh.primitive_plane_add(size=1, location=(x, y, 0.5 + height_offset))
+    wall = bpy.context.active_object
+    wall.rotation_euler[0] = math.radians(90)
+
     if dir_x == 1 and dir_y == 0:  # West-facing wall
-        bpy.ops.mesh.primitive_plane_add(size=1, location=(x + 0.5, y, 0.5 + height_offset))
-        wall = bpy.context.active_object
-        wall.rotation_euler[0] = math.radians(90)
+        wall.location.x += 0.5
         add_uvs(wall, 1, 1, flip_uv=True, uv_offset_x=-0.5)
-        if y == rect_y:  # West side
+        if y == rect_y:  # If this is the westmost side
             flip_wall_normals(wall)
             add_uvs(wall, 1, 1, flip_uv=False, uv_offset_x=-0.5)
     elif dir_x == 0 and dir_y == 1:  # North-facing wall
-        bpy.ops.mesh.primitive_plane_add(size=1, location=(x, y + 0.5, 0.5 + height_offset))
-        wall = bpy.context.active_object
-        wall.rotation_euler[0] = math.radians(90)
+        wall.location.y += 0.5
         wall.rotation_euler[2] = math.radians(90)
         add_uvs(wall, 1, 1, flip_uv=True)
-        if x != rect_x:  # North side
+        if x != rect_x:  # If this is not the leftmost side
             flip_wall_normals(wall)
             add_uvs(wall, 1, 1, flip_uv=False)
     elif dir_x == -1 and dir_y == 0:  # East-facing wall
-        bpy.ops.mesh.primitive_plane_add(size=1, location=(x - 0.5, y, 0.5 + height_offset))
-        wall = bpy.context.active_object
-        wall.rotation_euler[0] = math.radians(90)
+        wall.location.x -= 0.5
         add_uvs(wall, 1, 1, flip_uv=False)
     elif dir_x == 0 and dir_y == -1:  # South-facing wall
-        bpy.ops.mesh.primitive_plane_add(size=1, location=(x, y - 0.5, 0.5 + height_offset))
-        wall = bpy.context.active_object
-        wall.rotation_euler[0] = math.radians(90)
+        wall.location.y -= 0.5
         wall.rotation_euler[2] = math.radians(90)
         add_uvs(wall, 1, 1, flip_uv=False)
-    wall.data.materials.append(wall_material)
+
+    # Assign consistent material to procedural walls
+    if WALL_MATERIALS is None:
+        WALL_MATERIALS = [wall_material]  # Store the first assigned procedural wall material
+
+    if WALL_MATERIALS:
+        for i, mat in enumerate(WALL_MATERIALS):
+            if i < len(wall.data.materials):
+                wall.data.materials[i] = mat
+            else:
+                wall.data.materials.append(mat)
+
     return wall
+
+
 
 # Global variable to store the standardized doorway material
 DOORWAY_MATERIALS = None
-
-DOORWAY_MATERIALS = None  # Global variable to store the correct materials
 
 def create_doorway(x, y, dir_x, dir_y, collection, story=0):
     """
@@ -835,13 +917,25 @@ def add_rotunda_ceiling(rect, collection, ceiling_material, story):
     return objs
 
 def merge_objects(objs, name):
+    # Ensure all objects have the same UV map name before joining
+    uv_map_name = "UVMap"  # Default Blender UV map name
+    
+    for obj in objs:
+        if obj.data.uv_layers:
+            if uv_map_name not in obj.data.uv_layers:
+                obj.data.uv_layers.active.name = uv_map_name
+
+    # Merge objects
     bpy.ops.object.select_all(action='DESELECT')
     for obj in objs:
         obj.select_set(True)
     bpy.context.view_layer.objects.active = objs[0]
     bpy.ops.object.join()
+    
+    # Rename the merged object
     objs[0].name = name
     return objs[0]
+
 
 def apply_ramp_slope(obj, rect):
     """
@@ -893,7 +987,7 @@ def adjust_wall_uvs(obj, rect, direction):
     - direction: Ramp direction ('north', 'south', 'east', 'west').
     - slope_amount: The height difference per Blender unit of slope.
     """
-    print(f"Adjusting UVs for walls in merged object: {obj.name}, direction: {direction}")
+    # print(f"Adjusting UVs for walls in merged object: {obj.name}, direction: {direction}")
 
     slope_amount = 1
 
@@ -904,7 +998,7 @@ def adjust_wall_uvs(obj, rect, direction):
 
     for poly in obj.data.polygons:
         # Identify wall polygons by their normal orientation
-        if abs(poly.normal.z) < 0.01:  # Walls are vertical (not horizontal floors/ceilings)
+        if abs(poly.normal.z) < 0.7:  # Walls are vertical (not horizontal floors/ceilings)
             for loop_index in poly.loop_indices:
                 uv = uv_layer.data[loop_index].uv
                 vertex = obj.data.vertices[obj.data.loops[loop_index].vertex_index].co
@@ -929,7 +1023,7 @@ def adjust_wall_uvs(obj, rect, direction):
                 # Adjust the UVs by reversing the slope effect
                 uv.y += -adjustment
 
-    print(f"UV adjustment completed for object: {obj.name}")
+    # print(f"UV adjustment completed for object: {obj.name}")
 
 
 def recalculate_inward_normals(obj):
@@ -1016,7 +1110,7 @@ def adjust_column_uvs(column, total_height):
     # Update the mesh to reflect UV changes
     column.data.update()
 
-    print(f"Adjusted UVs for column '{column.name}' with height {total_height}.")
+    # print(f"Adjusted UVs for column '{column.name}' with height {total_height}.")
 
 
 def scale_and_translate_dungeon(scale_factor=1.28):
@@ -1027,7 +1121,7 @@ def scale_and_translate_dungeon(scale_factor=1.28):
     Parameters:
     - scale_factor: The uniform scale factor to apply to the entire dungeon.
     """
-    print(f"Scaling dungeon by a factor of {scale_factor}...")
+    # print(f"Scaling dungeon by a factor of {scale_factor}...")
 
     # Ensure all objects are deselected
     bpy.ops.object.select_all(action='DESELECT')
@@ -1039,7 +1133,7 @@ def scale_and_translate_dungeon(scale_factor=1.28):
     bpy.ops.transform.resize(value=(scale_factor, scale_factor, scale_factor))
     bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
 
-    print("Scaling applied.")
+    # print("Scaling applied.")
 
     # Find the object corresponding to the room at (0,0)
     room_at_origin = None
@@ -1054,20 +1148,20 @@ def scale_and_translate_dungeon(scale_factor=1.28):
 
     # Get the current location of the room at (0,0) AFTER scaling
     room_position = room_at_origin.location
-    print(f"Room at (0, 0) is currently located at: {room_position}")
+    # print(f"Room at (0, 0) is currently located at: {room_position}")
 
     # Calculate the translation needed to move the room to the origin
     translation_to_origin = (-room_position.x, -room_position.y, -room_position.z)
-    print(f"Translating the dungeon by {translation_to_origin} to align (0,0) room with the origin.")
+    # print(f"Translating the dungeon by {translation_to_origin} to align (0,0) room with the origin.")
 
     # Apply translation to align the room at (0,0) to the origin
     bpy.ops.transform.translate(value=translation_to_origin)
     bpy.ops.object.transform_apply(location=True, rotation=False, scale=True)
 
     # Final debug check
-    print(f"After translation, Room_0_0 should be at: {room_at_origin.location}")
+    # print(f"After translation, Room_0_0 should be at: {room_at_origin.location}")
 
-    print("Scaling and translation completed successfully.")
+    # print("Scaling and translation completed successfully.")
 
 
 def process_json_file(json_file):
@@ -1193,8 +1287,8 @@ def process_json_file(json_file):
             room_name = f"Room_{rect['x']}_{rect['y']}"
             ramp_obj = bpy.data.objects.get(room_objects.get(room_name))
             if ramp_obj:
-                print(f"Applying slope and UVs to ramp: {room_name}, Direction: {rect['ramp_dir']}")
-                
+                # print(f"Applying slope and UVs to ramp: {room_name}, Direction: {rect['ramp_dir']}")
+                # 
                 # Apply slope to the entire ramp object
                 apply_ramp_slope(ramp_obj, rect)
 

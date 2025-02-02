@@ -47,6 +47,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: CeilingMaterial.012
+    second: {fileID: 2100000, guid: ddd1468aad75ace069ed4de4b7ef56d6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: ColumnMaterial.001
     second: {fileID: 2100000, guid: 2e777fcd015bb06658a7ec00f38d2684, type: 2}
   - first:
@@ -92,7 +97,17 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: FloorMaterial.012
+    second: {fileID: 2100000, guid: b49bc01c673d107338ca8bdd3921d491, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: TEXTURE_120__Index_0_.002
+    second: {fileID: 2100000, guid: d0b9bdbecaa68998f837bd48b6df0211, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TEXTURE_120__Index_0_.006
     second: {fileID: 2100000, guid: d0b9bdbecaa68998f837bd48b6df0211, type: 2}
   - first:
       type: UnityEngine:Material
@@ -107,13 +122,43 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: TEXTURE_121__Index_2_.006
+    second: {fileID: 2100000, guid: d0b9bdbecaa68998f837bd48b6df0211, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: TEXTURE_121__Index_3_.001
     second: {fileID: 2100000, guid: c703880f9c24425fc98a3c2a98457372, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: TEXTURE_121__Index_3_.006
+    second: {fileID: 2100000, guid: d0b9bdbecaa68998f837bd48b6df0211, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TEXTURE_122__Index_4_.001
+    second: {fileID: 2100000, guid: d0b9bdbecaa68998f837bd48b6df0211, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: TEXTURE_321__Index_2_.001
     second: {fileID: 2100000, guid: d9ae0dbd179a97537b7b967aeea8592c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TEXTURE_321__Index_2_.006
+    second: {fileID: 2100000, guid: d0b9bdbecaa68998f837bd48b6df0211, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TileSet00_WallMaterial
+    second: {fileID: 2100000, guid: d0b9bdbecaa68998f837bd48b6df0211, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Tileset00_WallMaterial
+    second: {fileID: 2100000, guid: d0b9bdbecaa68998f837bd48b6df0211, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule

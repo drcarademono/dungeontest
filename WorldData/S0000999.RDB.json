@@ -125,7 +125,7 @@
                         }
                     },
                     {
-                        "Position": 15171,
+                        "Position": 25502,
                         "Index": 3,
                         "XPos": -192,
                         "YPos": 128,
@@ -153,7 +153,7 @@
                         }
                     },
                     {
-                        "Position": 25420,
+                        "Position": 29872,
                         "Index": 4,
                         "XPos": 192,
                         "YPos": 128,
@@ -181,7 +181,7 @@
                         }
                     },
                     {
-                        "Position": 18285,
+                        "Position": 25779,
                         "Index": 5,
                         "XPos": -536,
                         "YPos": 128,
@@ -209,7 +209,7 @@
                         }
                     },
                     {
-                        "Position": 26393,
+                        "Position": 28069,
                         "Index": 6,
                         "XPos": 488,
                         "YPos": 128,
@@ -237,7 +237,7 @@
                         }
                     },
                     {
-                        "Position": 10391,
+                        "Position": 11260,
                         "Index": 7,
                         "XPos": -320,
                         "YPos": 256,
@@ -265,7 +265,7 @@
                         }
                     },
                     {
-                        "Position": 13511,
+                        "Position": 17189,
                         "Index": 8,
                         "XPos": 960,
                         "YPos": 512,
@@ -293,7 +293,7 @@
                         }
                     },
                     {
-                        "Position": 28917,
+                        "Position": 20079,
                         "Index": 9,
                         "XPos": 576,
                         "YPos": 640,
@@ -321,15 +321,15 @@
                         }
                     },
                     {
-                        "Position": 24917,
+                        "Position": 23076,
                         "Index": 10,
-                        "XPos": -512,
-                        "YPos": 128,
-                        "ZPos": -768,
+                        "XPos": 1280,
+                        "YPos": 512,
+                        "ZPos": 512,
                         "Type": "Flat",
                         "Resources": {
                             "FlatResource": {
-                                "Position": 24917,
+                                "Position": 23076,
                                 "TextureArchive": 199,
                                 "TextureRecord": 15,
                                 "Flags": 0,
@@ -343,37 +343,15 @@
                         }
                     },
                     {
-                        "Position": 13506,
+                        "Position": 25545,
                         "Index": 11,
-                        "XPos": -384,
-                        "YPos": 384,
-                        "ZPos": -1664,
+                        "XPos": 0,
+                        "YPos": 640,
+                        "ZPos": 640,
                         "Type": "Flat",
                         "Resources": {
                             "FlatResource": {
-                                "Position": 13506,
-                                "TextureArchive": 199,
-                                "TextureRecord": 15,
-                                "Flags": 0,
-                                "Magnitude": 0,
-                                "SoundIndex": 0,
-                                "FactionOrMobileId": 512,
-                                "NextObjectOffset": 0,
-                                "Action": 0,
-                                "IsCustomData": false
-                            }
-                        }
-                    },
-                    {
-                        "Position": 14157,
-                        "Index": 12,
-                        "XPos": 896,
-                        "YPos": 384,
-                        "ZPos": -1792,
-                        "Type": "Flat",
-                        "Resources": {
-                            "FlatResource": {
-                                "Position": 14157,
+                                "Position": 25545,
                                 "TextureArchive": 199,
                                 "TextureRecord": 15,
                                 "Flags": 0,
@@ -388,10 +366,10 @@
                     },
                     {
                         "Position": 91186,
-                        "Index": 13,
-                        "XPos": -256.0,
-                        "YPos": 359,
-                        "ZPos": -1920.0,
+                        "Index": 12,
+                        "XPos": 256.0,
+                        "YPos": 615,
+                        "ZPos": 896.0,
                         "Type": "Model",
                         "Resources": {
                             "ModelResource": {
@@ -416,10 +394,10 @@
                     },
                     {
                         "Position": 39619,
-                        "Index": 14,
-                        "XPos": -256.0,
-                        "YPos": 300,
-                        "ZPos": -1920.0,
+                        "Index": 13,
+                        "XPos": 256.0,
+                        "YPos": 556,
+                        "ZPos": 896.0,
                         "Type": "Flat",
                         "Resources": {
                             "FlatResource": {
@@ -438,10 +416,10 @@
                     },
                     {
                         "Position": 65722,
-                        "Index": 15,
-                        "XPos": -222.0,
-                        "YPos": 333,
-                        "ZPos": -1920.0,
+                        "Index": 14,
+                        "XPos": 290.0,
+                        "YPos": 589,
+                        "ZPos": 896.0,
                         "Type": "Flat",
                         "Resources": {
                             "FlatResource": {
@@ -460,10 +438,10 @@
                     },
                     {
                         "Position": 45647,
-                        "Index": 16,
-                        "XPos": -290.0,
-                        "YPos": 333,
-                        "ZPos": -1920.0,
+                        "Index": 15,
+                        "XPos": 222.0,
+                        "YPos": 589,
+                        "ZPos": 896.0,
                         "Type": "Flat",
                         "Resources": {
                             "FlatResource": {
@@ -482,10 +460,10 @@
                     },
                     {
                         "Position": 10864,
-                        "Index": 17,
-                        "XPos": -256.0,
-                        "YPos": 363,
-                        "ZPos": -1870.0,
+                        "Index": 16,
+                        "XPos": 256.0,
+                        "YPos": 619,
+                        "ZPos": 946.0,
                         "Type": "Flat",
                         "Resources": {
                             "FlatResource": {
@@ -504,10 +482,10 @@
                     },
                     {
                         "Position": 61600,
-                        "Index": 18,
-                        "XPos": -256.0,
-                        "YPos": 363,
-                        "ZPos": -1970.0,
+                        "Index": 17,
+                        "XPos": 256.0,
+                        "YPos": 619,
+                        "ZPos": 846.0,
                         "Type": "Flat",
                         "Resources": {
                             "FlatResource": {
@@ -526,10 +504,10 @@
                     },
                     {
                         "Position": 31486,
-                        "Index": 19,
-                        "XPos": -188.0,
-                        "YPos": 346,
-                        "ZPos": -1918.0,
+                        "Index": 18,
+                        "XPos": 324.0,
+                        "YPos": 602,
+                        "ZPos": 898.0,
                         "Type": "Flat",
                         "Resources": {
                             "FlatResource": {
@@ -548,10 +526,10 @@
                     },
                     {
                         "Position": 40674,
-                        "Index": 20,
-                        "XPos": -206.0,
-                        "YPos": 342,
-                        "ZPos": -1964.0,
+                        "Index": 19,
+                        "XPos": 306.0,
+                        "YPos": 598,
+                        "ZPos": 852.0,
                         "Type": "Flat",
                         "Resources": {
                             "FlatResource": {
@@ -570,10 +548,10 @@
                     },
                     {
                         "Position": 28164,
-                        "Index": 21,
-                        "XPos": -306.0,
-                        "YPos": 342,
-                        "ZPos": -1964.0,
+                        "Index": 20,
+                        "XPos": 206.0,
+                        "YPos": 598,
+                        "ZPos": 852.0,
                         "Type": "Flat",
                         "Resources": {
                             "FlatResource": {
@@ -592,10 +570,10 @@
                     },
                     {
                         "Position": 16992,
-                        "Index": 22,
-                        "XPos": -290.0,
-                        "YPos": 369,
-                        "ZPos": -1868.0,
+                        "Index": 21,
+                        "XPos": 222.0,
+                        "YPos": 625,
+                        "ZPos": 948.0,
                         "Type": "Flat",
                         "Resources": {
                             "FlatResource": {
@@ -614,10 +592,10 @@
                     },
                     {
                         "Position": 10501,
-                        "Index": 23,
-                        "XPos": -280.0,
-                        "YPos": 369,
-                        "ZPos": -1855.0,
+                        "Index": 22,
+                        "XPos": 232.0,
+                        "YPos": 625,
+                        "ZPos": 961.0,
                         "Type": "Flat",
                         "Resources": {
                             "FlatResource": {
